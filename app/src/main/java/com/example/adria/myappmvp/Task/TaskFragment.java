@@ -80,13 +80,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     }
 
-    public void AddTask2(View v) {
-        Task hola = new Task("Tytul", "Opis");
-        mTaskArrayList.add(hola);
-        mTaskAdapter.notifyDataSetChanged();
-
-    }
-
     @Override
     public void ShowNoTaskMenu(boolean show)
     {

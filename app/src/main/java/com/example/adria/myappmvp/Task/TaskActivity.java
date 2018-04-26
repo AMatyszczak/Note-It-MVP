@@ -11,8 +11,12 @@ import android.view.MenuItem;
 
 import com.example.adria.myappmvp.R;
 
+import javax.inject.Inject;
+
 public class TaskActivity extends AppCompatActivity {
 
+    @Inject public TaskPresenter mPresenter;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,10 +24,12 @@ public class TaskActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mPresenter.onItemClicked();
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
             }
         });
@@ -45,6 +51,7 @@ public class TaskActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
