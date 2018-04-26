@@ -15,7 +15,9 @@ import javax.inject.Inject;
 
 public class TaskActivity extends AppCompatActivity {
 
-    @Inject private TaskPresenter mPresenter;
+    @Inject public TaskPresenter mPresenter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
