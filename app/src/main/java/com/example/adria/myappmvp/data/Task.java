@@ -1,15 +1,22 @@
-package com.example.adria.myappmvp.Task;
+package com.example.adria.myappmvp.data;
+
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Entity;
 
 /**
  * Created by adria on 23.04.2018.
  */
-
+@Entity(tableName = "task")
 public class Task
 {
+    @PrimaryKey
     public int ID;
 
+    @ColumnInfo(name = "title")
     public String mTitle;
 
+    @ColumnInfo(name = "description")
     public String mDescription;
 
     public Task(String Title, String Description)
@@ -28,7 +35,7 @@ public class Task
 
     public String getTitle() { return mTitle; }
 
-    public String getmDescription() { return mDescription; }
+    public String getDescription() { return mDescription; }
 
 
 

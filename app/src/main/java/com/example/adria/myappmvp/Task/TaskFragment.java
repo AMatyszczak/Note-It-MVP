@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
+import com.example.adria.myappmvp.data.Task;
 
 import java.util.ArrayList;
 
