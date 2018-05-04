@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -28,9 +28,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     private LinearLayout mNoTaskLayout;
 
     private TaskAdapter mTaskAdapter;
-    private ArrayList<Task> mTaskArrayList;
-    private Button button;
-
 
     public TaskFragment()
     {
@@ -41,8 +38,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTaskArrayList = new ArrayList<Task>(0);
-        mTaskAdapter = new TaskAdapter(getContext(),mTaskArrayList);
+        mTaskAdapter = new TaskAdapter(getContext(),new ArrayList<Task>(0));
     }
 
     @Override
@@ -54,35 +50,30 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         mTaskList = (ListView)root.findViewById(R.id.TaskListView);
 
         mTaskList.setAdapter(mTaskAdapter);
-        button = (Button)root.findViewById(R.id.but);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AddTask();
-            }
-        });
 
 
         mNoTaskTextView = (TextView) root.findViewById(R.id.NoTaskTextView);
         mNoTaskLayout = (LinearLayout) root.findViewById(R.id.NoTaskLayout);
-        ShowNoTaskMenu(false);
+        showNoTaskMenu(false);
 
 
         return root;
 
     }
 
-
     @Override
-    public void AddTask() {
-        Task hola = new Task("Tytul", "Opis");
-        mTaskArrayList.add(hola);
-        mTaskAdapter.notifyDataSetChanged();
-
+    public void updateTaskList(List<Task> taskList)
+    {
+        mTaskAdapter.setList(taskList);
     }
 
     @Override
-    public void ShowNoTaskMenu(boolean show)
+    public void addTask(Task task) {
+        mTaskAdapter.addTask(task);
+    }
+
+    @Override
+    public void showNoTaskMenu(boolean show)
     {
         if(show)
         {

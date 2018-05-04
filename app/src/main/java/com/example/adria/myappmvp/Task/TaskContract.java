@@ -1,17 +1,22 @@
 package com.example.adria.myappmvp.Task;
 
+import com.example.adria.myappmvp.data.Task;
+
+import java.util.List;
+
 /**
  * Created by adria on 23.04.2018.
  */
 
 public interface TaskContract
 {
-    public interface View
+    interface View
     {
-        void ShowNoTaskMenu(boolean show);
-        void AddTask();
+        void showNoTaskMenu(boolean show);
+        void addTask(Task task);
+        public void updateTaskList(List<Task> taskList);
     }
-    public interface Presenter
+    interface Presenter
     {
         void onItemClicked();
     }
