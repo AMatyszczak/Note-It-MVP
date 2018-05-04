@@ -11,14 +11,12 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:hint="Tytul"/>
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/descrption"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Opis"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
