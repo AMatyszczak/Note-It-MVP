@@ -1,5 +1,7 @@
 package com.example.adria.myappmvp.Task;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.adria.myappmvp.AddTask.AddTaskActivity;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
 
@@ -70,13 +73,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
         mTaskList.setAdapter(mTaskAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onItemClicked();
-            }
-        });
+
 
         mNoTaskTextView = (TextView) root.findViewById(R.id.NoTaskTextView);
         mNoTaskLayout = (LinearLayout) root.findViewById(R.id.NoTaskLayout);
@@ -87,13 +84,34 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_task);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.onItemClicked();
+            }
+        });
+    }
+
+    @Override
     public void updateTaskList(List<Task> taskList)
     {
         mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
     }
+//****************************************************************************************88
+    @Override
+    public void addTaskStart()
+    {
+        Intent intent = new Intent(getActivity(),AddTaskActivity.class);
+        startActivityForResult(intent,1);
+    }
 
     @Override
-    public void addTask(Task task) {
+    public void addTask(Task task)
+    {
         mTaskAdapter.addTask(task);
     }
 
