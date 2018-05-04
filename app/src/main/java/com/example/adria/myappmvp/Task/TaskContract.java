@@ -16,6 +16,7 @@ public interface TaskContract
         void addTask(Task task);
         public void updateTaskList(List<Task> taskList);
         public void setPresenter(TaskContract.Presenter presenter);
+        public void addTaskStart();
     }
     interface Presenter
     {

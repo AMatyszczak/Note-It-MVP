@@ -27,10 +27,10 @@ public class TaskPresenter implements TaskContract.Presenter
 
     @Override
     public void onItemClicked() {
-        Task task = new Task("Test", "test2");
-        mTaskRepository.insertTask(task);
+        mFragment.addTaskStart();
+        //mTaskRepository.insertTask(task);
         //mFragment.addTask(task);
-        mFragment.updateTaskList(mTaskRepository.getAllTasks());
+        //mFragment.updateTaskList(mTaskRepository.getAllTasks());
     }
     @Override
     public List<Task> GetAllTasks()

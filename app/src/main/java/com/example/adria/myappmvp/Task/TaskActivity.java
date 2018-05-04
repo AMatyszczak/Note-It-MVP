@@ -1,5 +1,6 @@
 package com.example.adria.myappmvp.Task;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.adria.myappmvp.AddTask.AddTaskActivity;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.TaskRepository;
@@ -34,6 +36,7 @@ public class TaskActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
