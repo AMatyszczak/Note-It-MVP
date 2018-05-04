@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 
@@ -27,7 +29,7 @@ public class TaskAdapter extends BaseAdapter
     TaskAdapter(Context context, List<Task> TaskList)
     {
         mContext = context;
-        mTaskList = TaskList;
+        setList(TaskList);
     }
 
     @Override
@@ -36,14 +38,14 @@ public class TaskAdapter extends BaseAdapter
     }
 
     @Override
-    public Object getItem(int i)
+    public Task getItem(int i)
     {
         return mTaskList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return mTaskList.get(i).getID();
+        return i;
     }
 
     @Override
@@ -51,12 +53,29 @@ public class TaskAdapter extends BaseAdapter
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View root = inflater.inflate(R.layout.task, viewGroup, false);
 
+        Task task = getItem(i);
+
         TextView title = (TextView)root.findViewById(R.id.title);
+        title.setText(task.getTitle());
+
         TextView description = (TextView)root.findViewById(R.id.descrption);
-        title.setText("TYTUL");
-        description.setText("OPIS");
+        description.setText(task.getDescription());
+
+
+
 
         return root;
+    }
+    public void addTask(Task task)
+    {
+        mTaskList.add(task);
+        notifyDataSetChanged();
+    }
+
+    public void setList(List<Task> taskList)
+    {
+        mTaskList = taskList;
+        notifyDataSetChanged();
     }
 
     @Nullable
