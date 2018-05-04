@@ -10,6 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.adria.myappmvp.R;
+import com.example.adria.myappmvp.data.Task;
+import com.example.adria.myappmvp.data.TaskRepository;
+
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -25,12 +29,14 @@ public class TaskActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TaskFragment taskFragment = (TaskFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
-        mPresenter = new TaskPresenter(taskFragment);
+        TaskRepository taskRepository = new TaskRepository(getApplication());
+        mPresenter = new TaskPresenter(taskFragment, taskRepository );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Task task = new Task(UUID.randomUUID().toString(),"3 proba","Oby wyszla");
                 mPresenter.onItemClicked();
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
             }
