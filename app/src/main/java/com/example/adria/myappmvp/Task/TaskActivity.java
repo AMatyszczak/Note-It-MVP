@@ -32,15 +32,7 @@ public class TaskActivity extends AppCompatActivity {
         TaskRepository taskRepository = new TaskRepository(getApplication());
         mPresenter = new TaskPresenter(taskFragment, taskRepository );
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Task task = new Task(UUID.randomUUID().toString(),"3 proba","Oby wyszla");
-                mPresenter.onItemClicked();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-            }
-        });
+
     }
 
     @Override

@@ -29,7 +29,8 @@ public class TaskAdapter extends BaseAdapter
     TaskAdapter(Context context, List<Task> TaskList)
     {
         mContext = context;
-        setList(TaskList);
+        mTaskList = TaskList;
+        //setList(TaskList);
     }
 
     @Override
@@ -61,9 +62,6 @@ public class TaskAdapter extends BaseAdapter
         TextView description = (TextView)root.findViewById(R.id.descrption);
         description.setText(task.getDescription());
 
-
-
-
         return root;
     }
     public void addTask(Task task)
@@ -72,10 +70,16 @@ public class TaskAdapter extends BaseAdapter
         notifyDataSetChanged();
     }
 
-    public void setList(List<Task> taskList)
+    public void replaceTaskList(List<Task> taskList)
     {
-        mTaskList = taskList;
+        setList(taskList);
+    }
+    private void setList(List<Task> taskList)
+    {
+        this.mTaskList.clear();
+        this.mTaskList.addAll(taskList);
         notifyDataSetChanged();
+
     }
 
     @Nullable

@@ -21,14 +21,20 @@ public class TaskPresenter implements TaskContract.Presenter
     {
         mFragment = fragment;
         mTaskRepository = taskRepository;
+
+        mFragment.setPresenter(this);
     }
 
     @Override
     public void onItemClicked() {
         Task task = new Task("Test", "test2");
         mTaskRepository.insertTask(task);
-        mFragment.addTask(task);
-        List<Task> taskList = mTaskRepository.getAllTasks();
-        //mFragment.updateTaskList(taskList);
+        //mFragment.addTask(task);
+        mFragment.updateTaskList(mTaskRepository.getAllTasks());
+    }
+    @Override
+    public List<Task> GetAllTasks()
+    {
+        return mTaskRepository.getAllTasks();
     }
 }

@@ -15,10 +15,12 @@ public interface TaskContract
         void showNoTaskMenu(boolean show);
         void addTask(Task task);
         public void updateTaskList(List<Task> taskList);
+        public void setPresenter(TaskContract.Presenter presenter);
     }
     interface Presenter
     {
         void onItemClicked();
+        public List<Task> GetAllTasks();
     }
 
 

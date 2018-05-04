@@ -1,8 +1,11 @@
 package com.example.adria.myappmvp.Task;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,8 @@ import com.example.adria.myappmvp.data.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -28,10 +33,24 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     private LinearLayout mNoTaskLayout;
 
     private TaskAdapter mTaskAdapter;
+    private TaskContract.Presenter mPresenter;
 
     public TaskFragment()
     {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Log.e("TAG", String.valueOf(mPresenter.GetAllTasks().size()));
+        mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
+
+    }
+    @Override
+    public void setPresenter(TaskContract.Presenter presenter)
+    {
+        mPresenter = presenter;
     }
 
     @Override
@@ -51,6 +70,13 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
         mTaskList.setAdapter(mTaskAdapter);
 
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.onItemClicked();
+            }
+        });
 
         mNoTaskTextView = (TextView) root.findViewById(R.id.NoTaskTextView);
         mNoTaskLayout = (LinearLayout) root.findViewById(R.id.NoTaskLayout);
@@ -58,13 +84,12 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
 
         return root;
-
     }
 
     @Override
     public void updateTaskList(List<Task> taskList)
     {
-        mTaskAdapter.setList(taskList);
+        mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
     }
 
     @Override
