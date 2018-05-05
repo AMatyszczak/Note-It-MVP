@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ import static android.content.ContentValues.TAG;
  */
 public class TaskFragment extends Fragment implements TaskContract.View {
 
+    private final int ADD_TASK = 1;
+
     private ListView mTaskList;
     private LinearLayout mTaskLayout;
 
@@ -38,17 +41,17 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     private TaskAdapter mTaskAdapter;
     private TaskContract.Presenter mPresenter;
 
+
     public TaskFragment()
     {
 
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
-        //Log.e("TAG", String.valueOf(mPresenter.GetAllTasks().size()));
         mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
-
     }
     @Override
     public void setPresenter(TaskContract.Presenter presenter)
@@ -70,10 +73,22 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         View root = inflater.inflate(R.layout.task_frag, container, false);
         mTaskLayout = (LinearLayout) root.findViewById(R.id.TaskLayout);
         mTaskList = (ListView)root.findViewById(R.id.TaskListView);
-
         mTaskList.setAdapter(mTaskAdapter);
 
-
+        Button butt = (Button) root.findViewById(R.id.OhButton);
+        butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearTaskList();
+            }
+        });
+        Button butt2 = (Button) root.findViewById(R.id.OhButton2);
+        butt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTaskAdapter.notifyDataSetChanged();
+            }
+        });
 
         mNoTaskTextView = (TextView) root.findViewById(R.id.NoTaskTextView);
         mNoTaskLayout = (LinearLayout) root.findViewById(R.id.NoTaskLayout);
@@ -91,7 +106,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.onItemClicked();
+                addTaskStart();
             }
         });
     }
@@ -99,14 +114,27 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     @Override
     public void updateTaskList(List<Task> taskList)
     {
+        for (Task task: mPresenter.GetAllTasks()
+                ) {
+            Log.e(TAG, task.getTitle());
+        }
         mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
     }
-//****************************************************************************************88
+
+    @Override
+    public void clearTaskList()
+    {
+        mPresenter.clearTasks();
+    }
+
     @Override
     public void addTaskStart()
     {
         Intent intent = new Intent(getActivity(),AddTaskActivity.class);
-        startActivityForResult(intent,1);
+        startActivityForResult(intent,ADD_TASK);
+        Log.e(TAG, "WYNIK" );
+        updateTaskList(mPresenter.GetAllTasks());
+        mTaskAdapter.notifyDataSetInvalidated();
     }
 
     @Override
@@ -136,4 +164,5 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         }
 
     }
+
 }

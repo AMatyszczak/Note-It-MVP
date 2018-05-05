@@ -1,5 +1,9 @@
 package com.example.adria.myappmvp.Task;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.TaskRepository;
 
@@ -12,6 +16,7 @@ import java.util.UUID;
 
 public class TaskPresenter implements TaskContract.Presenter
 {
+    private final int ADD_TASK = 1;
 
     private TaskRepository mTaskRepository;
 
@@ -27,14 +32,18 @@ public class TaskPresenter implements TaskContract.Presenter
 
     @Override
     public void onItemClicked() {
-        mFragment.addTaskStart();
-        //mTaskRepository.insertTask(task);
-        //mFragment.addTask(task);
-        //mFragment.updateTaskList(mTaskRepository.getAllTasks());
+
     }
+
+    @Override
+    public void clearTasks() {
+        mTaskRepository.deleteTask();
+    }
+
     @Override
     public List<Task> GetAllTasks()
     {
         return mTaskRepository.getAllTasks();
     }
+
 }

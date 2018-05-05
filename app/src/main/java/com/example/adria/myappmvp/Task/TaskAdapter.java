@@ -3,6 +3,7 @@ package com.example.adria.myappmvp.Task;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 
 /**
  * Created by adria on 23.04.2018.
@@ -28,9 +31,10 @@ public class TaskAdapter extends BaseAdapter
 
     TaskAdapter(Context context, List<Task> TaskList)
     {
-        mContext = context;
-        mTaskList = TaskList;
-        //setList(TaskList);
+
+        this.mContext = context;
+        this.mTaskList = TaskList;
+        setList(TaskList);
     }
 
     @Override
@@ -51,10 +55,14 @@ public class TaskAdapter extends BaseAdapter
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View root = inflater.inflate(R.layout.task, viewGroup, false);
+        View root = view;
+        if(view == null)
+        {
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            root = inflater.inflate(R.layout.task, viewGroup, false);
+        }
 
-        Task task = getItem(i);
+        Task task = (Task)getItem(i);
 
         TextView title = (TextView)root.findViewById(R.id.title);
         title.setText(task.getTitle());
@@ -76,6 +84,7 @@ public class TaskAdapter extends BaseAdapter
     }
     private void setList(List<Task> taskList)
     {
+
         this.mTaskList.clear();
         this.mTaskList.addAll(taskList);
         notifyDataSetChanged();
