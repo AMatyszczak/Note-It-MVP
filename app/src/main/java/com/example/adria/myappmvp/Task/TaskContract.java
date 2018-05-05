@@ -14,14 +14,17 @@ public interface TaskContract
     {
         void showNoTaskMenu(boolean show);
         void addTask(Task task);
-        public void updateTaskList(List<Task> taskList);
-        public void setPresenter(TaskContract.Presenter presenter);
-        public void addTaskStart();
+        void updateTaskList(List<Task> taskList);
+        void setPresenter(TaskContract.Presenter presenter);
+        void addTaskStart();
+        void clearTaskList();
+
     }
     interface Presenter
     {
         void onItemClicked();
-        public List<Task> GetAllTasks();
+        List<Task> GetAllTasks();
+        void clearTasks();
     }
 
 
