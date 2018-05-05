@@ -8,22 +8,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.adria.myappmvp.R;
+import com.example.adria.myappmvp.data.TaskRepository;
 
-public class AddTaskActivity extends AppCompatActivity implements AddTaskContract.Presenter {
+public class AddTaskActivity extends AppCompatActivity {
+
+    private AddTaskPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addtask_act);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-}
+        AddTaskFragment addTaskFragment = (AddTaskFragment)getSupportFragmentManager().findFragmentById(R.id.addTaskFragment);
+        TaskRepository taskRepository = new TaskRepository(getApplication());
+        mPresenter = new AddTaskPresenter(addTaskFragment, taskRepository);
+    }
 
 }
