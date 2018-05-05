@@ -31,7 +31,7 @@ public final class Task
 
     public Task(@Nullable String title, @Nullable String description)
     {
-        this(UUID.randomUUID().toString(),"test",description);
+        this(UUID.randomUUID().toString(), title,description);
     }
 
     public Task(@NonNull String Id, @Nullable String title,@Nullable String description)
