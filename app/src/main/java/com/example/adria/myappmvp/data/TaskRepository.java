@@ -1,7 +1,6 @@
 package com.example.adria.myappmvp.data;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import java.util.List;
 
@@ -11,33 +10,31 @@ import java.util.List;
 
 public class TaskRepository
 {
-    private TaskDao mtaskDao;
-    private List<Task> allTasks;
+    private TaskDao mTaskDao;
     private static TaskRepository INSTANCE = null;
 
     public TaskRepository(Application application)
     {
         AppDatabase database = AppDatabase.getDatabase(application);
-        mtaskDao = database.taskDao();
-        allTasks = mtaskDao.allTasks();
+        mTaskDao = database.taskDao();
     }
 
-    public List<Task> getAllTasks()
+    public List<Task> getTasksList()
     {
-        return allTasks;
+        return mTaskDao.getTasks();
     }
 
     public void insertTask(Task task)
     {
-        mtaskDao.insertTask(task);
+        mTaskDao.insertTask(task);
     }
 
     public void deleteTask()
     {
-        mtaskDao.delete();
+        mTaskDao.delete();
     }
 
-    public TaskRepository getINSTANCE(Application application)
+    public static TaskRepository getINSTANCE(Application application)
     {
         if(INSTANCE == null)
         {
