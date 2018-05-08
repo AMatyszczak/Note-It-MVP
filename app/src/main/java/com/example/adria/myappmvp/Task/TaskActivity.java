@@ -31,7 +31,7 @@ public class TaskActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TaskFragment taskFragment = (TaskFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
-        TaskRepository taskRepository = new TaskRepository(getApplication());
+        TaskRepository taskRepository = TaskRepository.getINSTANCE(getApplication());
         mPresenter = new TaskPresenter(taskFragment, taskRepository );
 
 
