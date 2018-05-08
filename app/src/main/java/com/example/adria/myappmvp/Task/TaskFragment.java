@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     private final int ADD_TASK = 1;
 
-    private ListView mTaskList;
+    private GridView mTaskList;
     private LinearLayout mTaskLayout;
 
     private TextView mNoTaskTextView;
@@ -72,7 +73,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     {
         View root = inflater.inflate(R.layout.task_frag, container, false);
         mTaskLayout = (LinearLayout) root.findViewById(R.id.TaskLayout);
-        mTaskList = (ListView)root.findViewById(R.id.TaskListView);
+        mTaskList = (GridView)root.findViewById(R.id.TaskListView);
         mTaskList.setAdapter(mTaskAdapter);
 
         Button butt = (Button) root.findViewById(R.id.OhButton);
@@ -80,13 +81,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
             @Override
             public void onClick(View view) {
                 clearTaskList();
-            }
-        });
-        Button butt2 = (Button) root.findViewById(R.id.OhButton2);
-        butt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mTaskAdapter.notifyDataSetChanged();
             }
         });
 
@@ -114,10 +108,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     @Override
     public void updateTaskList(List<Task> taskList)
     {
-        for (Task task: mPresenter.GetAllTasks()
-                ) {
-            Log.e(TAG, task.getTitle());
-        }
         mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
     }
 
@@ -125,6 +115,8 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     public void clearTaskList()
     {
         mPresenter.clearTasks();
+        mTaskAdapter.replaceTaskList(new ArrayList<Task>(0));
+        mTaskAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -132,9 +124,14 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     {
         Intent intent = new Intent(getActivity(),AddTaskActivity.class);
         startActivityForResult(intent,ADD_TASK);
-        Log.e(TAG, "WYNIK" );
-        updateTaskList(mPresenter.GetAllTasks());
-        mTaskAdapter.notifyDataSetInvalidated();
+        mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
+
     }
 
     @Override
