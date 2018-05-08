@@ -20,7 +20,7 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.addtask_act);
 
         AddTaskFragment addTaskFragment = (AddTaskFragment)getSupportFragmentManager().findFragmentById(R.id.addTaskFragment);
-        TaskRepository taskRepository = new TaskRepository(getApplication());
+        TaskRepository taskRepository = TaskRepository.getINSTANCE(getApplication());
         mPresenter = new AddTaskPresenter(addTaskFragment, taskRepository);
     }
 
