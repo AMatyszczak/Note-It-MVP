@@ -18,6 +18,7 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static dagger.internal.Preconditions.checkNotNull;
 
 
 /**
@@ -84,9 +85,8 @@ public class TaskAdapter extends BaseAdapter
     }
     private void setList(List<Task> taskList)
     {
-
-        this.mTaskList.clear();
-        this.mTaskList.addAll(taskList);
+        mTaskList.clear();
+        mTaskList.addAll(taskList);
         notifyDataSetChanged();
 
     }
