@@ -1,14 +1,9 @@
 package com.example.adria.myappmvp.Task;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-
 import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.TaskRepository;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by adria on 24.04.2018.
@@ -43,7 +38,7 @@ public class TaskPresenter implements TaskContract.Presenter
     @Override
     public List<Task> GetAllTasks()
     {
-        return mTaskRepository.getAllTasks();
+        return mTaskRepository.getTasksList();
     }
 
 }
