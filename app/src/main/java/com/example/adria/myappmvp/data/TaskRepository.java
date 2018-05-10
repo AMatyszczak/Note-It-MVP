@@ -34,6 +34,8 @@ public class TaskRepository
         mTaskDao.delete();
     }
 
+    public Task getTaskFromId(String id) { return mTaskDao.getTaskFromId(id); }
+
     public static TaskRepository getINSTANCE(Application application)
     {
         if(INSTANCE == null)

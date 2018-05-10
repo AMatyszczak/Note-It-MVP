@@ -18,6 +18,7 @@ public interface TaskContract
         void setPresenter(TaskContract.Presenter presenter);
         void addTaskStart();
         void clearTaskList();
+        void getTaskDetail(int taskFromList);
 
     }
     interface Presenter

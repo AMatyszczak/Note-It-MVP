@@ -20,6 +20,9 @@ public interface TaskDao
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTask(Task task);
 
+    @Query("SELECT * From task WHERE id = :id")
+    Task getTaskFromId(String id);
+
     @Query("DELETE FROM task")
     void delete();
 }
