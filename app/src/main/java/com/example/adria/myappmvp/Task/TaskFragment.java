@@ -1,6 +1,5 @@
 package com.example.adria.myappmvp.Task;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,20 +10,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.adria.myappmvp.AddTask.AddTaskActivity;
 import com.example.adria.myappmvp.R;
+import com.example.adria.myappmvp.TaskDetail.TaskDetailActivity;
 import com.example.adria.myappmvp.data.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -33,7 +31,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     private final int ADD_TASK = 1;
 
-    private GridView mTaskList;
+    private GridView mTaskGridView;
     private LinearLayout mTaskLayout;
 
     private TextView mNoTaskTextView;
@@ -73,8 +71,17 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     {
         View root = inflater.inflate(R.layout.task_frag, container, false);
         mTaskLayout = (LinearLayout) root.findViewById(R.id.TaskLayout);
-        mTaskList = (GridView)root.findViewById(R.id.TaskListView);
-        mTaskList.setAdapter(mTaskAdapter);
+        mTaskGridView = (GridView)root.findViewById(R.id.TaskListView);
+        mTaskGridView.setAdapter(mTaskAdapter);
+        mTaskGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Snackbar.make(getView(),task.getTitle(),Snackbar.LENGTH_SHORT).show();
+                getTaskDetail(i);
+
+            }
+        }) ;
+
 
         Button butt = (Button) root.findViewById(R.id.OhButton);
         butt.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +90,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
                 clearTaskList();
             }
         });
+
 
         mNoTaskTextView = (TextView) root.findViewById(R.id.NoTaskTextView);
         mNoTaskLayout = (LinearLayout) root.findViewById(R.id.NoTaskLayout);
@@ -145,7 +153,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     {
         if(show)
         {
-            mTaskList.setVisibility(View.GONE);
+            mTaskGridView.setVisibility(View.GONE);
             mTaskLayout.setVisibility(View.GONE);
 
             mNoTaskTextView.setVisibility(View.VISIBLE);
@@ -153,13 +161,24 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         }
         else
         {
-            mTaskList.setVisibility(View.VISIBLE);
+            mTaskGridView.setVisibility(View.VISIBLE);
             mTaskLayout.setVisibility(View.VISIBLE);
 
             mNoTaskTextView.setVisibility(View.GONE);
             mNoTaskLayout.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void getTaskDetail(int taskFromList)
+    {
+        Task task = mTaskAdapter.getItem(taskFromList);
+        Log.e("TAG", "Task Id:" + task.getId() );
+        Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+        intent.putExtra("TASKID",task.getId());
+
+        startActivity(intent);
     }
 
 }
