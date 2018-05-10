@@ -71,6 +71,9 @@ public class TaskAdapter extends BaseAdapter
         TextView description = (TextView)root.findViewById(R.id.descrption);
         description.setText(task.getDescription());
 
+
+
+
         return root;
     }
     public void addTask(Task task)

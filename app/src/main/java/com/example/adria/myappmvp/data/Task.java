@@ -17,7 +17,7 @@ public final class Task
 {
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "entryid")
+    @ColumnInfo(name = "id")
     private String mId;
 
     @Nullable
