@@ -13,7 +13,7 @@ public class TaskRepository
     private TaskDao mTaskDao;
     private static TaskRepository INSTANCE = null;
 
-    public TaskRepository(Application application)
+    private TaskRepository(Application application)
     {
         AppDatabase database = AppDatabase.getDatabase(application);
         mTaskDao = database.taskDao();
@@ -35,6 +35,8 @@ public class TaskRepository
     }
 
     public Task getTaskFromId(String id) { return mTaskDao.getTaskFromId(id); }
+
+    public void updateTask(Task task) { mTaskDao.updateTask(task); }
 
     public static TaskRepository getINSTANCE(Application application)
     {

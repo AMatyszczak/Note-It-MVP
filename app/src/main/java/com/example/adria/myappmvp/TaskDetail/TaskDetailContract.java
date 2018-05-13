@@ -1,5 +1,7 @@
 package com.example.adria.myappmvp.TaskDetail;
 
+import android.content.Intent;
+
 import com.example.adria.myappmvp.data.Task;
 
 /**
@@ -17,7 +19,9 @@ public interface TaskDetailContract
 
     interface Presenter
     {
-        Task getTaskFromID(String id);
+        Task getTaskFromIntent(Intent intent);
+        void updateTask(String title, String description);
+
     }
 
 }
