@@ -7,18 +7,21 @@
     tools:context="com.example.adria.myappmvp.TaskDetail.TaskDetailFragment"
     tools:showIn="@layout/taskdetail_act"
     android:orientation="vertical"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:padding="16dp">
 
-    <TextView
+    <EditText
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:hint="title"/>
+        android:layout_marginBottom="8dp"
+        />
 
-    <TextView
+    <EditText
         android:id="@+id/description"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="top"/>
 
 </LinearLayout>

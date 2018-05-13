@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Do the CLEAN"/>
 
+
         <GridView
             android:id="@+id/TaskListView"
             android:layout_width="match_parent"

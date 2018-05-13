@@ -92,6 +92,9 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         });
 
 
+
+
+
         mNoTaskTextView = (TextView) root.findViewById(R.id.NoTaskTextView);
         mNoTaskLayout = (LinearLayout) root.findViewById(R.id.NoTaskLayout);
         showNoTaskMenu(false);
@@ -126,6 +129,8 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         mTaskAdapter.replaceTaskList(new ArrayList<Task>(0));
         mTaskAdapter.notifyDataSetChanged();
     }
+
+
 
     @Override
     public void addTaskStart()
