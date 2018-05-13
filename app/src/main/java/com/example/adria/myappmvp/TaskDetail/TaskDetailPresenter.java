@@ -1,5 +1,6 @@
 package com.example.adria.myappmvp.TaskDetail;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.adria.myappmvp.data.Task;
@@ -13,26 +14,33 @@ import static android.content.ContentValues.TAG;
 
 public class TaskDetailPresenter implements TaskDetailContract.Presenter
 {
-    TaskDetailContract.View mFragment;
-    TaskRepository mTaskRepository;
+    private String mTaskID;
 
-    public TaskDetailPresenter(TaskDetailContract.View fragment, TaskRepository taskRepository)
+    private TaskDetailContract.View mFragment;
+    private TaskRepository mTaskRepository;
+
+
+    public TaskDetailPresenter(String taskId, TaskDetailContract.View fragment, TaskRepository taskRepository)
     {
+        mTaskID = taskId;
         mFragment = fragment;
         mTaskRepository = taskRepository;
-        Log.e(TAG, "KONSTRUKTOR PRESNETERA" );
+
         mFragment.setPresenter(this);
     }
 
-    public Task getTaskFromID(String id)
-    {
-        Task task = mTaskRepository.getTaskFromId(id);
 
-//        Task task = new Task("HOLA","DESC HOLA");
-//        task.setTitle("HOLA");
-//        task.setDescription("DESC HOLA");
+
+    public Task getTaskFromIntent(Intent intent)
+    {
+        Task task = mTaskRepository.getTaskFromId(mTaskID);
         return task;
     }
 
-
+    @Override
+    public void updateTask(String title, String description) {
+        Task task = new Task(mTaskID, title, description);
+        mTaskRepository.updateTask(task);
+        mFragment.closeTaskDetail();
+    }
 }
