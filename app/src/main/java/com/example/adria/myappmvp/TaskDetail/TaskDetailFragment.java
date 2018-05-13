@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
@@ -24,8 +26,9 @@ import static android.content.ContentValues.TAG;
 
 public class TaskDetailFragment extends Fragment implements TaskDetailContract.View
 {
-    private TextView mTitle;
-    private TextView mDescription;
+
+    private EditText mTitle;
+    private EditText mDescription;
 
     private TaskDetailContract.Presenter mPresenter;
 
@@ -34,15 +37,18 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Intent intent = getActivity().getIntent();
-        Bundle bundle = intent.getExtras();
-        String Id = bundle.getString("TASKID");
-        Log.e("TAG",Id);
-        if(mPresenter == null)
-            Log.e(TAG, "PRESENTER JEST PUSTY" );
-        Task task = mPresenter.getTaskFromID(Id);
+        Task task = mPresenter.getTaskFromIntent(getActivity().getIntent());
         mTitle.setText(task.getTitle());
         mDescription.setText(task.getDescription());
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_task_detail);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateTask();
+            }
+        });
     }
 
     @Nullable
@@ -50,10 +56,8 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.taskdetail_frag, container, false);
-
-        mTitle = (TextView) root.findViewById(R.id.title);
-        mDescription = (TextView) root.findViewById(R.id.description);
-
+        mTitle = (EditText) root.findViewById(R.id.title);
+        mDescription = (EditText) root.findViewById(R.id.description);
 
         return root;
     }
@@ -61,7 +65,12 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     @Override
     public void setPresenter(TaskDetailContract.Presenter presenter) {
         mPresenter = presenter;
-        Log.e(TAG, "DODAJE PRESENTER !!!!!!!!!!!!!!" );
+    }
+
+    private void updateTask()
+    {
+
+        mPresenter.updateTask(mTitle.getText().toString(), mDescription.getText().toString());
     }
 
     @Override
