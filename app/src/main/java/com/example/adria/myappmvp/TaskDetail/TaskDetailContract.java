@@ -14,6 +14,7 @@ public interface TaskDetailContract
     {
         void closeTaskDetail();
         void setPresenter(TaskDetailContract.Presenter presenter);
+        void updateTask();
 
     }
 
@@ -21,6 +22,9 @@ public interface TaskDetailContract
     {
         Task getTaskFromIntent(Intent intent);
         void updateTask(String title, String description);
+        void updateTaskOnBackPressed();
+        void notifyDataChanged();
+        boolean isChanged();
 
     }
 

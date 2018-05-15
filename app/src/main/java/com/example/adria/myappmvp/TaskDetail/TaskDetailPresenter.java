@@ -1,12 +1,9 @@
 package com.example.adria.myappmvp.TaskDetail;
 
 import android.content.Intent;
-import android.util.Log;
-
 import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.TaskRepository;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by adria on 10.05.2018.
@@ -18,6 +15,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter
 
     private TaskDetailContract.View mFragment;
     private TaskRepository mTaskRepository;
+    private boolean isChanged;
 
 
     public TaskDetailPresenter(String taskId, TaskDetailContract.View fragment, TaskRepository taskRepository)
@@ -25,6 +23,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter
         mTaskID = taskId;
         mFragment = fragment;
         mTaskRepository = taskRepository;
+        isChanged = false;
 
         mFragment.setPresenter(this);
     }
@@ -43,4 +42,15 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter
         mTaskRepository.updateTask(task);
         mFragment.closeTaskDetail();
     }
+
+    @Override
+    public void updateTaskOnBackPressed()
+    {
+        mFragment.updateTask();
+    }
+    @Override
+    public void notifyDataChanged() { isChanged = true; }
+
+    @Override
+    public boolean isChanged() { return isChanged; }
 }

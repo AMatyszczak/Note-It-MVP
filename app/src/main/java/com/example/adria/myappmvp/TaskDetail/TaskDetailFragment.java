@@ -1,17 +1,16 @@
 package com.example.adria.myappmvp.TaskDetail;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
@@ -33,6 +32,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     private TaskDetailContract.Presenter mPresenter;
 
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -40,6 +40,38 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
         Task task = mPresenter.getTaskFromIntent(getActivity().getIntent());
         mTitle.setText(task.getTitle());
         mDescription.setText(task.getDescription());
+        mTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mPresenter.notifyDataChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        mDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mPresenter.notifyDataChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_task_detail);
 
@@ -67,7 +99,8 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
         mPresenter = presenter;
     }
 
-    private void updateTask()
+    @Override
+    public void updateTask()
     {
 
         mPresenter.updateTask(mTitle.getText().toString(), mDescription.getText().toString());
