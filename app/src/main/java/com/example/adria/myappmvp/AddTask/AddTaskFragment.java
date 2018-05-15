@@ -1,18 +1,14 @@
 package com.example.adria.myappmvp.AddTask;
 
 import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
 
@@ -56,7 +52,6 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
 
         mTitle = (EditText)root.findViewById(R.id.title);
         mDescription = (EditText)root.findViewById(R.id.description);
-
 
         return root;
     }

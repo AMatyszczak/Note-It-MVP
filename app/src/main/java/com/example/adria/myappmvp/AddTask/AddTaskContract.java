@@ -9,9 +9,9 @@ public interface AddTaskContract
     interface View
     {
         void setPresenter(AddTaskContract.Presenter presenter);
-        public String getTitle();
-        public String getDescription();
-        public void showTasks();
+        String getTitle();
+        String getDescription();
+        void showTasks();
 
     }
 
