@@ -26,6 +26,7 @@ public interface TaskContract
         void onItemClicked();
         List<Task> GetAllTasks();
         void clearTasks();
+        void deleteTask(String id);
     }
 
 

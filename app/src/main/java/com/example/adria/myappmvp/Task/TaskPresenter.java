@@ -32,7 +32,7 @@ public class TaskPresenter implements TaskContract.Presenter
 
     @Override
     public void clearTasks() {
-        mTaskRepository.deleteTask();
+        mTaskRepository.deleteAllTasks();
     }
 
     @Override
@@ -40,5 +40,12 @@ public class TaskPresenter implements TaskContract.Presenter
     {
         return mTaskRepository.getTasksList();
     }
+
+    @Override
+    public void deleteTask(String id) {
+        Task task = mTaskRepository.getTaskFromId(id);
+        mTaskRepository.deleteTask(task);
+    }
+
 
 }

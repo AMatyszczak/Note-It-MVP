@@ -1,17 +1,18 @@
 package com.example.adria.myappmvp.Task;
 
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.CardView;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +40,8 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     private TaskAdapter mTaskAdapter;
     private TaskContract.Presenter mPresenter;
+
+    private FloatingActionButton mFabTaskDelete;
 
 
     public TaskFragment()
@@ -76,29 +79,25 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         mTaskGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Snackbar.make(getView(),task.getTitle(),Snackbar.LENGTH_SHORT).show();
                 getTaskDetail(i);
-
             }
         }) ;
+        mFabTaskDelete = (FloatingActionButton)root.findViewById(R.id.fab_deleteTask);
+        mFabTaskDelete.setVisibility(View.GONE);
+        mFabTaskDelete.setOnDragListener(new MyDragListener());
 
-
-        Button butt = (Button) root.findViewById(R.id.OhButton);
-        butt.setOnClickListener(new View.OnClickListener() {
+        mTaskGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                clearTaskList();
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startDragAndDrop(i);
+                return false;
             }
         });
-
-
-
-
 
         mNoTaskTextView = (TextView) root.findViewById(R.id.NoTaskTextView);
         mNoTaskLayout = (LinearLayout) root.findViewById(R.id.NoTaskLayout);
         showNoTaskMenu(false);
-
 
         return root;
     }
@@ -144,7 +143,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
-
     }
 
     @Override
@@ -175,15 +173,50 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     }
 
+
     @Override
     public void getTaskDetail(int taskFromList)
     {
         Task task = mTaskAdapter.getItem(taskFromList);
-        Log.e("TAG", "Task Id:" + task.getId() );
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         intent.putExtra("TASKID",task.getId());
 
         startActivity(intent);
     }
 
+    void startDragAndDrop(int itemIndex)
+    {
+        mFabTaskDelete.setVisibility(View.VISIBLE);
+
+        String id = mTaskAdapter.getItem(itemIndex).getId();
+        CardView cardView = (CardView)getView().findViewById(R.id.taskCardView);
+        ClipData.Item item = new ClipData.Item(id);
+        ClipData dragData = new ClipData(id,new String[]{ ClipDescription.MIMETYPE_TEXT_PLAIN},item );
+        View.DragShadowBuilder myShadow = new MyDragShadowBuilder(cardView);
+        getView().startDrag(dragData, myShadow,null,0);
+    }
+
+    private class MyDragListener implements View.OnDragListener
+    {
+        @Override
+        public boolean onDrag(View view, DragEvent dragEvent) {
+            switch(dragEvent.getAction())
+            {
+                case DragEvent.ACTION_DRAG_STARTED:
+
+                    break;
+                case DragEvent.ACTION_DROP:
+                    ClipData.Item item= dragEvent.getClipData().getItemAt(0);
+                    mPresenter.deleteTask(item.getText().toString());
+                    mTaskAdapter.replaceTaskList(mPresenter.GetAllTasks());
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    mFabTaskDelete.setVisibility(View.GONE);
+                    break;
+            }
+            return true;
+        }
+    }
 }
+
+
