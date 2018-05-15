@@ -3,7 +3,6 @@ package com.example.adria.myappmvp.Task;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,7 @@ import android.widget.TextView;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
-import static dagger.internal.Preconditions.checkNotNull;
 
 
 /**
@@ -70,8 +64,6 @@ public class TaskAdapter extends BaseAdapter
 
         TextView description = (TextView)root.findViewById(R.id.descrption);
         description.setText(task.getDescription());
-
-
 
 
         return root;
