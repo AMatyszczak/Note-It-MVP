@@ -29,14 +29,16 @@ public class TaskRepository
         mTaskDao.insertTask(task);
     }
 
-    public void deleteTask()
+    public void deleteAllTasks()
     {
-        mTaskDao.delete();
+        mTaskDao.deleteAllTasks();
     }
 
     public Task getTaskFromId(String id) { return mTaskDao.getTaskFromId(id); }
 
     public void updateTask(Task task) { mTaskDao.updateTask(task); }
+
+    public void deleteTask(Task task) { mTaskDao.deleteTask(task);}
 
     public static TaskRepository getINSTANCE(Application application)
     {
