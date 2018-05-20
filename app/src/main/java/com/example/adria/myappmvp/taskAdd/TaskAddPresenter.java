@@ -1,4 +1,4 @@
-package com.example.adria.myappmvp.AddTask;
+package com.example.adria.myappmvp.taskAdd;
 
 import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.TaskRepository;
@@ -7,13 +7,13 @@ import com.example.adria.myappmvp.data.TaskRepository;
  * Created by adria on 05.05.2018.
  */
 
-public class AddTaskPresenter implements AddTaskContract.Presenter
+public class TaskAddPresenter implements TaskAddContract.Presenter
 {
 
-    private AddTaskContract.View mFragment;
+    private TaskAddContract.View mFragment;
     private TaskRepository mTaskRepository;
 
-    AddTaskPresenter(AddTaskContract.View fragment, TaskRepository taskRepository)
+    TaskAddPresenter(TaskAddContract.View fragment, TaskRepository taskRepository)
     {
         mFragment = fragment;
         mTaskRepository = taskRepository;

@@ -1,4 +1,4 @@
-package com.example.adria.myappmvp.AddTask;
+package com.example.adria.myappmvp.taskAdd;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,14 +13,14 @@ import android.widget.EditText;
 import com.example.adria.myappmvp.R;
 
 
-public class AddTaskFragment extends Fragment implements AddTaskContract.View {
+public class TaskAddFragment extends Fragment implements TaskAddContract.View {
 
     private EditText mTitle;
     private EditText mDescription;
-    private AddTaskContract.Presenter mPresenter;
+    private TaskAddContract.Presenter mPresenter;
 
 
-    public AddTaskFragment() {
+    public TaskAddFragment() {
         // Required empty public constructor
     }
 
@@ -34,7 +34,7 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_task);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,14 +50,14 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
 
         View root = inflater.inflate(R.layout.addtask_frag, container, false);
 
-        mTitle = (EditText)root.findViewById(R.id.title);
-        mDescription = (EditText)root.findViewById(R.id.description);
+        mTitle = root.findViewById(R.id.title);
+        mDescription = root.findViewById(R.id.description);
 
         return root;
     }
 
     @Override
-    public void setPresenter(AddTaskContract.Presenter presenter) {
+    public void setPresenter(TaskAddContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
