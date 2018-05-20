@@ -10,25 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Task.TaskActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".task.TaskActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddTask.AddTaskActivity"
+            android:name=".taskAdd.TaskAddActivity"
             android:label="@string/title_activity_add_task"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".task.TaskActivity"/>
         <activity
-            android:name=".TaskDetail.TaskDetailActivity"
+            android:name=".taskDetail.TaskDetailActivity"
             android:label="@string/title_activity_task_detail"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".task.TaskActivity"/>
     </application>
 
 </manifest>

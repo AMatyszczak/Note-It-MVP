@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">MyAppMVP</string>
+    <string name="app_name">Note It</string>
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_add_task">AddTaskActivity</string>
-    <string name="title_activity_task_detail">TaskDetailActivity</string>
+    <string name="title_activity_add_task">Note new task</string>
+    <string name="title_activity_task_detail">Edit Task</string>
+    <string name="saved">Saved</string>
+
 </resources>
