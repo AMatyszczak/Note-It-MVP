@@ -1,4 +1,4 @@
-package com.example.adria.myappmvp.Task;
+package com.example.adria.myappmvp.task;
 
 
 import android.content.Context;
@@ -22,12 +22,10 @@ import java.util.List;
 public class TaskAdapter extends BaseAdapter
 {
     private List<Task> mTaskList;
-    private Context mContext;
 
-    TaskAdapter(Context context, List<Task> TaskList)
+    TaskAdapter(List<Task> TaskList)
     {
 
-        this.mContext = context;
         this.mTaskList = TaskList;
         setList(TaskList);
     }
@@ -53,16 +51,16 @@ public class TaskAdapter extends BaseAdapter
         View root = view;
         if(view == null)
         {
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
             root = inflater.inflate(R.layout.task, viewGroup, false);
         }
 
-        Task task = (Task)getItem(i);
+        Task task = getItem(i);
 
-        TextView title = (TextView)root.findViewById(R.id.title);
+        TextView title = root.findViewById(R.id.title);
         title.setText(task.getTitle());
 
-        TextView description = (TextView)root.findViewById(R.id.descrption);
+        TextView description = root.findViewById(R.id.description);
         description.setText(task.getDescription());
 
 
@@ -72,6 +70,7 @@ public class TaskAdapter extends BaseAdapter
     {
         mTaskList.add(task);
         notifyDataSetChanged();
+
     }
 
     public void replaceTaskList(List<Task> taskList)
@@ -83,7 +82,12 @@ public class TaskAdapter extends BaseAdapter
         mTaskList.clear();
         mTaskList.addAll(taskList);
         notifyDataSetChanged();
+    }
 
+    public void removeItem(Task task)
+    {
+        mTaskList.remove(task);
+        notifyDataSetChanged();
     }
 
     @Nullable
