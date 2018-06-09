@@ -29,7 +29,6 @@ public class TaskActivity extends AppCompatActivity {
             Log.e(TAG, "onCreate(): toolbar is null" );
         }
 
-
         TaskFragment taskFragment = (TaskFragment)getSupportFragmentManager().findFragmentById(R.id.Taskfragment);
         TaskRepository taskRepository = TaskRepository.getINSTANCE(getApplication());
         mPresenter = new TaskPresenter(taskFragment, taskRepository );

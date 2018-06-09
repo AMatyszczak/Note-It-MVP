@@ -95,4 +95,14 @@ public class TaskAdapter extends BaseAdapter
     public CharSequence[] getAutofillOptions() {
         return new CharSequence[0];
     }
+
+
+    public void swapItems(int fromId, int toId)
+    {
+        Task temp = mTaskList.get(fromId);
+        mTaskList.set(fromId, temp);
+        mTaskList.set(toId, temp);
+
+
+    }
 }
