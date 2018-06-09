@@ -48,21 +48,10 @@ public class TaskAddActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setMessage(SAVE_ONBACKQUESTION);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, YES, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mPresenter.addTask();
-            }
-        });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, NO, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                setResult(Activity.RESULT_OK);
-                finish();
-            }
-        });
+
+        mPresenter.addTask();
+        setResult(Activity.RESULT_OK);
+        finish();
 
     }
 }
