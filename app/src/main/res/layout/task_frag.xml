@@ -48,9 +48,7 @@
                 android:horizontalSpacing="8dp"
                 android:numColumns="auto_fit"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="8dp"
-                android:listSelector="@drawable/selector_grid_view"
-                />
+                android:verticalSpacing="8dp" />
 
         </LinearLayout>
 

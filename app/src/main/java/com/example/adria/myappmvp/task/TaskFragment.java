@@ -103,10 +103,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
         mFlaggedGridView = root.findViewById(R.id.FlaggedTaskGridView);
 
-
-        mTaskGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
-        mTaskGridView.setMultiChoiceModeListener(new MyMultiChoiceListener());
-
         mTaskGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

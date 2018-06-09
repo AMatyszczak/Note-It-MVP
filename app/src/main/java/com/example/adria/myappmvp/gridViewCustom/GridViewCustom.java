@@ -65,8 +65,6 @@ public class GridViewCustom extends GridView
         public boolean onItemLongClick(AdapterView<?> adapterView, final View viewClick, final int index, final long l)
         {
 
-            viewClick.setSelected(true);
-
             mCurrViewId = index;
             ClipData data = ClipData.newPlainText("DragData", "HOPA");
             viewClick.startDrag(data, new View.DragShadowBuilder(viewClick), viewClick, 0);
@@ -116,8 +114,9 @@ public class GridViewCustom extends GridView
                                         Log.e(TAG, "onTouch: mNextItemId: " + mNextItemId );
                                         Log.e(TAG, "onTouch: mCurrViewId: " + mCurrViewId);
                                         if (mCurrViewId > -1 && mNextItemId > -1) {
-                                            animateDragToStart(mCurrView, mNextView);
                                             mAdapter.swapItems((int) mCurrViewId,(int)mNextItemId);
+                                            animateDragToStart(mCurrView, mNextView);
+
                                             mAdapter.notifyDataSetChanged();
                                             mCurrViewId = mNextItemId;
                                         }
