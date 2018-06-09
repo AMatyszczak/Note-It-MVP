@@ -17,7 +17,7 @@
             android:layout_height="56dp"
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:elevation="4dp"/>
+            android:elevation="@dimen/toolbar_elevation"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -29,6 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/ic_outline_add_24px"/>
 
 </android.support.design.widget.CoordinatorLayout>
