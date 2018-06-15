@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -38,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -113,6 +116,18 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
         }
     }) ;
+
+        mTaskGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, final View view, int i, long l) {
+
+                Log.e(TAG, "ON ITEM LONG CLICK !!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+
+                return true;
+            }
+        });
 
 //        mTaskGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
 //        {
@@ -302,6 +317,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
             View view = mTaskGridView.getAdapter().getView(i,null,mTaskGridView);
             view.setBackgroundColor(getResources().getColor(R.color.pressedColor));
+            
 
             final int checkedItemCount = mTaskGridView.getCheckedItemCount();
             actionMode.setTitle(checkedItemCount + " Selected");
