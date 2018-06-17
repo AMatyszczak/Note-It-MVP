@@ -2,6 +2,7 @@ package com.example.adria.myappmvp.task;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;

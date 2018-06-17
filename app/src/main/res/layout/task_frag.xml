@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <GridView
+                <com.example.adria.myappmvp.gridViewCustom.GridViewCustom
                     android:id="@+id/FlaggedTaskGridView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -105,7 +105,8 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         mFabTaskDelete.setOnDragListener(new MyDragDeleteListener());
 
         mFlaggedGridView = root.findViewById(R.id.FlaggedTaskGridView);
-
+        mTaskGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        mTaskGridView.setMultiChoiceModeListener(new MyMultiChoiceListener());
         mTaskGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -117,17 +118,17 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         }
     }) ;
 
-        mTaskGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-        {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, final View view, int i, long l) {
-
-                Log.e(TAG, "ON ITEM LONG CLICK !!!!!!!!!!!!!!!!!!!!!!!!!!!" );
-
-                return true;
-            }
-        });
+//        mTaskGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+//        {
+//
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, final View view, int i, long l) {
+//
+//                Log.e(TAG, "ON ITEM LONG CLICK !!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+//
+//                return true;
+//            }
+//        });
 
 //        mTaskGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
 //        {
@@ -259,8 +260,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
             View.DragShadowBuilder myShadow = new MyDragShadowBuilder(cardView);
             getView().startDrag(dragData, myShadow,null,0);
         }
-
-
     }
 
 
@@ -316,7 +315,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
 
             View view = mTaskGridView.getAdapter().getView(i,null,mTaskGridView);
-            view.setBackgroundColor(getResources().getColor(R.color.pressedColor));
+            view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             
 
             final int checkedItemCount = mTaskGridView.getCheckedItemCount();

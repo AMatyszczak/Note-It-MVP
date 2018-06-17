@@ -15,7 +15,7 @@ public class MyDragShadowBuilder extends View.DragShadowBuilder
 {
     private static Drawable shadow;
 
-    MyDragShadowBuilder(View v)
+    public MyDragShadowBuilder(View v)
     {
         super(v);
 
