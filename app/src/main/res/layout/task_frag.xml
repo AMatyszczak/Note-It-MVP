@@ -16,27 +16,20 @@
             android:id="@+id/TaskLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:orientation="vertical">
-            <LinearLayout
+
+            <com.example.adria.myappmvp.gridViewCustom.GridViewCustom
+                android:id="@+id/FlaggedTaskGridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <com.example.adria.myappmvp.gridViewCustom.GridViewCustom
-                    android:id="@+id/FlaggedTaskGridView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:columnWidth="150dp"
-                    android:minHeight="150dp"
-                    android:gravity="center"
-                    android:horizontalSpacing="8dp"
-                    android:numColumns="auto_fit"
-                    android:stretchMode="columnWidth"
-                    android:verticalSpacing="8dp"
-                    />
-
-            </LinearLayout>
+                android:columnWidth="150dp"
+                android:minHeight="150dp"
+                android:gravity="center"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="2dp"
+                android:horizontalSpacing="2dp"
+                />
 
             <com.example.adria.myappmvp.gridViewCustom.GridViewCustom
                 android:id="@+id/TaskGridView"
@@ -46,7 +39,12 @@
                 android:minHeight="150dp"
                 android:gravity="center"
                 android:numColumns="auto_fit"
-                android:stretchMode="columnWidth" />
+                android:stretchMode="columnWidth"
+                android:background="@color/colorBackground"
+                android:verticalSpacing="2dp"
+                android:horizontalSpacing="2dp"
+
+                />
 
         </LinearLayout>
 
@@ -70,11 +68,4 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_deleteTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="32dp"
-        android:src = "@drawable/ic_outline_close_24px"/>
 </android.support.design.widget.CoordinatorLayout>
