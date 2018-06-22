@@ -79,6 +79,13 @@ public class TaskAdapter extends BaseAdapter
 
     }
 
+    public void removeTask(Task task)
+    {
+        mTaskList.remove(task);
+        notifyDataSetChanged();
+
+    }
+
     public void replaceTaskList(List<Task> taskList)
     {
         setList(taskList);

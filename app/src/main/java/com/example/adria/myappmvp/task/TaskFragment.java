@@ -41,6 +41,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
 
     private TaskAdapter mTaskAdapter;
+    private TaskAdapter mTaskFlaggedAdapter;
     private TaskContract.Presenter mPresenter;
 
     private final static int ADD_TASK = 1;
@@ -77,6 +78,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         super.onCreate(savedInstanceState);
 
         mTaskAdapter = new TaskAdapter(new ArrayList<Task>(0));
+        mTaskFlaggedAdapter = new TaskAdapter(new ArrayList<Task>(0));
 
     }
 
@@ -86,16 +88,21 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     {
         final View root = inflater.inflate(R.layout.task_frag, container, false);
         mTaskLayout = root.findViewById(R.id.TaskLayout);
+        mNoTaskTextView = root.findViewById(R.id.NoTaskTextView);
+        mNoTaskLayout = root.findViewById(R.id.NoTaskLayout);
+
+
         mTaskGridView = root.findViewById(R.id.TaskGridView);
         mTaskGridView.setAdapter(mTaskAdapter);
-
-        mFlaggedGridView = root.findViewById(R.id.FlaggedTaskGridView);
         mTaskGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         mTaskGridView.setMultiChoiceModeListener(new MyMultiChoiceListener());
 
-        mNoTaskTextView = root.findViewById(R.id.NoTaskTextView);
-        mNoTaskLayout = root.findViewById(R.id.NoTaskLayout);
         showNoTaskMenu(false);
+
+        mFlaggedGridView = root.findViewById(R.id.FlaggedTaskGridView);
+        mFlaggedGridView.setAdapter(mTaskFlaggedAdapter);
+
+
 
         return root;
     }
@@ -220,9 +227,14 @@ public class TaskFragment extends Fragment implements TaskContract.View {
                     actionMode.finish();
                     break;
                 case R.id.flag:
+                    ArrayList<Task> arrayList2 = mTaskAdapter.getTasksFromIds(mTaskGridView.getCheckedItemPositions());
+                    for (Task task :arrayList2) {
+                        mTaskFlaggedAdapter.addTask(task);
+                        mTaskAdapter.removeTask(task);
+
+                    }
 
 
-                    
                     break;
             }
             return false;
