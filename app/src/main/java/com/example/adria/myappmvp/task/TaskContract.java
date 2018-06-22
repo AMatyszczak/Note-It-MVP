@@ -1,7 +1,10 @@
 package com.example.adria.myappmvp.task;
 
+import android.util.SparseBooleanArray;
+
 import com.example.adria.myappmvp.data.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +30,8 @@ public interface TaskContract
         void onItemClicked();
         List<Task> getAllTasks();
         void clearTasks();
-        void deleteTask(String id);
+        void deleteTasks(ArrayList<Task> tasks);
+        void deleteTaskById(String id);
         void refreshTaskList();
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
@@ -88,12 +90,6 @@ public class TaskAdapter extends BaseAdapter
         notifyDataSetChanged();
     }
 
-    public void removeItem(Task task)
-    {
-        mTaskList.remove(task);
-        notifyDataSetChanged();
-    }
-
     @Nullable
     @Override
     public CharSequence[] getAutofillOptions() {
@@ -105,11 +101,23 @@ public class TaskAdapter extends BaseAdapter
     {
         Task temp = mTaskList.get(fromId);
         Task toIdTask = mTaskList.get(toId);
-        Log.e(TAG, "swapItems: " + temp.getTitle() + temp.getDescription() );
         mTaskList.set(fromId, toIdTask);
         mTaskList.set(toId, temp);
 
+    }
 
+    public ArrayList<Task> getTasksFromIds(SparseBooleanArray taskIds)
+    {
+        ArrayList<Task> taskList = new ArrayList<>() ;
 
+        for (int i = 0 ; i < taskIds.size(); i++)
+        {
+            if(taskIds.valueAt(i))
+            {
+                 taskList.add(mTaskList.get(taskIds.keyAt(i)));
+            }
+
+        }
+        return taskList;
     }
 }

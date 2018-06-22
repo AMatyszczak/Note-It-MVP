@@ -1,9 +1,16 @@
 package com.example.adria.myappmvp.task;
 
+import android.util.Log;
+import android.util.SparseBooleanArray;
+
 import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.TaskRepository;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * Created by adria on 24.04.2018.
@@ -56,8 +63,20 @@ public class TaskPresenter implements TaskContract.Presenter
     }
 
     @Override
-    public void deleteTask(String id) {
+    public void deleteTasks(ArrayList<Task> tasks)
+    {
+        for (Task task: tasks) {
+            mTaskRepository.deleteTask(task);
+        }
+        refreshTaskList();
+
+    }
+
+    @Override
+    public void deleteTaskById(String id) {
+
         Task task = mTaskRepository.getTaskFromId(id);
+
         mTaskRepository.deleteTask(task);
         if(mTaskRepository.getTasksList().size() == 0)
             mFragment.showNoTaskMenu(true);
