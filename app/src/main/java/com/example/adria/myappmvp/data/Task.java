@@ -28,17 +28,21 @@ public final class Task
     @ColumnInfo(name = "description")
     private String mDescription;
 
+    @ColumnInfo(name = "flagged")
+    public boolean mFlagged;
+
 
     public Task(@Nullable String title, @Nullable String description)
     {
-        this(UUID.randomUUID().toString(), title,description);
+        this(UUID.randomUUID().toString(), title,description, false);
     }
 
-    public Task(@NonNull String Id, @Nullable String title,@Nullable String description)
+    public Task(@NonNull String Id, @Nullable String title,@Nullable String description, boolean flagged)
     {
         mId = Id;
         mTitle = title;
         mDescription = description;
+        mFlagged = flagged;
     }
 
 
@@ -58,6 +62,11 @@ public final class Task
     public String getDescription() { return mDescription; }
 
     public void setDescription(String description) { mTitle = description;}
+
+    public boolean isFlagged() { return mFlagged; }
+
+    public void setFlag(boolean flag) { mFlagged = flag; }
+
 
 
 }
