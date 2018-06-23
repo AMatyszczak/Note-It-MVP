@@ -37,7 +37,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter
 
     @Override
     public void updateTask(String title, String description) {
-        Task task = new Task(mTaskID, title, description);
+        Task task = new Task(mTaskID, title, description, false);
         mTaskRepository.updateTask(task);
         mFragment.closeTaskDetail();
     }
