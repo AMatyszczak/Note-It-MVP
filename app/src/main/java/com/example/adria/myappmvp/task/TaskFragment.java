@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,17 +41,11 @@ import static android.content.ContentValues.TAG;
  */
 public class TaskFragment extends Fragment implements TaskContract.View {
 
-
     private TaskAdapter mTaskAdapter;
-    private TaskAdapter mTaskFlaggedAdapter;
     private TaskContract.Presenter mPresenter;
 
     private final static int ADD_TASK = 1;
     private final static String GET_TASK_DETAIL = "GETTASKDETAIL";
-
-    private GridView mFlaggedGridView;
-    private TextView mFlaggedTaskTextView;
-    private TextView mTaskTextView;
 
     private GridViewCustom mTaskGridView;
     private LinearLayout mTaskLayout;
@@ -80,9 +75,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTaskAdapter = new TaskAdapter(new ArrayList<Task>(0));
-        mTaskFlaggedAdapter = new TaskAdapter(new ArrayList<Task>(0));
-
+        mTaskAdapter = new TaskAdapter(new ArrayList<Task>(0),this);
     }
 
     @Override
@@ -98,20 +91,13 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         mTaskGridView.setAdapter(mTaskAdapter);
         mTaskGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         mTaskGridView.setMultiChoiceModeListener(new MyMultiChoiceListener(mTaskAdapter));
-
+        mTaskGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                getTaskDetail(i);
+            }
+        });
         showNoTaskMenu(false);
-
-        mFlaggedGridView = root.findViewById(R.id.FlaggedTaskGridView);
-        mFlaggedGridView.setAdapter(mTaskFlaggedAdapter);
-        mFlaggedGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mFlaggedGridView.setMultiChoiceModeListener(new MyMultiChoiceListener(mTaskFlaggedAdapter));
-
-        mFlaggedTaskTextView = root.findViewById(R.id.FlaggedTaskTextView);
-        mTaskTextView = root.findViewById(R.id.TaskTextView);
-
-        showFlaggedGridView(false);
-
-
 
         return root;
     }
@@ -186,25 +172,6 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     }
 
-    public void showFlaggedGridView(boolean show)
-    {
-        if(show)
-        {
-            mFlaggedGridView.setVisibility(View.VISIBLE);
-            mFlaggedTaskTextView.setVisibility(View.VISIBLE);
-            mTaskTextView.setVisibility(View.VISIBLE);
-        }
-
-        else
-        {
-            //mFlaggedGridView.setVisibility(View.GONE);
-            mFlaggedTaskTextView.setVisibility(View.GONE);
-            mTaskTextView.setVisibility(View.GONE);
-        }
-
-    }
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_task,menu);
@@ -219,6 +186,11 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         intent.putExtra(GET_TASK_DETAIL,task.getId());
 
         startActivity(intent);
+    }
+
+    public void notifyDataSwapped(Task fromTask, Task toTask)
+    {
+        mPresenter.swapData(fromTask, toTask);
     }
 
     private class MyMultiChoiceListener implements AbsListView.MultiChoiceModeListener
@@ -246,37 +218,12 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         @Override
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
             ArrayList<Task> arrayList = skAdapter.getTasksFromIds(mTaskGridView.getCheckedItemPositions());
-            arrayList.addAll(skAdapter.getTasksFromIds(mFlaggedGridView.getCheckedItemPositions()));
             switch(menuItem.getItemId())
             {
                 case R.id.item_delete:
 
                     mPresenter.deleteTasks(arrayList);
                     actionMode.finish();
-                    break;
-                case R.id.flag:
-
-                    for (Task task :arrayList)
-                    {
-                        if(task.isFlagged())
-                        {
-                            mTaskAdapter.addTask(task);
-                            mTaskFlaggedAdapter.removeTask(task);
-                            task.setFlag(false);
-                        }
-                        else
-                        {
-                            mTaskFlaggedAdapter.addTask(task);
-                            mTaskAdapter.removeTask(task);
-                            task.setFlag(true);
-                        }
-                        Log.e(TAG, "onActionItemClicked: " + task.getTitle() + " , " + task.isFlagged() );
-                        actionMode.finish();
-                    }
-                    showFlaggedGridView(true);
-                    if(mFlaggedGridView.getCount() == 0)
-                        showFlaggedGridView(false);
-
                     break;
             }
             return false;
@@ -291,12 +238,10 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
 
             int checkedItemCountTask = mTaskGridView.getCheckedItemCount();
-            int checkedItemCountFlaggedTask = mFlaggedGridView.getCheckedItemCount();
-            actionMode.setTitle(checkedItemCountTask + checkedItemCountFlaggedTask + " Selected");
+            actionMode.setTitle(checkedItemCountTask + " Selected");
 
         }
     }
 
 }
-
 
