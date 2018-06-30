@@ -33,6 +33,7 @@ public interface TaskContract
         void deleteTasks(ArrayList<Task> tasks);
         void deleteTaskById(String id);
         void refreshTaskList();
+        public void swapTasksPositions(Task fromTask, Task toTask);
     }
 
 

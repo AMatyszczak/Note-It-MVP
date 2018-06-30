@@ -1,12 +1,10 @@
 package com.example.adria.myappmvp.task;
 
 import android.util.Log;
-import android.util.SparseBooleanArray;
 
 import com.example.adria.myappmvp.data.Task;
-import com.example.adria.myappmvp.data.TaskRepository;
+import com.example.adria.myappmvp.data.local.TaskRepository;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +78,19 @@ public class TaskPresenter implements TaskContract.Presenter
         mTaskRepository.deleteTask(task);
         if(mTaskRepository.getTasksList().size() == 0)
             mFragment.showNoTaskMenu(true);
+
+    }
+
+    @Override
+    public void swapTasksPositions(Task fromTask, Task toTask)
+    {
+        int position = fromTask.getPosition();
+        fromTask.setPosition(toTask.getPosition());
+        toTask.setPosition(position);
+        Log.e(TAG, "swapTasksPositions: from task:" + fromTask.getPosition() + " , toTask: " + toTask.getPosition() );
+
+        mTaskRepository.updateTask(fromTask);
+        mTaskRepository.updateTask(toTask);
 
     }
 
