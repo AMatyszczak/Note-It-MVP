@@ -1,11 +1,16 @@
 package com.example.adria.myappmvp.data;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Entity;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.example.adria.myappmvp.task.TaskFragment;
 
 import java.util.UUID;
 
@@ -28,21 +33,23 @@ public final class Task
     @ColumnInfo(name = "description")
     private String mDescription;
 
-    @ColumnInfo(name = "flagged")
-    public boolean mFlagged;
+    @Nullable
+    @ColumnInfo(name = "position")
+    private int mPosition;
 
 
-    public Task(@Nullable String title, @Nullable String description)
+    public Task(@Nullable String title, @Nullable String description, @Nullable int position)
     {
-        this(UUID.randomUUID().toString(), title,description, false);
+        this(UUID.randomUUID().toString(), title, description, position);
     }
 
-    public Task(@NonNull String Id, @Nullable String title,@Nullable String description, boolean flagged)
+    public Task(@NonNull String Id, @Nullable String title,@Nullable String description,@Nullable int position)
     {
         mId = Id;
         mTitle = title;
         mDescription = description;
-        mFlagged = flagged;
+
+        mPosition = position;
     }
 
 
@@ -63,10 +70,13 @@ public final class Task
 
     public void setDescription(String description) { mTitle = description;}
 
-    public boolean isFlagged() { return mFlagged; }
+    public int getPosition() {
+        return mPosition;
+    }
 
-    public void setFlag(boolean flag) { mFlagged = flag; }
-
+    public void setPosition(int mPosition) {
+        this.mPosition = mPosition;
+    }
 
 
 }

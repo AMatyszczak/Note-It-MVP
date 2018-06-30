@@ -1,6 +1,8 @@
-package com.example.adria.myappmvp.data;
+package com.example.adria.myappmvp.data.local;
 
 import android.app.Application;
+
+import com.example.adria.myappmvp.data.Task;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class TaskRepository
 
     private TaskRepository(Application application)
     {
-        AppDatabase database = AppDatabase.getDatabase(application);
+        LocalAppDatabase database = LocalAppDatabase.getDatabase(application);
         mTaskDao = database.taskDao();
     }
 
@@ -26,6 +28,8 @@ public class TaskRepository
 
     public void insertTask(Task task)
     {
+        if(task.getPosition() < 0)
+            task.setPosition(getTaskCount()+1);
         mTaskDao.insertTask(task);
     }
 
@@ -40,6 +44,8 @@ public class TaskRepository
 
     public void deleteTask(Task task) { mTaskDao.deleteTask(task);}
 
+    public int getTaskCount() { return mTaskDao.getTaskCount(); }
+
     public static TaskRepository getINSTANCE(Application application)
     {
         if(INSTANCE == null)
@@ -48,7 +54,6 @@ public class TaskRepository
         }
         return INSTANCE;
     }
-
 
 
 }
