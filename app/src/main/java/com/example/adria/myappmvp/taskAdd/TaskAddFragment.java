@@ -52,6 +52,7 @@ public class TaskAddFragment extends Fragment implements TaskAddContract.View {
 
         mTitle = root.findViewById(R.id.title);
         mDescription = root.findViewById(R.id.description);
+        mDescription.setBackground(null);
 
         return root;
     }

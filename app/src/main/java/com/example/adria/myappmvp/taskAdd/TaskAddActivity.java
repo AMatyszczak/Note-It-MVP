@@ -1,17 +1,13 @@
 package com.example.adria.myappmvp.taskAdd;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.example.adria.myappmvp.R;
-import com.example.adria.myappmvp.data.TaskRepository;
-
-import javax.security.auth.login.LoginException;
+import com.example.adria.myappmvp.data.local.TaskRepository;
 
 public class TaskAddActivity extends AppCompatActivity {
 

@@ -1,17 +1,11 @@
 package com.example.adria.myappmvp.task;
 
-import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.ActionMode;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,8 +25,6 @@ import com.example.adria.myappmvp.data.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -190,7 +180,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     public void notifyDataSwapped(Task fromTask, Task toTask)
     {
-        mPresenter.swapData(fromTask, toTask);
+        mPresenter.swapTasksPositions(fromTask, toTask);
     }
 
     private class MyMultiChoiceListener implements AbsListView.MultiChoiceModeListener

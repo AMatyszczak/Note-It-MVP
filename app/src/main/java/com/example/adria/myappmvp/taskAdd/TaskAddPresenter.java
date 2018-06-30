@@ -1,7 +1,7 @@
 package com.example.adria.myappmvp.taskAdd;
 
 import com.example.adria.myappmvp.data.Task;
-import com.example.adria.myappmvp.data.TaskRepository;
+import com.example.adria.myappmvp.data.local.TaskRepository;
 
 /**
  * Created by adria on 05.05.2018.
@@ -24,7 +24,7 @@ public class TaskAddPresenter implements TaskAddContract.Presenter
     @Override
     public void addTask()
     {
-        Task task = new Task(mFragment.getTitle(),mFragment.getDescription());
+        Task task = new Task(mFragment.getTitle(),mFragment.getDescription(), -1);
         mTaskRepository.insertTask(task);
         mFragment.showTasks();
 

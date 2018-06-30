@@ -1,8 +1,9 @@
 package com.example.adria.myappmvp.taskDetail;
 
 import android.content.Intent;
+
 import com.example.adria.myappmvp.data.Task;
-import com.example.adria.myappmvp.data.TaskRepository;
+import com.example.adria.myappmvp.data.local.TaskRepository;
 
 
 /**
@@ -36,8 +37,9 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter
     }
 
     @Override
-    public void updateTask(String title, String description) {
-        Task task = new Task(mTaskID, title, description, false);
+    public void updateTask(String title, String description, int position) {
+        Task task = new Task(mTaskID, title, description, position);
+
         mTaskRepository.updateTask(task);
         mFragment.closeTaskDetail();
     }

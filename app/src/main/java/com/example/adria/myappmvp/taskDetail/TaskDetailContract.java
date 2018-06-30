@@ -21,7 +21,7 @@ public interface TaskDetailContract
     interface Presenter
     {
         Task getTaskFromIntent(Intent intent);
-        void updateTask(String title, String description);
+        void updateTask(String title, String description, int position);
         void updateTaskOnBackPressed();
         void notifyDataChanged();
         boolean isChanged();

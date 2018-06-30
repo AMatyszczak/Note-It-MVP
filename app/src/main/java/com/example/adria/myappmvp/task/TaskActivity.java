@@ -1,17 +1,13 @@
 package com.example.adria.myappmvp.task;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.support.v4.app.Fragment;
-import android.widget.FrameLayout;
 
 import com.example.adria.myappmvp.R;
-import com.example.adria.myappmvp.data.TaskRepository;
+import com.example.adria.myappmvp.data.local.TaskRepository;
 import com.example.adria.myappmvp.util.ActivityUtils;
 
 public class TaskActivity extends AppCompatActivity {

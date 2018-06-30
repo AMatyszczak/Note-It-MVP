@@ -28,6 +28,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     private static final String SAVED = "Saved";
     private EditText mTitle;
     private EditText mDescription;
+    private int mPosition;
 
     private TaskDetailContract.Presenter mPresenter;
 
@@ -40,6 +41,8 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
         Task task = mPresenter.getTaskFromIntent(getActivity().getIntent());
         mTitle.setText(task.getTitle());
         mDescription.setText(task.getDescription());
+        mDescription.setBackground(null);
+        mPosition = task.getPosition();
         mTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -102,7 +105,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     @Override
     public void updateTask()
     {
-        mPresenter.updateTask(mTitle.getText().toString(), mDescription.getText().toString());
+        mPresenter.updateTask(mTitle.getText().toString(), mDescription.getText().toString(), mPosition);
         if(getView()!=null)
         {
             Snackbar.make(getView(),SAVED,Snackbar.LENGTH_SHORT).show();

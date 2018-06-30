@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.example.adria.myappmvp.R;
-import com.example.adria.myappmvp.data.TaskRepository;
+import com.example.adria.myappmvp.data.local.TaskRepository;
 
 
 public class TaskDetailActivity extends AppCompatActivity {

@@ -83,7 +83,6 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
             mDraggedItemId = getAdapter().getItemId(position);
             mHoverCell = getAndHoverView(mDownView);
 
-            mDownView.setVisibility(INVISIBLE);
             isDragging = true;
 
             return true;
