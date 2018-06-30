@@ -20,19 +20,16 @@ import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
-
-/**
- * Created by adria on 23.04.2018.
- */
-
 public class TaskAdapter extends BaseAdapter
 {
     private List<Task> mTaskList;
+    private TaskFragment mTaskFragment;
 
-    TaskAdapter(List<Task> TaskList)
+    TaskAdapter(List<Task> TaskList, TaskFragment taskFragment)
     {
 
         this.mTaskList = TaskList;
+        this.mTaskFragment = taskFragment;
         setList(TaskList);
     }
 
@@ -108,8 +105,12 @@ public class TaskAdapter extends BaseAdapter
     {
         Task temp = mTaskList.get(fromId);
         Task toIdTask = mTaskList.get(toId);
+
         mTaskList.set(fromId, toIdTask);
         mTaskList.set(toId, temp);
+
+        mTaskFragment.notifyDataSwapped(temp, toIdTask);
+
 
     }
 
