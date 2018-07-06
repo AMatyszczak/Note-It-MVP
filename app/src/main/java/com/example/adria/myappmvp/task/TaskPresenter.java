@@ -87,7 +87,6 @@ public class TaskPresenter implements TaskContract.Presenter
         int position = fromTask.getPosition();
         fromTask.setPosition(toTask.getPosition());
         toTask.setPosition(position);
-        Log.e(TAG, "swapTasksPositions: from task:" + fromTask.getPosition() + " , toTask: " + toTask.getPosition() );
 
         mTaskRepository.updateTask(fromTask);
         mTaskRepository.updateTask(toTask);

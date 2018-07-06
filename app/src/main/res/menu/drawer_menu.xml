@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/layout_layout" android:checkableBehavior="single">
+        <item
+            android:id="@+id/archived"
+            android:title="Archived" />
+    </group>
+    <group android:id="@+id/group_settings">
+        <item
+            android:id="@+id/about"
+            android:title="About us" />
+    </group>
+</menu>
