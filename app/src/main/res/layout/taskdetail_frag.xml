@@ -16,7 +16,8 @@
         android:hint="@string/title"
         android:inputType="text"
         android:padding="8dp"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textSize="24dp"/>
 
     <EditText
         android:id="@+id/description"
@@ -24,6 +25,7 @@
         android:layout_height="match_parent"
         android:gravity="top"
         android:hint="@string/description"
-        android:inputType="text" />
+        android:inputType="textCapSentences|textMultiLine"
+        android:textSize="16dp"/>
 
 </LinearLayout>

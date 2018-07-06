@@ -21,7 +21,8 @@
         android:layout_height="match_parent"
         android:hint="@string/description"
         android:gravity="top"
-        android:inputType="text"
+        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+
         />
 
 
