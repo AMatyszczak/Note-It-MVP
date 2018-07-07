@@ -7,8 +7,18 @@
     <string name="title_activity_add_task">Note new task</string>
     <string name="title_activity_task_detail">Edit Task</string>
     <string name="saved">Saved</string>
+
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="no_task">No Tasks</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+
+    <string name="login_hint">login</string>
+    <string name="password_hint">password</string>
+    <string name="name_hint">name</string>
+    <string name="email_hint">email</string>
+    <string name="login_back">Back to login</string>
 
 </resources>
