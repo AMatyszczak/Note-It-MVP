@@ -1,9 +1,11 @@
 package com.example.adria.myappmvp.task;
 
 
+
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -25,12 +27,16 @@ public class TaskAdapter extends BaseAdapter
     private List<Task> mTaskList;
     private TaskFragment mTaskFragment;
 
-    TaskAdapter(List<Task> TaskList, TaskFragment taskFragment)
+    public TaskAdapter(List<Task> TaskList)
     {
 
         this.mTaskList = TaskList;
-        this.mTaskFragment = taskFragment;
         setList(TaskList);
+    }
+
+    public void setFragment(Fragment fragment)
+    {
+        mTaskFragment = (TaskFragment)fragment;
     }
 
     @Override
@@ -109,7 +115,8 @@ public class TaskAdapter extends BaseAdapter
         mTaskList.set(fromId, toIdTask);
         mTaskList.set(toId, temp);
 
-        mTaskFragment.notifyDataSwapped(temp, toIdTask);
+        if(mTaskFragment != null)
+            mTaskFragment.notifyDataSwapped(temp, toIdTask);
 
 
     }

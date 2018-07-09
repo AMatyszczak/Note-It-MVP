@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,8 @@ import com.example.adria.myappmvp.data.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -65,7 +68,8 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTaskAdapter = new TaskAdapter(new ArrayList<Task>(0),this);
+        mTaskAdapter = new TaskAdapter(new ArrayList<Task>(0));
+        mTaskAdapter.setFragment(this);
     }
 
     @Override
@@ -174,7 +178,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         Task task = mTaskAdapter.getItem(taskFromList);
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         intent.putExtra(GET_TASK_DETAIL,task.getId());
-
+        Log.e(TAG, "getTaskDetail: " + task.getId().toString() );
         startActivity(intent);
     }
 
