@@ -18,7 +18,7 @@
         android:layout_height="56dp"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        android:elevation="@dimen/toolbar_elevation"/>
+        android:elevation="@dimen/toolbar_elevation" />
 
     </android.support.design.widget.AppBarLayout>
 
