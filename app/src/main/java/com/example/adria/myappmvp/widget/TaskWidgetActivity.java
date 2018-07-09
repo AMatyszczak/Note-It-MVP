@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -18,12 +19,15 @@ import com.example.adria.myappmvp.task.TaskAdapter;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class TaskWidgetActivity extends Activity
 {
 
     private static final String PREFS_NAME = "com.example.adria.myappmvp.widget.TaskWidgetActivity";
     private static final String PREF_TITLE = "Title";
     private static final String PREF_DESCRIPTION = "Description";
+    private static final String PREF_ID = "Id";
 
 
     private GridView mGridView;
@@ -35,10 +39,10 @@ public class TaskWidgetActivity extends Activity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.widget_task_menu);
+
 
         setResult(RESULT_CANCELED);
-
+        setContentView(R.layout.widget_task_menu);
         mGridView = findViewById(R.id.WidgetTaskGridView);
         mTaskRepository = mTaskRepository.getINSTANCE(getApplication());
         mTaskAdapter = new TaskAdapter(new ArrayList<Task>(0) );
@@ -65,6 +69,7 @@ public class TaskWidgetActivity extends Activity
                 String id = task.getId();
 
                 Context context = TaskWidgetActivity.this;
+                saveTask(context, mAppWidgetId, task);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 TaskWidget.updateAppWidget(context,appWidgetManager,mAppWidgetId,title,description,id);
 
@@ -83,9 +88,10 @@ public class TaskWidgetActivity extends Activity
     static void saveTask(Context context, int appwidgetId, Task task)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME,0).edit();
-        prefs.putString(PREF_TITLE, task.getTitle());
-        prefs.putString(PREF_DESCRIPTION, task.getDescription());
-        prefs.commit();
+        prefs.putString(PREF_TITLE + appwidgetId, task.getTitle());
+        prefs.putString(PREF_DESCRIPTION+ appwidgetId, task.getDescription());
+        prefs.putString(PREF_ID+ appwidgetId, task.getId());
+        prefs.apply();
     }
 
     static String loadTitlePref(Context context, int appWidgetId)
@@ -98,7 +104,7 @@ public class TaskWidgetActivity extends Activity
         }
         else
         {
-            return "";
+            return ":(";
         }
     }
 
@@ -109,6 +115,20 @@ public class TaskWidgetActivity extends Activity
         if(description != null)
         {
             return description;
+        }
+        else
+        {
+            return ":(";
+        }
+    }
+
+    static String loadIdPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        String id = prefs.getString(PREF_ID + appWidgetId, null);
+        if(id != null)
+        {
+            return id;
         }
         else
         {
