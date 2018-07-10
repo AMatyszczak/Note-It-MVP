@@ -40,7 +40,7 @@
             android:label="WidgetActivity"
             android:windowSoftInputMode="adjustResize"/>
 
-        <receiver android:name=".widget.TaskWidget" >
+        <receiver android:name=".widget.TaskWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
