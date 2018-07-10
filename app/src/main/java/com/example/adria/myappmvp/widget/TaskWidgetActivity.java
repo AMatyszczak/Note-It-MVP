@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -19,16 +18,13 @@ import com.example.adria.myappmvp.task.TaskAdapter;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
-
 public class TaskWidgetActivity extends Activity
 {
 
     private static final String PREFS_NAME = "com.example.adria.myappmvp.widget.TaskWidgetActivity";
-    private static final String PREF_TITLE = "Title";
-    private static final String PREF_DESCRIPTION = "Description";
-    private static final String PREF_ID = "Id";
-
+    public static final String PREF_TITLE = "Title";
+    public static final String PREF_DESCRIPTION = "Description";
+    public static final String PREF_ID = "Id";
 
     private GridView mGridView;
     private TaskRepository mTaskRepository;
@@ -39,6 +35,7 @@ public class TaskWidgetActivity extends Activity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
         setResult(RESULT_CANCELED);
@@ -59,6 +56,7 @@ public class TaskWidgetActivity extends Activity
         if(mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
             finish();
 
+
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -71,7 +69,7 @@ public class TaskWidgetActivity extends Activity
                 Context context = TaskWidgetActivity.this;
                 saveTask(context, mAppWidgetId, task);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                TaskWidget.updateAppWidget(context,appWidgetManager,mAppWidgetId,title,description,id);
+                TaskWidgetProvider.updateAppWidget(context,appWidgetManager,mAppWidgetId,title,description,id);
 
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
@@ -90,7 +88,7 @@ public class TaskWidgetActivity extends Activity
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME,0).edit();
         prefs.putString(PREF_TITLE + appwidgetId, task.getTitle());
         prefs.putString(PREF_DESCRIPTION+ appwidgetId, task.getDescription());
-        prefs.putString(PREF_ID+ appwidgetId, task.getId());
+        prefs.putString(PREF_ID + appwidgetId, task.getId());
         prefs.apply();
     }
 
@@ -104,7 +102,7 @@ public class TaskWidgetActivity extends Activity
         }
         else
         {
-            return ":(";
+            return "Example";
         }
     }
 
@@ -118,7 +116,7 @@ public class TaskWidgetActivity extends Activity
         }
         else
         {
-            return ":(";
+            return "Example";
         }
     }
 
@@ -132,7 +130,7 @@ public class TaskWidgetActivity extends Activity
         }
         else
         {
-            return "";
+            return "Example";
         }
     }
 }
