@@ -1,6 +1,8 @@
 package com.example.adria.myappmvp.taskDetail;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Task;
+import com.example.adria.myappmvp.widget.TaskWidgetProvider;
 
 import static android.content.ContentValues.TAG;
 
@@ -117,6 +120,12 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     @Override
     public void closeTaskDetail()
     {
+
+
+        Intent intent = new Intent(getActivity(), TaskWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        getActivity().sendBroadcast(intent);
+
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
     }

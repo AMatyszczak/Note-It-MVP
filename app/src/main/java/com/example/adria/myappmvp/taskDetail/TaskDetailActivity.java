@@ -1,6 +1,7 @@
 package com.example.adria.myappmvp.taskDetail;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         TaskDetailFragment taskDetailFragment = (TaskDetailFragment) getSupportFragmentManager().findFragmentById(R.id.taskDetailFragment);
         TaskRepository taskRepository = TaskRepository.getINSTANCE(getApplication());
         String id = getIntent().getStringExtra(GET_TASK_DETAIL);
+
         mPresenter = new TaskDetailPresenter(id, taskDetailFragment,taskRepository);
 
     }
