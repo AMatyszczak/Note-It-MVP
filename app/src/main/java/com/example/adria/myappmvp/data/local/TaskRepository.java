@@ -1,6 +1,7 @@
 package com.example.adria.myappmvp.data.local;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.adria.myappmvp.data.Task;
 
@@ -15,9 +16,9 @@ public class TaskRepository
     private TaskDao mTaskDao;
     private static TaskRepository INSTANCE = null;
 
-    private TaskRepository(Application application)
+    private TaskRepository(Context context)
     {
-        LocalAppDatabase database = LocalAppDatabase.getDatabase(application);
+        LocalAppDatabase database = LocalAppDatabase.getDatabase(context);
         mTaskDao = database.taskDao();
     }
 
@@ -46,11 +47,11 @@ public class TaskRepository
 
     public int getTaskCount() { return mTaskDao.getTaskCount(); }
 
-    public static TaskRepository getINSTANCE(Application application)
+    public static TaskRepository getINSTANCE(Context context)
     {
         if(INSTANCE == null)
         {
-            INSTANCE = new TaskRepository(application);
+            INSTANCE = new TaskRepository(context);
         }
         return INSTANCE;
     }
