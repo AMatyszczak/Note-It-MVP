@@ -12,27 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.adria.myappmvp.AppConfig;
 import com.example.adria.myappmvp.R;
-import com.example.adria.myappmvp.task.TaskActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.adria.myappmvp.note.NoteActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.zip.Inflater;
 
 import static android.content.ContentValues.TAG;
 
@@ -68,7 +59,7 @@ public class LoginActivity extends Activity
 
 //        if(mSessionManager.isLoggedIn())
 //        {
-//            Intent intent = new Intent(this, TaskActivity.class);
+//            Intent intent = new Intent(this, NoteActivity.class);
 //            startActivity(intent);
 //            finish();
 //        }
@@ -83,7 +74,7 @@ public class LoginActivity extends Activity
         mSkipTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, TaskActivity.class);
+                Intent intent = new Intent(context, NoteActivity.class);
                 startActivity(intent);
             }
         });

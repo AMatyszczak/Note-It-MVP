@@ -1,18 +1,12 @@
 package com.example.adria.myappmvp.gridViewCustom;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ActionMode;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,10 +17,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.example.adria.myappmvp.task.MyDragShadowBuilder;
-import com.example.adria.myappmvp.task.TaskAdapter;
-
-import static android.content.ContentValues.TAG;
+import com.example.adria.myappmvp.note.NoteAdapter;
 
 public class GridViewCustom extends GridView implements AdapterView.OnItemLongClickListener
 {
@@ -122,7 +113,7 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
 
-            TaskAdapter adapter = (TaskAdapter) getAdapter();
+            NoteAdapter adapter = (NoteAdapter) getAdapter();
             switch(motionEvent.getAction() & MotionEvent.ACTION_MASK)
             {
                 case MotionEvent.ACTION_DOWN:
@@ -251,7 +242,7 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
     public View getViewFromId(long id)
     {
         int relativePosition = getFirstVisiblePosition();
-        TaskAdapter adapter = (TaskAdapter) getAdapter();
+        NoteAdapter adapter = (NoteAdapter) getAdapter();
         for(int i = 0; i < getChildCount(); i++)
         {
             View v = getChildAt(i);

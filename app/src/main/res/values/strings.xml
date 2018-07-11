@@ -2,13 +2,13 @@
     <string name="app_name">Note It</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_activity_add_task">Note new task</string>
-    <string name="title_activity_task_detail">Edit Task</string>
+    <string name="title_activity_add_note">Note new note</string>
+    <string name="title_activity_note_detail">Edit Task</string>
     <string name="saved">Saved</string>
 
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="no_task">No Tasks</string>
+    <string name="no_note">No Tasks</string>
 
     <string name="login">Login</string>
     <string name="register">Register</string>

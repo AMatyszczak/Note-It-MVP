@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/noteCardView"
+    android:layout_width="match_parent"
+    android:layout_height="225dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="false">
+    <FrameLayout
+        android:background="@drawable/selector_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:maxLines="1"
+            android:textAlignment="center"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="16dp"
+
+            app:autoSizeStepGranularity="2dp"
+            android:text="HOLAAAAAAA"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="12dp"
+            app:autoSizeMaxTextSize="24dp"
+            app:autoSizeStepGranularity="2dp"
+            android:breakStrategy="high_quality"/>
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

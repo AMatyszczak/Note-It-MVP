@@ -3,32 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="6dp"
+    android:layout_margin="8dp"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="com.example.adria.myappmvp.noteDetail.NoteDetailFragment"
-    tools:showIn="@layout/notedetail_act"
-    android:id="@+id/widgetLayout"
-    android:background="@color/unselected">
+    tools:showIn="@layout/notedetail_act">
 
-    <TextView
-        android:id="@+id/widgetTitle"
+    <EditText
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title"
+        android:inputType="text"
+        android:padding="8dp"
         android:singleLine="true"
-        android:textSize="16dp"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:textColor="@color/black" />
+        android:textSize="24dp"/>
 
-    <TextView
-        android:id="@+id/widgetDescription"
+    <EditText
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
         android:hint="@string/description"
-        android:textSize="12dp"
-        android:padding="2dp"
-        android:textColor="@color/black"/>
+        android:inputType="textCapSentences|textMultiLine"
+        android:textSize="16dp"/>
 
 </LinearLayout>

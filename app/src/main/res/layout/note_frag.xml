@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.adria.myappmvp.note.NoteFragment"
+    tools:showIn="@layout/note_act"
+    android:id="@+id/NoteFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:padding="6dp">
+
+            <LinearLayout
+                android:id="@+id/noteLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.example.adria.myappmvp.gridViewCustom.GridViewCustom
+                    android:id="@+id/noteGridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnWidth="150dp"
+                    android:minHeight="150dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center"
+                    android:numColumns="auto_fit"
+                    android:background="@color/colorBackground"
+                    android:verticalSpacing="2dp"
+                    android:horizontalSpacing="2dp"
+                    />
+
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/noNoteLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/noNoteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/no_note" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

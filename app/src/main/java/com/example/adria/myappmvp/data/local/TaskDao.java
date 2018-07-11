@@ -7,7 +7,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.adria.myappmvp.data.Task;
+import com.example.adria.myappmvp.data.Note;
 
 import java.util.List;
 
@@ -17,24 +17,24 @@ import java.util.List;
 @Dao
 public interface TaskDao
 {
-    @Query("SELECT * FROM task ORDER BY position ASC")
-    List<Task> getTasks();
+    @Query("SELECT * FROM Note ORDER BY position ASC")
+    List<Note> getNotes();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertTask(Task task);
+    void insertNote(Note note);
 
-    @Query("SELECT * From task WHERE id = :id")
-    Task getTaskFromId(String id);
+    @Query("SELECT * From Note WHERE id = :id")
+    Note getNoteFromId(String id);
 
-    @Query("DELETE FROM task")
-    void deleteAllTasks();
+    @Query("DELETE FROM Note")
+    void deleteAllNotes();
 
-    @Query("SELECT COUNT() FROM task")
-    int getTaskCount();
+    @Query("SELECT COUNT() FROM Note")
+    int getNoteCount();
 
     @Delete
-    void deleteTask(Task task);
+    void deleteNote(Note note);
 
     @Update
-    void updateTask(Task task);
+    void updateNote(Note note);
 }
