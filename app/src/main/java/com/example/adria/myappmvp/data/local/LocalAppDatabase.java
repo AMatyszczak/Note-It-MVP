@@ -1,16 +1,18 @@
 package com.example.adria.myappmvp.data.local;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 
-import com.example.adria.myappmvp.data.Task;
+import com.example.adria.myappmvp.data.Note;
 
 /**
  * Created by adria on 01.05.2018.
  */
-@Database(entities = {Task.class}, version = 1, exportSchema = false)
+@Database(entities = {Note.class}, version = 2 , exportSchema = false)
 public abstract class LocalAppDatabase extends RoomDatabase
 {
     public abstract TaskDao taskDao();
@@ -26,11 +28,20 @@ public abstract class LocalAppDatabase extends RoomDatabase
                 if(INSTANCE == null)
                 {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            LocalAppDatabase.class, "App_Database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+                            LocalAppDatabase.class, "App_Database").allowMainThreadQueries().fallbackToDestructiveMigration()
+                            .addMigrations(MIGRATION_1_2).build();
                 }
             }
         }
         return INSTANCE;
     }
+
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE `task` RENAME TO `note`");
+        }
+    };
+
 
 }
