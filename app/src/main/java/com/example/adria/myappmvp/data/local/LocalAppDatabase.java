@@ -6,15 +6,18 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.Task;
 
 /**
  * Created by adria on 01.05.2018.
  */
-@Database(entities = {Note.class}, version = 2 , exportSchema = false)
+@Database(entities = {Note.class , Task.class}, version = 2)
 public abstract class LocalAppDatabase extends RoomDatabase
 {
+    public abstract NoteDao noteDao();
     public abstract TaskDao taskDao();
 
     private static LocalAppDatabase INSTANCE;
@@ -29,19 +32,27 @@ public abstract class LocalAppDatabase extends RoomDatabase
                 {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LocalAppDatabase.class, "App_Database").allowMainThreadQueries().fallbackToDestructiveMigration()
-                            .addMigrations(MIGRATION_1_2).build();
+                            .addMigrations().build();
                 }
             }
         }
         return INSTANCE;
     }
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE `task` RENAME TO `note`");
-        }
-    };
+//    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+//        @Override
+//        public void migrate(SupportSQLiteDatabase database) {
+//            database.execSQL("ALTER TABLE `task` RENAME TO `note`");
+//        }
+//    };
+//
+//    private static final Migration MIGRATION_2_3 = new Migration(2,3) {
+//        @Override
+//        public void migrate(@NonNull SupportSQLiteDatabase database) {
+//            database.execSQL("CREATE TABLE `task` ( `id` TEXT NOT NULL, `description` TEXT , `noteId` TEXT NOT NULL," +
+//                    " PRIMARY KEY(`id`))");
+//        }
+//    };
 
 
 }

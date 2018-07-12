@@ -3,6 +3,7 @@ package com.example.adria.myappmvp.data.local;
 import android.content.Context;
 
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.Task;
 
 import java.util.List;
 
@@ -12,13 +13,15 @@ import java.util.List;
 
 public class NoteRepository
 {
-    private TaskDao mNoteDao;
+    private NoteDao mNoteDao;
+    private TaskDao mTaskDao;
     private static NoteRepository INSTANCE = null;
 
     private NoteRepository(Context context)
     {
         LocalAppDatabase database = LocalAppDatabase.getDatabase(context);
-        mNoteDao = database.taskDao();
+        mNoteDao = database.noteDao();
+        mTaskDao = database.taskDao();
     }
 
     public List<Note> getNotesList()
@@ -55,6 +58,13 @@ public class NoteRepository
         return INSTANCE;
     }
 
+    //TASKS
+
+    public List<Task> getNoteTasks(int noteId) { return mNoteDao.getNoteTasks(noteId); }
+
+    public void updateTask(Task task ) { mTaskDao.updateTask(task); }
+
+    public void deleteTask(Task task) { mTaskDao.deleteTask(task); }
 
 }
 
