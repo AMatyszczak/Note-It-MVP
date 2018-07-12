@@ -15,10 +15,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
+import com.example.adria.myappmvp.TaskList.TaskItem;
+import com.example.adria.myappmvp.TaskList.TaskListAdapter;
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.local.TaskDao_Impl;
 import com.example.adria.myappmvp.widget.NoteWidgetProvider;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
@@ -32,20 +41,31 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
     private EditText mTitle;
     private EditText mDescription;
     private int mPosition;
+    private TextView mAddTaskEditText;
 
     private NoteDetailContract.Presenter mPresenter;
+
+    private ListView mListView;
+    private TaskListAdapter mAdapter;
 
 
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAdapter = new TaskListAdapter(new ArrayList<TaskItem>(0));
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         Note note = mPresenter.getNoteFromIntent(getActivity().getIntent());
         mTitle.setText(note.getTitle());
         mDescription.setText(note.getDescription());
         mDescription.setBackground(null);
+
         mPosition = note.getPosition();
+
         mTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -97,6 +117,18 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
         mTitle = root.findViewById(R.id.title);
         mDescription = root.findViewById(R.id.description);
 
+        mListView = root.findViewById(R.id.taskList);
+        mListView.setAdapter(mAdapter);
+
+        mAddTaskEditText = root.findViewById(R.id.add_task_textView);
+        mAddTaskEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TaskItem taskItem = new TaskItem(" ",false);
+                mAdapter.addTask(taskItem);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
         return root;
     }
 

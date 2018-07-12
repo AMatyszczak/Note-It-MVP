@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:layout_margin="8dp"
-    android:id="@+id/note_list_item">
+    android:id="@+id/task_list_item">
 
     <CheckBox
         android:id="@+id/item_checkbox"
@@ -14,6 +14,8 @@
     <EditText
         android:id="@+id/item_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:inputType="text"/>
 
 </LinearLayout>

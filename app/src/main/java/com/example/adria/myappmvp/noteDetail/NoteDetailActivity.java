@@ -9,6 +9,8 @@ import android.view.Menu;
 
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.local.NoteRepository;
+import com.example.adria.myappmvp.note.NoteFragment;
+import com.example.adria.myappmvp.util.ActivityUtils;
 
 
 public class NoteDetailActivity extends AppCompatActivity {
@@ -38,8 +40,13 @@ public class NoteDetailActivity extends AppCompatActivity {
             Log.e(TAG, "onCreate(): toolbar is null" );
         }
 
-
-        NoteDetailFragment noteDetailFragment = (NoteDetailFragment) getSupportFragmentManager().findFragmentById(R.id.noteDetailFragment);
+        NoteDetailFragment noteDetailFragment = (NoteDetailFragment)getSupportFragmentManager().findFragmentById(R.id.NoteFragment);
+        if(noteDetailFragment == null)
+        {
+            noteDetailFragment = new NoteDetailFragment();
+            ActivityUtils.addFragmentToActivity(
+                    getSupportFragmentManager(), noteDetailFragment, R.id.contentFrame);
+        }
         NoteRepository noteRepository = NoteRepository.getINSTANCE(getApplication());
         String id = getIntent().getStringExtra(GET_NOTE_DETAIL);
 
