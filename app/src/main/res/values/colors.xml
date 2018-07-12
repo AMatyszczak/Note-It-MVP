@@ -8,7 +8,9 @@
     <color name="colorBackground">#e6e6e6</color>
     <color name="loginBackground">#00838F</color>
     <color name="registerBackground">#006064</color>
+    <color name="widgetTitleColor">#f6ff74</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
 </resources>

@@ -7,7 +7,8 @@
     tools:context="com.example.adria.myappmvp.note.NoteFragment"
     tools:showIn="@layout/note_act"
     android:id="@+id/WidgetTaskLayout"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
