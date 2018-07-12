@@ -26,9 +26,9 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
     private ActionMode mActionMode;
     private CompositeListener compositeListener;
 
-    private int mDownX = -1;
-    private int mDownY = -1;
-    private View mDownView;
+    private int mDraggedX = -1;
+    private int mDraggedY = -1;
+    private View mDraggedView;
 
     private boolean isDragging = false;
 
@@ -68,11 +68,11 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, final View viewClick, final int index, final long l) {
 
-            int position = pointToPosition(mDownX, mDownY);
+            int position = pointToPosition(mDraggedX, mDraggedY);
             int itemId = position - getFirstVisiblePosition();
-            mDownView = getChildAt(itemId);
+            mDraggedView = getChildAt(itemId);
             mDraggedItemId = getAdapter().getItemId(position);
-            mHoverCell = getAndHoverView(mDownView);
+            mHoverCell = getAndHoverView(mDraggedView);
 
             isDragging = true;
 
@@ -117,8 +117,8 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
             switch(motionEvent.getAction() & MotionEvent.ACTION_MASK)
             {
                 case MotionEvent.ACTION_DOWN:
-                    mDownX = (int)motionEvent.getX();
-                    mDownY = (int)motionEvent.getY();
+                    mDraggedX = (int)motionEvent.getX();
+                    mDraggedY = (int)motionEvent.getY();
                     mActivePointerId = motionEvent.getPointerId(0);
 
                     break;
@@ -131,8 +131,8 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
                     int mLastEventY = (int)motionEvent.getY(pointerIndex);
 
 
-                    int deltaY = mLastEventY - mDownY;
-                    int deltaX = mLastEventX - mDownX;
+                    int deltaY = mLastEventY - mDraggedY;
+                    int deltaX = mLastEventX - mDraggedX;
 
                     if(isDragging)
                     {
@@ -150,12 +150,12 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
                             final View viewUnder = getViewFromId(viewID);
 
                             adapter.swapItems((int)mDraggedItemId, (int)viewID);
-                            animateDragToStart(mDownView, viewUnder);
+                            animateDragToStart(mDraggedView, viewUnder);
 
                             viewUnder.setVisibility(INVISIBLE);
-                            mDownView.setVisibility(VISIBLE);
+                            mDraggedView.setVisibility(VISIBLE);
 
-                            mDownView = viewUnder;
+                            mDraggedView = viewUnder;
                             mDraggedItemId = viewID;
 
                             adapter.notifyDataSetChanged();
@@ -203,13 +203,13 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
     }
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        int position = pointToPosition(mDownX, mDownY);
+        int position = pointToPosition(mDraggedX, mDraggedY);
         int itemId = position - getFirstVisiblePosition();
-        mDownView = getChildAt(itemId);
+        mDraggedView = getChildAt(itemId);
         mDraggedItemId = getAdapter().getItemId(position);
-        mHoverCell = getAndHoverView(mDownView);
+        mHoverCell = getAndHoverView(mDraggedView);
 
-        mDownView.setVisibility(INVISIBLE);
+        mDraggedView.setVisibility(INVISIBLE);
         isDragging = true;
 
         return true;
@@ -304,13 +304,13 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
         public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
             if( isDraggable)
             {
-                int pos = pointToPosition(mDownX, mDownY);
+                int pos = pointToPosition(mDraggedX, mDraggedY);
                 int itemId = pos - getFirstVisiblePosition();
-                mDownView = getChildAt(itemId);
+                mDraggedView = getChildAt(itemId);
                 mDraggedItemId = getAdapter().getItemId(pos);
-                mHoverCell = getAndHoverView(mDownView);
+                mHoverCell = getAndHoverView(mDraggedView);
 
-                mDownView.setVisibility(INVISIBLE);
+                mDraggedView.setVisibility(INVISIBLE);
                 isDragging = true;
                 isDraggable = false;
                 if(!selectOnly)

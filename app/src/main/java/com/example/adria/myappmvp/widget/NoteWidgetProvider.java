@@ -81,7 +81,7 @@ public class NoteWidgetProvider extends AppWidgetProvider
         Intent intent = new Intent(context, NoteActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent);
-        views.setInt(R.id.widgetLayout, "setBackgroundResource", R.drawable.widget_style);
+        //views.setInt(R.id.widgetLayout, "setBackgroundResource", R.drawable.widget_style);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
