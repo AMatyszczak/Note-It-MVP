@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,17 +18,16 @@
     android:padding="16dp"
     tools:context="com.example.adria.myappmvp.noteDetail.NoteDetailFragment"
     tools:showIn="@layout/notedetail_act"
-    android:fitsSystemWindows="true">
-
+    >
     <EditText
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title"
         android:inputType="text"
-        android:padding="8dp"
+        android:paddingBottom="16dp"
         android:maxLines="1"
-        android:textSize="24dp"/>
+        android:textSize="24dp" />
 
     <EditText
         android:id="@+id/description"
@@ -28,7 +36,10 @@
         android:gravity="top"
         android:hint="@string/description"
         android:inputType="textCapSentences|textMultiLine"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:background="@null"
+        android:paddingBottom="16dp"/>
+
     <TextView
         android:id="@+id/add_task_textView"
         android:layout_width="match_parent"
@@ -39,14 +50,13 @@
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:text="+ Add New Task"/>
-
-    <ListView
-        android:id="@+id/taskList"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
         />
-
-
-
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+
+
