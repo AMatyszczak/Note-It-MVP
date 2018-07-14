@@ -1,10 +1,12 @@
 package com.example.adria.myappmvp.data.local;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
 
 import com.example.adria.myappmvp.data.Note;
 import com.example.adria.myappmvp.data.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,11 +31,12 @@ public class NoteRepository
         return mNoteDao.getNotes();
     }
 
-    public void insertNote(Note note)
+    public String insertNote(Note note)
     {
         if(note.getPosition() < 0)
             note.setPosition(getNoteCount()+1);
         mNoteDao.insertNote(note);
+        return note.getId();
     }
 
     public void deleteAllNotes()
@@ -60,11 +63,15 @@ public class NoteRepository
 
     //TASKS
 
-    public List<Task> getNoteTasks(int noteId) { return mNoteDao.getNoteTasks(noteId); }
+    public ArrayList<Task> getNoteTasks(String noteId) { return (ArrayList<Task>)mNoteDao.getNoteTasks(noteId); }
 
-    public void updateTask(Task task ) { mTaskDao.updateTask(task); }
+    public void insertTask(Task task ) { mTaskDao.insertTask(task); }
+
+    public void insertTasks(ArrayList<Task> tasks) { mTaskDao.insertTasks(tasks);}
 
     public void deleteTask(Task task) { mTaskDao.deleteTask(task); }
+
+    public void updateTask(Task task) {mTaskDao.updateTask(task);}
 
 }
 

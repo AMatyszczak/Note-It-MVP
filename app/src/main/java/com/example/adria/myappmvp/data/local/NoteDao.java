@@ -10,6 +10,8 @@ import android.arch.persistence.room.Update;
 import com.example.adria.myappmvp.data.Note;
 import com.example.adria.myappmvp.data.Task;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +41,6 @@ public interface NoteDao
     @Update
     void updateNote(Note note);
 
-    @Query("SELECT t.* FROM task t, note n WHERE t.noteId = :noteId ")
-    List<Task> getNoteTasks(int noteId);
+    @Query("SELECT t.* FROM task t, note n WHERE t.noteId = :noteId AND n.id = t.noteId")
+    List<Task> getNoteTasks(String noteId);
 }
