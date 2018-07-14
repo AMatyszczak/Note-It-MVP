@@ -11,7 +11,7 @@ import java.util.List;
  * Created by adria on 24.04.2018.
  */
 
-public class NotePresenter implements NoteContract.Presenter
+public final class NotePresenter implements NoteContract.Presenter
 {
     private final int ADD_NOTE = 1;
 

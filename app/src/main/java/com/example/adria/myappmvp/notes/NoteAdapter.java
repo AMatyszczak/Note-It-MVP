@@ -79,7 +79,7 @@ public class NoteAdapter extends BaseAdapter
 
         TextView description = root.findViewById(R.id.description);
         description.setText(note.getDescription());
-
+//
         LinearLayout linearLayout = root.findViewById(R.id.noteTaskList);
         ArrayList<Task> taskList = mNoteFragment.getNoteTasks(note.getId());
         linearLayout.removeAllViews();
@@ -156,8 +156,8 @@ public class NoteAdapter extends BaseAdapter
     public ArrayList<Note> getNotesFromIds(SparseBooleanArray notesIds)
     {
         ArrayList<Note> noteList = new ArrayList<>() ;
-
-        for (int i = 0 ; i < notesIds.size(); i++)
+        int N = noteList.size();
+        for (int i = 0 ; i < N; i++)
         {
             if(notesIds.valueAt(i))
             {

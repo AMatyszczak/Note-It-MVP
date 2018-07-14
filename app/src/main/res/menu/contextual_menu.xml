@@ -3,14 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/flag"
-        android:orderInCategory="100"
-        android:title="@string/saved"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_outline_flag_24px"
-        />
-
-    <item
         android:id="@+id/item_delete"
         android:icon="@android:drawable/ic_menu_delete"
 

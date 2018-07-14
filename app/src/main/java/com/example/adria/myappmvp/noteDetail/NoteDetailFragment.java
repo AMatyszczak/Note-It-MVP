@@ -124,7 +124,12 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAddTaskEditText = root.findViewById(R.id.add_task_textView);
-        setTaskListAddTitle(false);
+
+        if(mAdapter.getItemCount() == 0 )
+            setTaskListAddTitle(false);
+        else
+            setTaskListAddTitle(true);
+
         mAddTaskEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

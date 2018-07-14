@@ -88,10 +88,12 @@ public class NoteFragment extends Fragment implements NoteContract.View {
         mNoteGridView.setAdapter(mNoteAdapter);
         mNoteGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         mNoteGridView.setMultiChoiceModeListener(new MyMultiChoiceListener(mNoteAdapter));
+
         mNoteGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 getNoteDetail(i);
+                Log.e(TAG, "onItemClick: " );
             }
         });
         showNoNoteMenu(false);

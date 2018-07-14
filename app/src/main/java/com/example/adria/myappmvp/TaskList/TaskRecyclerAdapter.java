@@ -53,11 +53,6 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         root.setTag(myViewHolder);
 
         final MyViewHolder holder = (MyViewHolder) root.getTag();
-
-
-
-
-
         return holder;
     }
 

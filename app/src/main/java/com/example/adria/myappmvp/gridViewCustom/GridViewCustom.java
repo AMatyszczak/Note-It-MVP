@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -147,7 +148,8 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
                         {
                             if(mActionMode != null)
                                 mActionMode.finish();
-                            final View viewUnder = getViewFromId(viewID);
+
+                            View viewUnder = getViewFromId(viewID);
 
                             adapter.swapItems((int)mDraggedItemId, (int)viewID);
                             animateDragToStart(mDraggedView, viewUnder);
