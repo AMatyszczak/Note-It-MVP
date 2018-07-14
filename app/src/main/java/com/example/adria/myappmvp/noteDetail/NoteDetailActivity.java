@@ -9,7 +9,6 @@ import android.view.Menu;
 
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.local.NoteRepository;
-import com.example.adria.myappmvp.note.NoteFragment;
 import com.example.adria.myappmvp.util.ActivityUtils;
 
 

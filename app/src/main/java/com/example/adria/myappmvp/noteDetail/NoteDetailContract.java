@@ -3,6 +3,9 @@ package com.example.adria.myappmvp.noteDetail;
 import android.content.Intent;
 
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.Task;
+
+import java.util.ArrayList;
 
 /**
  * Created by adria on 10.05.2018.
@@ -20,7 +23,9 @@ public interface NoteDetailContract
 
     interface Presenter
     {
-        Note getNoteFromIntent(Intent intent);
+        Note getNoteFromIntent();
+        ArrayList<Task> getNoteTasks();
+
         void updateNote(String title, String description, int position);
         void updateNoteOnBackPressed();
         void notifyDataChanged();
