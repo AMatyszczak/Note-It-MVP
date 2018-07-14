@@ -1,5 +1,10 @@
 package com.example.adria.myappmvp.noteAdd;
 
+import com.example.adria.myappmvp.TaskList.TaskItem;
+import com.example.adria.myappmvp.data.Task;
+
+import java.util.ArrayList;
+
 /**
  * Created by adria on 04.05.2018.
  */
@@ -12,6 +17,7 @@ public interface NoteAddContract
         String getTitle();
         String getDescription();
         void showNotes();
+        ArrayList<Task> getTaskList();
 
     }
 
