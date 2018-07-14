@@ -25,23 +25,28 @@ public final class Task
     @ColumnInfo(name = "description")
     private String mDescription;
 
+    @Nonnull
+    @ColumnInfo(name ="isDone")
+    private boolean isDone;
+
     @NonNull
     @ForeignKey(entity = Note.class,parentColumns = "id", childColumns = "noteId")
     @ColumnInfo(name = "noteId")
     private String mNoteId;
 
 
-    public Task(String description, String noteId)
+    public Task(String description,Boolean isDone, String noteId)
     {
-        this(UUID.randomUUID().toString(), description, noteId);
+        this(UUID.randomUUID().toString(), description, isDone, noteId);
 
     }
 
     @Ignore
-    Task(String id, String description, String noteId)
+    Task(String id, String description,Boolean isDone, String noteId)
     {
         this.mId = id;
         this.mDescription = description;
+        this.isDone = isDone;
         this.mNoteId = noteId;
     }
 
@@ -73,4 +78,9 @@ public final class Task
     public void setNoteId(@Nonnull String mNoteId) {
         this.mNoteId = mNoteId;
     }
+
+    @Nonnull
+    public boolean isDone() { return isDone; }
+
+    public void setDone(@Nonnull boolean done) { isDone = done; }
 }
