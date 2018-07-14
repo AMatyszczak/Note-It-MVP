@@ -1,21 +1,34 @@
-package com.example.adria.myappmvp.note;
+package com.example.adria.myappmvp.notes;
 
 
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.Task;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class NoteAdapter extends BaseAdapter
 {
@@ -66,6 +79,30 @@ public class NoteAdapter extends BaseAdapter
 
         TextView description = root.findViewById(R.id.description);
         description.setText(note.getDescription());
+
+        LinearLayout linearLayout = root.findViewById(R.id.noteTaskList);
+        ArrayList<Task> taskList = mNoteFragment.getNoteTasks(note.getId());
+        linearLayout.removeAllViews();
+
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        RelativeLayout v = (RelativeLayout)inflater.inflate(R.layout.task_fragment_layout, viewGroup, false);
+        TextView textView = v.findViewById(R.id.item_frag_text);
+
+
+        for (Task task :taskList) {
+
+            if(textView!=null)
+            {
+                v = (RelativeLayout)inflater.inflate(R.layout.task_fragment_layout, viewGroup, false);
+                textView = v.findViewById(R.id.item_frag_text);
+                CheckBox checkBox = v.findViewById(R.id.item_frag_checkbox);
+                textView.setText(task.getDescription());
+                checkBox.setChecked(task.isDone());
+
+                linearLayout.addView(v);
+            }
+        }
+
 
 
         return root;
