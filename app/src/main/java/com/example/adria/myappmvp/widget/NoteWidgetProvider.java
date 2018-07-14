@@ -14,7 +14,7 @@ import android.widget.RemoteViews;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Note;
 import com.example.adria.myappmvp.data.local.NoteRepository;
-import com.example.adria.myappmvp.note.NoteActivity;
+import com.example.adria.myappmvp.notes.NoteActivity;
 
 import static android.content.ContentValues.TAG;
 

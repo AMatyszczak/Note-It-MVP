@@ -17,7 +17,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.example.adria.myappmvp.note.NoteAdapter;
+import com.example.adria.myappmvp.notes.NoteAdapter;
 
 public class GridViewCustom extends GridView implements AdapterView.OnItemLongClickListener
 {

@@ -1,6 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="fab_elevation">8dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

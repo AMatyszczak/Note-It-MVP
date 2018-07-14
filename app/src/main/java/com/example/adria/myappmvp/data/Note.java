@@ -1,6 +1,7 @@
 package com.example.adria.myappmvp.data;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Entity;
 import android.support.annotation.NonNull;
@@ -71,6 +72,5 @@ public final class Note
     public void setPosition(int mPosition) {
         this.mPosition = mPosition;
     }
-
 
 }

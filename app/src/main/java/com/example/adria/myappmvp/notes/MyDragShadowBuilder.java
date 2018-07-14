@@ -1,4 +1,4 @@
-package com.example.adria.myappmvp.note;
+package com.example.adria.myappmvp.notes;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

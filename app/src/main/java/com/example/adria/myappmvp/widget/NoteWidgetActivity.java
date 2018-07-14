@@ -14,7 +14,7 @@ import android.widget.GridView;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.Note;
 import com.example.adria.myappmvp.data.local.NoteRepository;
-import com.example.adria.myappmvp.note.NoteAdapter;
+import com.example.adria.myappmvp.notes.NoteAdapter;
 
 import java.util.ArrayList;
 

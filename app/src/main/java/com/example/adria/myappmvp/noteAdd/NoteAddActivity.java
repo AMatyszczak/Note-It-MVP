@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.data.local.NoteRepository;
+import com.example.adria.myappmvp.noteDetail.NoteDetailFragment;
+import com.example.adria.myappmvp.util.ActivityUtils;
 
 public class NoteAddActivity extends AppCompatActivity {
 
@@ -36,6 +38,12 @@ public class NoteAddActivity extends AppCompatActivity {
         }
 
         NoteAddFragment NoteAddFragment = (NoteAddFragment)getSupportFragmentManager().findFragmentById(R.id.NoteAddFragment);
+        if(NoteAddFragment == null)
+        {
+            NoteAddFragment = new NoteAddFragment();
+            ActivityUtils.addFragmentToActivity(
+                    getSupportFragmentManager(), NoteAddFragment, R.id.contentFrame);
+        }
         NoteRepository noteRepository = NoteRepository.getINSTANCE(getApplication());
         mPresenter = new NoteAddPresenter(NoteAddFragment, noteRepository);
     }

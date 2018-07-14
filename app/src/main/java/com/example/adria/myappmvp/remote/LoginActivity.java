@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
-import com.example.adria.myappmvp.note.NoteActivity;
+import com.example.adria.myappmvp.notes.NoteActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;

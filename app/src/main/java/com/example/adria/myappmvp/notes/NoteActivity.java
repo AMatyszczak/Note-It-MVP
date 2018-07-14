@@ -1,4 +1,4 @@
-package com.example.adria.myappmvp.note;
+package com.example.adria.myappmvp.notes;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
