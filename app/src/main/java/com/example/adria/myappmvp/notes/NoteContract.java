@@ -1,6 +1,7 @@
-package com.example.adria.myappmvp.note;
+package com.example.adria.myappmvp.notes;
 
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public interface NoteContract
         void clearNoteList();
         void getNoteDetail(int noteFromList);
 
+        ArrayList<Task> getNoteTasks(String noteId);
+
 
     }
     interface Presenter
@@ -30,7 +33,10 @@ public interface NoteContract
         void clearNotes();
         void deleteNotes(ArrayList<Note> notes);
         void deleteNoteById(String id);
+
         void refreshNoteList();
+        ArrayList<Task> getNoteTasks(String noteId);
+
         public void swapNotesPositions(Note fromNote, Note toNote);
     }
 

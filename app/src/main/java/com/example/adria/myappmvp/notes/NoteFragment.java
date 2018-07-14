@@ -1,4 +1,4 @@
-package com.example.adria.myappmvp.note;
+package com.example.adria.myappmvp.notes;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -18,12 +18,15 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.adria.myappmvp.TaskList.TaskRecyclerAdapter;
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.gridViewCustom.GridViewCustom;
 import com.example.adria.myappmvp.noteAdd.NoteAddActivity;
 import com.example.adria.myappmvp.R;
 import com.example.adria.myappmvp.noteDetail.NoteDetailActivity;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +37,11 @@ import static android.content.ContentValues.TAG;
  */
 public class NoteFragment extends Fragment implements NoteContract.View {
 
-    private NoteAdapter mNoteAdapter;
-    private NoteContract.Presenter mPresenter;
-
     private final static int ADD_NOTE = 1;
     private final static String GET_NOTE_DETAIL = "GETNOTEDETAIL";
+
+    private NoteAdapter mNoteAdapter;
+    private NoteContract.Presenter mPresenter;
 
     private GridViewCustom mNoteGridView;
     private LinearLayout mNoteLayout;
@@ -115,6 +118,9 @@ public class NoteFragment extends Fragment implements NoteContract.View {
     {
         mNoteAdapter.replaceNoteList(noteList);
     }
+
+    @Override
+    public ArrayList<Task> getNoteTasks(String noteId ) { return mPresenter.getNoteTasks(noteId); }
 
     @Override
     public void clearNoteList()

@@ -1,6 +1,7 @@
-package com.example.adria.myappmvp.note;
+package com.example.adria.myappmvp.notes;
 
 import com.example.adria.myappmvp.data.Note;
+import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.local.NoteRepository;
 
 import java.util.ArrayList;
@@ -55,6 +56,9 @@ public class NotePresenter implements NoteContract.Presenter
     {
         return mNoteRepository.getNotesList();
     }
+
+    @Override
+    public ArrayList<Task> getNoteTasks(String noteId) { return mNoteRepository.getNoteTasks(noteId); }
 
     @Override
     public void deleteNotes(ArrayList<Note> notes)
