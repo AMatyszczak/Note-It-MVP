@@ -17,7 +17,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.noteIt.adria.myappmvp.notes.NoteAdapter;
+import com.noteIt.notes.NoteAdapter;
 
 public class GridViewCustom extends GridView implements AdapterView.OnItemLongClickListener {
     private final static long ANIMATION_DURATION = 300;
