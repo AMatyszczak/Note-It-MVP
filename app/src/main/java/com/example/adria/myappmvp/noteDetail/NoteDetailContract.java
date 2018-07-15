@@ -23,10 +23,10 @@ public interface NoteDetailContract
 
     interface Presenter
     {
-        Note getNoteFromIntent();
+        Note getNote();
         ArrayList<Task> getNoteTasks();
 
-        void updateNote(String title, String description, int position);
+        void updateNote(String title, String description, int position, ArrayList<Task> tasksList);
         void updateNoteOnBackPressed();
         void notifyDataChanged();
         boolean isChanged();

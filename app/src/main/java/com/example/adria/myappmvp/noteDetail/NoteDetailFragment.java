@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.adria.myappmvp.R;
-import com.example.adria.myappmvp.TaskList.TaskItem;
 import com.example.adria.myappmvp.TaskList.TaskRecyclerAdapter;
 import com.example.adria.myappmvp.data.Note;
 import com.example.adria.myappmvp.data.Task;
@@ -62,7 +61,7 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Note note = mPresenter.getNoteFromIntent();
+        Note note = mPresenter.getNote();
         mTitle.setText(note.getTitle());
         mDescription.setText(note.getDescription());
         mPosition = note.getPosition();
@@ -154,13 +153,12 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
     @Override
     public void updateNote()
     {
-        mPresenter.updateNote(mTitle.getText().toString(), mDescription.getText().toString(), mPosition);
+        mPresenter.updateNote(mTitle.getText().toString(), mDescription.getText().toString(), mPosition, mAdapter.getTaskList());
         if(getView()!=null)
         {
+
             Snackbar.make(getView(),SAVED,Snackbar.LENGTH_SHORT).show();
         }
-        else
-            Log.e(TAG, "updateNote: getView() is null");
     }
 
     @Override

@@ -1,11 +1,9 @@
 package com.example.adria.myappmvp.noteDetail;
 
-import android.content.Intent;
 
 import com.example.adria.myappmvp.data.Note;
 import com.example.adria.myappmvp.data.Task;
 import com.example.adria.myappmvp.data.local.NoteRepository;
-
 import java.util.ArrayList;
 
 
@@ -34,7 +32,7 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter
 
 
     @Override
-    public Note getNoteFromIntent()
+    public Note getNote()
     {
         return mNoteRepository.getNoteFromId(mNoteID);
     }
@@ -43,8 +41,19 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter
     public ArrayList<Task> getNoteTasks() { return mNoteRepository.getNoteTasks(mNoteID); }
 
     @Override
-    public void updateNote(String title, String description, int position) {
+    public void updateNote(String title, String description, int position, ArrayList<Task> tasksList) {
         Note note = new Note(mNoteID, title, description, position);
+        for (Task task : tasksList) {
+            if(task.getNoteId().equals(String.valueOf(-1)))
+            {
+                task.setNoteId(mNoteID);
+                mNoteRepository.insertTask(task);
+            }
+            else
+            {
+                mNoteRepository.updateTask(task);
+            }
+        }
 
         mNoteRepository.updateNote(note);
         mFragment.closeNoteDetail();
