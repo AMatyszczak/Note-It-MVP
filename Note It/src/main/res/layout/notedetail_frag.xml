@@ -14,7 +14,7 @@
         android:layout_margin="8dp"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:context="com.example.adria.myappmvp.noteDetail.NoteDetailFragment"
+        tools:context="com.noteIt.noteDetail.NoteDetailFragment"
         tools:showIn="@layout/notedetail_act">
 
         <EditText

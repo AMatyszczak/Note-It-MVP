@@ -9,7 +9,7 @@
         android:layout_margin="8dp"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:context="com.example.adria.myappmvp.noteAdd.NoteAddFragment">
+        tools:context="com.noteIt.noteAdd.NoteAddFragment">
 
         <EditText
             android:id="@+id/title"

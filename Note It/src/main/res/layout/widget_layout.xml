@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="6dp"
     android:orientation="vertical"
-    tools:context="com.example.adria.myappmvp.noteDetail.NoteDetailFragment"
+    tools:context="com.noteIt.noteDetail.NoteDetailFragment"
     tools:showIn="@layout/notedetail_act"
     android:id="@+id/widgetLayout"
     android:background="@drawable/widget_style">

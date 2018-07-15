@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.adria.myappmvp.notes.NoteFragment"
+    tools:context="com.noteIt.notes.NoteFragment"
     tools:showIn="@layout/note_act"
     android:id="@+id/NoteFragment"
     android:background="@color/colorBackground">
@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:padding="6dp">
 
-        <com.example.adria.myappmvp.gridViewCustom.GridViewCustom
+        <com.noteIt.gridViewCustom.GridViewCustom
             android:id="@+id/noteGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
