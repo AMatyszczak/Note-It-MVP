@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adria.myappmvp.notes.NoteFragment"
+    tools:showIn="@layout/note_act"
+    android:id="@+id/NoteFragment"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:id="@+id/noteLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <com.example.adria.myappmvp.gridViewCustom.GridViewCustom
+            android:id="@+id/noteGridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="150dp"
+            android:minHeight="150dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:numColumns="auto_fit"
+
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="2dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/noNoteLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/noNoteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_note" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

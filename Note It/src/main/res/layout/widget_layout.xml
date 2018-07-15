@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="6dp"
+    android:orientation="vertical"
+    tools:context="com.example.adria.myappmvp.noteDetail.NoteDetailFragment"
+    tools:showIn="@layout/notedetail_act"
+    android:id="@+id/widgetLayout"
+    android:background="@drawable/widget_style">
+
+    <TextView
+        android:id="@+id/widgetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/title"
+        android:singleLine="true"
+        android:textSize="16dp"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:background="@drawable/widget_title_style" />
+
+    <TextView
+        android:id="@+id/widgetDescription"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:hint="@string/description"
+        android:textSize="12dp"
+        android:padding="2dp"
+        android:textColor="@color/black" />
+
+</LinearLayout>
