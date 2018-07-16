@@ -164,7 +164,6 @@ public class NoteFragment extends Fragment implements NoteContract.View {
         Note note = mNoteAdapter.getItem(noteFromList);
         Intent intent = new Intent(getContext(), NoteDetailActivity.class);
         intent.putExtra(GET_NOTE_DETAIL, note.getId());
-        Log.e(TAG, "getNoteDetail: " + note.getId().toString());
         startActivity(intent);
     }
 
@@ -198,7 +197,6 @@ public class NoteFragment extends Fragment implements NoteContract.View {
             ArrayList<Note> arrayList = skAdapter.getNotesFromIds(mNoteGridView.getCheckedItemPositions());
             switch (menuItem.getItemId()) {
                 case R.id.item_delete:
-
                     mPresenter.deleteNotes(arrayList);
                     actionMode.finish();
                     break;

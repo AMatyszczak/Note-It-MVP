@@ -124,7 +124,7 @@ public class NoteAdapter extends BaseAdapter {
 
     public ArrayList<Note> getNotesFromIds(SparseBooleanArray notesIds) {
         ArrayList<Note> noteList = new ArrayList<>();
-        int N = noteList.size();
+        int N = notesIds.size();
         for (int i = 0; i < N; i++) {
             if (notesIds.valueAt(i)) {
                 noteList.add(mNoteList.get(notesIds.keyAt(i)));
