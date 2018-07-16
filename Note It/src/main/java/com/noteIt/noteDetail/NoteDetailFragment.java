@@ -56,44 +56,47 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Note note = mPresenter.getNote();
-        mTitle.setText(note.getTitle());
-        mDescription.setText(note.getDescription());
-        mPosition = note.getPosition();
+        if(mPresenter != null)
+        {
+            Note note = mPresenter.getNote();
+            mTitle.setText(note.getTitle());
+            mDescription.setText(note.getDescription());
+            mPosition = note.getPosition();
 
-        mTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
+            mTitle.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mPresenter.notifyDataChanged();
-            }
+                }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    mPresenter.notifyDataChanged();
+                }
 
-            }
-        });
-        mDescription.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                @Override
+                public void afterTextChanged(Editable editable) {
 
-            }
+                }
+            });
+            mDescription.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mPresenter.notifyDataChanged();
-            }
+                }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    mPresenter.notifyDataChanged();
+                }
 
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable editable) {
 
+                }
+            });
+        }
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_note_detail);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,16 +110,17 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.notedetail_frag, container, false);
-        mTitle = root.findViewById(R.id.title);
-        mDescription = root.findViewById(R.id.description);
-        mAdapter.addTasks(mPresenter.getNoteTasks());
+        mTitle = root.findViewById(R.id.edit_note_title);
+        mDescription = root.findViewById(R.id.edit_note_description);
+        if(mPresenter!= null)
+            mAdapter.addTasks(mPresenter.getNoteTasks());
 
         mRecyclerView = root.findViewById(R.id.recyclerView);
         mRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAddTaskEditText = root.findViewById(R.id.add_task_textView);
+        mAddTaskEditText = root.findViewById(R.id.add_note_textView);
 
         if (mAdapter.getItemCount() == 0)
             setTaskListAddTitle(false);
