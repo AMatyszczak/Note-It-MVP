@@ -54,7 +54,8 @@ public class NoteFragment extends Fragment implements NoteContract.View {
 
     @Override
     public void onResume() {
-        mPresenter.refreshNoteList();
+        if(mPresenter!= null)
+            mPresenter.refreshNoteList();
 
         super.onResume();
     }
@@ -108,7 +109,8 @@ public class NoteFragment extends Fragment implements NoteContract.View {
                 addNoteStart();
             }
         });
-        mPresenter.refreshNoteList();
+        if(mPresenter!= null)
+            mPresenter.refreshNoteList();
     }
 
     @Override
