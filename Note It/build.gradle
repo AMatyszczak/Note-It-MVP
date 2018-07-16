@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
-        applicationId "com.myappmvp"
+        applicationId "com.noteIt"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -16,38 +16,56 @@ android {
         }
 
     }
+    flavorDimensions "default"
 
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+        }
+        prod {
+            dimension "default"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        mock {
+        }
+    }
 }
 
 dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     //Material design
-    api 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
+    api 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     //Dagger dependencies
-    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.google.dagger:dagger:2.11-rc2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11-rc2'
     implementation 'com.google.dagger:dagger-android-support:2.11-rc2'
     //ROOM DB
     // Room (use 1.1.0-beta3 for latest beta)
-    implementation "android.arch.persistence.room:runtime:1.0.0"
+    implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     //CardView
-    implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.1'
     //Recycler View
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    //TESTING
     testImplementation 'junit:junit:4.12'
+    //Espresso
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
+    //Mockito
+    testImplementation 'org.mockito:mockito-core:2.7.22'
 }
