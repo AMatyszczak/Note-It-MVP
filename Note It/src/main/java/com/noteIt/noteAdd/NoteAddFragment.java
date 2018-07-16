@@ -65,8 +65,8 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
 
         View root = inflater.inflate(R.layout.addnote_frag, container, false);
 
-        mTitle = root.findViewById(R.id.title);
-        mDescription = root.findViewById(R.id.description);
+        mTitle = root.findViewById(R.id.add_note_title);
+        mDescription = root.findViewById(R.id.add_note_description);
 
 
         mRecyclerView = root.findViewById(R.id.recyclerViewAdd);
@@ -74,7 +74,7 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAddTaskEditText = root.findViewById(R.id.add_task_textView);
+        mAddTaskEditText = root.findViewById(R.id.add_note_textView);
         setTaskListAddTitle(false);
         mAddTaskEditText.setOnClickListener(new View.OnClickListener() {
             @Override

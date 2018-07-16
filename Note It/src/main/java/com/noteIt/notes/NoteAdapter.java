@@ -60,10 +60,10 @@ public class NoteAdapter extends BaseAdapter {
 
         Note note = getItem(i);
 
-        TextView title = root.findViewById(R.id.title);
+        TextView title = root.findViewById(R.id.add_note_title);
         title.setText(note.getTitle());
 
-        TextView description = root.findViewById(R.id.description);
+        TextView description = root.findViewById(R.id.add_note_description);
         description.setText(note.getDescription());
 
         LinearLayout linearLayout = root.findViewById(R.id.noteTaskList);

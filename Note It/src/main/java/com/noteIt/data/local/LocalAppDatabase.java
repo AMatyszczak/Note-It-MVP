@@ -19,7 +19,7 @@ public abstract class LocalAppDatabase extends RoomDatabase {
 
     private static LocalAppDatabase INSTANCE;
 
-    static LocalAppDatabase getDatabase(Context context) {
+    public static LocalAppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             synchronized (LocalAppDatabase.class) {
                 if (INSTANCE == null) {

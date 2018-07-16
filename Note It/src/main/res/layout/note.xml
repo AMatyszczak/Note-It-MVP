@@ -26,7 +26,7 @@
 
         <android.support.v7.widget.AppCompatTextView
 
-            android:id="@+id/title"
+            android:id="@+id/add_note_title"
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:maxLines="1"
@@ -37,7 +37,7 @@
             android:textColor="@color/black" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/description"
+            android:id="@+id/add_note_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:autoSizeTextType="uniform"

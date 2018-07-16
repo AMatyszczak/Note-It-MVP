@@ -18,7 +18,7 @@
         tools:showIn="@layout/notedetail_act">
 
         <EditText
-            android:id="@+id/title"
+            android:id="@+id/edit_note_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title"
@@ -28,7 +28,7 @@
             android:textSize="24dp" />
 
         <EditText
-            android:id="@+id/description"
+            android:id="@+id/edit_note_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
@@ -39,7 +39,7 @@
             android:paddingBottom="16dp" />
 
         <TextView
-            android:id="@+id/add_task_textView"
+            android:id="@+id/add_note_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="36dp"
