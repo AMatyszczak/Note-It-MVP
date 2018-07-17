@@ -17,6 +17,8 @@ public interface NoteDetailContract {
 
         void updateNote();
 
+        ArrayList<Task> getDeletedTasks();
+
     }
 
     interface Presenter {

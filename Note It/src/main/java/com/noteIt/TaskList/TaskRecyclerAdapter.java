@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.MyViewHolder> {
-    private ArrayList<Task> mTaskItems;
+    private ArrayList<Task> mTaskList;
+    private ArrayList<Task> mDeletedTaskList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         CheckBox checkBox;
@@ -28,14 +29,15 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
         MyViewHolder(View view) {
             super(view);
-            checkBox = view.findViewById(R.id.item_checkbox);
-            editText = view.findViewById(R.id.item_text);
-            button = view.findViewById(R.id.clear_button);
+            checkBox = view.findViewById(R.id.task_checkbox);
+            editText = view.findViewById(R.id.task_text);
+            button = view.findViewById(R.id.task_clear_button);
         }
     }
 
     public TaskRecyclerAdapter(ArrayList<Task> arrayList) {
-        this.mTaskItems = arrayList;
+        this.mDeletedTaskList = new ArrayList<>(0);
+        this.mTaskList = arrayList;
         setList(arrayList);
     }
 
@@ -52,7 +54,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        final Task task = mTaskItems.get(position);
+        final Task task = mTaskList.get(position);
 
         if (holder.textWatcher != null)
             holder.editText.removeTextChangedListener(holder.textWatcher);
@@ -85,6 +87,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mDeletedTaskList.add(task);
                 deleteTask(task);
             }
         });
@@ -92,7 +95,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return mTaskItems.size();
+        return mTaskList.size();
     }
 
     @Override
@@ -101,28 +104,30 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     }
 
     private void deleteTask(Task task) {
-        mTaskItems.remove(task);
+        mTaskList.remove(task);
         notifyDataSetChanged();
     }
 
     public void addTasks(ArrayList<Task> taskList) {
-        mTaskItems.addAll(taskList);
+        mTaskList.addAll(taskList);
         notifyDataSetChanged();
     }
 
     public void addTask(Task task) {
-        mTaskItems.add(task);
+        mTaskList.add(task);
         notifyDataSetChanged();
     }
 
 
     public ArrayList<Task> getTaskList() {
-        return mTaskItems;
+        return mTaskList;
     }
 
+    public ArrayList<Task> getDeletedTaskList() { return mDeletedTaskList; };
+
     private void setList(List<Task> taskList) {
-        mTaskItems.clear();
-        mTaskItems.addAll(taskList);
+        mTaskList.clear();
+        mTaskList.addAll(taskList);
         notifyDataSetChanged();
     }
 

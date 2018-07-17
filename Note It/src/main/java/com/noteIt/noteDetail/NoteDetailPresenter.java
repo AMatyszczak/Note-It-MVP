@@ -5,6 +5,7 @@ import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -18,6 +19,7 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter {
     private NoteDetailContract.View mFragment;
     private NoteRepository mNoteRepository;
     private boolean isChanged;
+
 
 
     NoteDetailPresenter(String noteId, NoteDetailContract.View fragment, NoteRepository noteRepository) {
@@ -43,12 +45,21 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter {
     @Override
     public void updateNote(String title, String description, int position, ArrayList<Task> tasksList) {
         Note note = new Note(mNoteID, title, description, position);
-        for (Task task : tasksList) {
+
+        for (Task task : tasksList)
+        {
             if (task.getNoteId().equals(String.valueOf(-1))) {
                 task.setNoteId(mNoteID);
                 mNoteRepository.insertTask(task);
             } else {
                 mNoteRepository.updateTask(task);
+            }
+        }
+        for(Task task: mFragment.getDeletedTasks())
+        {
+            if(!task.getNoteId().equals(String.valueOf(-1)))
+            {
+                mNoteRepository.deleteTask(task);
             }
         }
 
@@ -70,4 +81,5 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter {
     public boolean isChanged() {
         return isChanged;
     }
+
 }
