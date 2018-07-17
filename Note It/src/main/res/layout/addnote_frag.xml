@@ -34,7 +34,7 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/add_note_textView"
+            android:id="@+id/add_task_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
@@ -45,7 +45,7 @@
             tools:textSize="24dp" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewAdd"
+            android:id="@+id/task_recycler_view_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true" />

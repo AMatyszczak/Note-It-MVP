@@ -25,8 +25,8 @@ public class NoteDaoTest
 
     private static final Note NOTE = new Note("Title", "Description", 1);
 
-    LocalAppDatabase mAppDatabase;
-    NoteDao mNoteDao;
+    private LocalAppDatabase mAppDatabase;
+    private NoteDao mNoteDao;
 
     @Before
     public void init()
@@ -133,7 +133,7 @@ public class NoteDaoTest
 
     }
 
-    void checkNote(Note note,String id, String title, String description, int position)
+    private void checkNote(Note note,String id, String title, String description, int position)
     {
         assertThat(note, notNullValue());
         assertThat(note.getId(), is(id));

@@ -28,7 +28,7 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
     private EditText mTitle;
     private EditText mDescription;
     private NoteAddContract.Presenter mPresenter;
-    private TextView mAddTaskEditText;
+    private TextView mAddTaskTextView;
 
     private RecyclerView mRecyclerView;
     private TaskRecyclerAdapter mAdapter;
@@ -69,17 +69,17 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
         mDescription = root.findViewById(R.id.add_note_description);
 
 
-        mRecyclerView = root.findViewById(R.id.recyclerViewAdd);
+        mRecyclerView = root.findViewById(R.id.task_recycler_view_add);
         mRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAddTaskEditText = root.findViewById(R.id.add_note_textView);
+        mAddTaskTextView = root.findViewById(R.id.add_task_text_view);
         setTaskListAddTitle(false);
-        mAddTaskEditText.setOnClickListener(new View.OnClickListener() {
+        mAddTaskTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Task task = new Task(" ", false, String.valueOf(-1));
+                Task task = new Task("", false, String.valueOf(-1));
                 mAdapter.addTask(task);
                 mAdapter.notifyDataSetChanged();
                 setTaskListAddTitle(true);
@@ -117,9 +117,9 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
 
     public void setTaskListAddTitle(boolean set) {
         if (set) {
-            mAddTaskEditText.setText(ADD_TASK);
+            mAddTaskTextView.setText(ADD_TASK);
         } else
-            mAddTaskEditText.setText(ADD_LIST);
+            mAddTaskTextView.setText(ADD_LIST);
     }
 
 

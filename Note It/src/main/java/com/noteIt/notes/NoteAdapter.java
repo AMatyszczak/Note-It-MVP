@@ -72,14 +72,14 @@ public class NoteAdapter extends BaseAdapter {
 
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         RelativeLayout v = (RelativeLayout) inflater.inflate(R.layout.task_fragment_layout, viewGroup, false);
-        TextView textView = v.findViewById(R.id.item_frag_text);
+        TextView textView = v.findViewById(R.id.task_layout_text);
 
         for (Task task : taskList) {
 
             if (textView != null) {
                 v = (RelativeLayout) inflater.inflate(R.layout.task_fragment_layout, viewGroup, false);
-                textView = v.findViewById(R.id.item_frag_text);
-                CheckBox checkBox = v.findViewById(R.id.item_frag_checkbox);
+                textView = v.findViewById(R.id.task_layout_text);
+                CheckBox checkBox = v.findViewById(R.id.task_layout_checkbox);
                 textView.setText(task.getDescription());
                 checkBox.setChecked(task.isDone());
 
