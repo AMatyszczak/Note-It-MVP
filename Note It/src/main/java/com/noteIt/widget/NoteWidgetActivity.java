@@ -13,6 +13,7 @@ import android.widget.GridView;
 
 import com.noteIt.R;
 import com.noteIt.data.Note;
+import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 import com.noteIt.notes.NoteAdapter;
 
@@ -25,9 +26,10 @@ public class NoteWidgetActivity extends Activity
     public static final String PREF_TITLE = "Title";
     public static final String PREF_DESCRIPTION = "Description";
     public static final String PREF_ID = "Id";
+    public static final String PREF_TASK_LIST = "PrefTaskList";
 
     private GridView mGridView;
-    private NoteRepository mTaskRepository;
+    private NoteRepository mNoteRepository;
     private NoteAdapter mNoteAdapter;
 
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -36,15 +38,13 @@ public class NoteWidgetActivity extends Activity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         setResult(RESULT_CANCELED);
         setContentView(R.layout.widget_note_menu);
         mGridView = findViewById(R.id.widgetNoteGridView);
-        mTaskRepository = mTaskRepository.getINSTANCE(getApplication());
+        mNoteRepository = mNoteRepository.getINSTANCE(getApplication());
         mNoteAdapter = new NoteAdapter(new ArrayList<Note>(0) );
         mGridView.setAdapter(mNoteAdapter);
-        mNoteAdapter.replaceNoteList(mTaskRepository.getNotesList());
+        mNoteAdapter.replaceNoteList(mNoteRepository.getNotesList());
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -67,7 +67,7 @@ public class NoteWidgetActivity extends Activity
                 String id = note.getId();
 
                 Context context = NoteWidgetActivity.this;
-                saveTask(context, mAppWidgetId, note);
+                saveNote(context, mAppWidgetId, note);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 NoteWidgetProvider.updateAppWidget(context,appWidgetManager,mAppWidgetId,title,description,id);
 
@@ -83,12 +83,13 @@ public class NoteWidgetActivity extends Activity
 
     }
 
-    static void saveTask(Context context, int appwidgetId, Note note)
+    static void saveNote(Context context, int appwidgetId, Note note)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME,0).edit();
         prefs.putString(PREF_TITLE + appwidgetId, note.getTitle());
         prefs.putString(PREF_DESCRIPTION+ appwidgetId, note.getDescription());
         prefs.putString(PREF_ID + appwidgetId, note.getId());
+
         prefs.apply();
     }
 
@@ -133,4 +134,5 @@ public class NoteWidgetActivity extends Activity
             return "Example";
         }
     }
+
 }

@@ -6,15 +6,24 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.noteIt.R;
 import com.noteIt.data.Note;
+import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 import com.noteIt.notes.NoteActivity;
+
+import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
@@ -23,6 +32,9 @@ public class NoteWidgetProvider extends AppWidgetProvider
 
     private static final int MIN_WIDGET_HEIGHT = 100;
     private static final int MIN_WIDGET_WIDTH = 70;
+
+    private static final String NOTE_ID = "NOTE_ID";
+   // private static final String
     NoteRepository mTaskRepository;
 
 
@@ -55,7 +67,7 @@ public class NoteWidgetProvider extends AppWidgetProvider
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
-        Log.e(TAG, "onUpdate: !!!!" );
+
         for (int i=0; i<N; i++) {
             int appWidgetId = appWidgetIds[i];
 
@@ -63,7 +75,7 @@ public class NoteWidgetProvider extends AppWidgetProvider
             String description = NoteWidgetActivity.loadDescPref(context,appWidgetId);
             String id = NoteWidgetActivity.loadIdPref(context,appWidgetId);
 
-            updateAppWidget(context, appWidgetManager, appWidgetId, title,description,id);
+            updateAppWidget(context, appWidgetManager, appWidgetId, title,description, id);
 
         }
     }
@@ -71,17 +83,23 @@ public class NoteWidgetProvider extends AppWidgetProvider
 
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, String title, String description, String taskId)
+                                int appWidgetId, String title, String description, String noteId)
     {
         RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.widget_layout);
 
-
         views.setTextViewText(R.id.widgetTitle,title);
         views.setTextViewText(R.id.widgetDescription,description);
-        Intent intent = new Intent(context, NoteActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+        Intent intentActivity = new Intent(context, NoteActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentActivity, 0);
         views.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent);
-        //views.setInt(R.id.widgetLayout, "setBackgroundResource", R.drawable.widget_style);
+
+        Intent intentTask = new Intent(context, MyWidgetRemoteViewsService.class);
+        intentTask.putExtra(NOTE_ID, noteId);
+        intentTask.setData(Uri.fromParts("content",noteId,null));
+
+        intentTask.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        views.setRemoteAdapter(R.id.widgetTaskList, intentTask);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
