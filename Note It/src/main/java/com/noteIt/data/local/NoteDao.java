@@ -38,6 +38,5 @@ public interface NoteDao {
     @Update
     void updateNote(Note note);
 
-    @Query("SELECT t.* FROM task t, note n WHERE t.noteId = :noteId AND n.id = t.noteId")
-    List<Task> getNoteTasks(String noteId);
+
 }
