@@ -150,11 +150,11 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
 
                             viewUnder.setVisibility(INVISIBLE);
                             mDraggedView.setVisibility(VISIBLE);
-
+//
                             mDraggedView = viewUnder;
                             mDraggedItemId = viewID;
 
-                            adapter.notifyDataSetChanged();
+                            //adapter.notifyDataSetChanged();
                             return true;
                         }
                         return false;
@@ -230,6 +230,10 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
             translateAnimation.setDuration(ANIMATION_DURATION);
             translateAnimation.setInterpolator(new AccelerateInterpolator());
             currView.startAnimation(translateAnimation);
+
+
+
+
 
         }
     }

@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -71,10 +70,10 @@ public class TaskDaoTest
         Note note = new Note(NOTE_ID,"title","description",1);
         noteDao.insertNote(note);
 
-        ArrayList<Task> taskList = new ArrayList<Task>(0);
+        ArrayList<Task> taskList = new ArrayList<>(0);
         taskList.add(TASK);
         taskList.add(TASK2);
-        
+
         mTaskDao.insertTasks(taskList);
         ArrayList<Task> tasksReturned = (ArrayList<Task>)mTaskDao.getNoteTasks(TASK.getNoteId());
 
@@ -84,27 +83,12 @@ public class TaskDaoTest
 
 
 
-    void checkTask(Task task,String id, String description, Boolean isDone)
+    private void checkTask(Task task,String id, String description, Boolean isDone)
     {
         assertThat(task, notNullValue());
         assertThat(task.getId(), is(id));
         assertThat(task.getDescription(), is(description));
         assertThat(task.isDone(), is(isDone));
     }
-
-//    @Insert
-//    void insertTask(Task task);
-//
-//    @Insert
-//    void insertTasks(ArrayList<Task> task);
-//
-//    @Delete
-//    void deleteTask(Task task);
-//
-//    @Update
-//    void updateTask(Task task);
-//@Query("SELECT t.* FROM task t, note n WHERE t.noteId = :noteId AND n.id = t.noteId")
-//List<Task> getNoteTasks(String noteId);
-
 
 }

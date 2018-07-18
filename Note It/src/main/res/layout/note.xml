@@ -20,8 +20,6 @@
         android:id="@+id/noteLL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.AppCompatTextView
@@ -34,7 +32,9 @@
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="16dp"
             app:autoSizeStepGranularity="2dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/add_note_description"
@@ -45,7 +45,9 @@
             app:autoSizeMaxTextSize="24dp"
             app:autoSizeStepGranularity="2dp"
             android:breakStrategy="high_quality"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
 
         <LinearLayout
             android:id="@+id/noteTaskList"

@@ -120,7 +120,7 @@ public class NoteFragment extends Fragment implements NoteContract.View {
 
     @Override
     public ArrayList<Task> getNoteTasks(String noteId) {
-        return mPresenter.getNoteTasks(noteId);
+            return mPresenter.getNoteTasks(noteId);
     }
 
 

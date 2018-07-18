@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/task_frag_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_margin="8dp"
-    android:id="@+id/task_frag_list_item"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    android:orientation="horizontal">
 
     <CheckBox
         android:id="@+id/task_layout_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
+        android:buttonTint="@color/colorPrimary"
         android:clickable="false"
-        android:buttonTint="@color/colorPrimary" />
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <TextView
         android:id="@+id/task_layout_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/task_layout_checkbox"
         android:layout_centerVertical="true"
-        android:maxLines="1"
-        android:typeface="monospace"
+        android:layout_toEndOf="@id/task_layout_checkbox"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:textColor="@color/colorPrimary" />
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:typeface="normal" />
 
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.noteIt.notes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,18 @@ import com.noteIt.data.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 
 public class NoteAdapter extends BaseAdapter {
     private List<Note> mNoteList;
+    private List<Task> mTaskList;
     private NoteFragment mNoteFragment;
+    private int N ;
 
     public NoteAdapter(List<Note> noteList) {
 
+        N = 0;
         this.mNoteList = noteList;
         setList(noteList);
     }
@@ -52,6 +58,8 @@ public class NoteAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        //Log.e(TAG, "getView: WYWOLANE!!!!!!!!!!!!!!!!!!!!!, N: " + N );
+        N++;
         View root = view;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
@@ -67,7 +75,10 @@ public class NoteAdapter extends BaseAdapter {
         description.setText(note.getDescription());
 
         LinearLayout linearLayout = root.findViewById(R.id.noteTaskList);
-        ArrayList<Task> taskList = mNoteFragment.getNoteTasks(note.getId());
+        ArrayList<Task> taskList = new ArrayList<>(0);
+
+        if(mNoteFragment != null)
+            taskList = mNoteFragment.getNoteTasks(note.getId());
         linearLayout.removeAllViews();
 
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());

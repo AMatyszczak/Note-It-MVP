@@ -7,8 +7,7 @@
     tools:context="com.noteIt.notes.NoteFragment"
     tools:showIn="@layout/note_act"
     android:id="@+id/WidgetTaskLayout"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -64,7 +64,7 @@ public class NoteRepository {
     //TASKS
 
     public ArrayList<Task> getNoteTasks(String noteId) {
-        return (ArrayList<Task>) mNoteDao.getNoteTasks(noteId);
+        return (ArrayList<Task>) mTaskDao.getNoteTasks(noteId);
     }
 
     public void insertTask(Task task) {

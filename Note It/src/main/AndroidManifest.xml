@@ -46,6 +46,9 @@
                 android:resource="@xml/note_widget_info" />
         </receiver>
 
+        <service android:name=".widget.MyWidgetRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
     </application>
 
 </manifest>

@@ -12,8 +12,7 @@
         android:id="@+id/noteLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="6dp">
+        android:orientation="vertical">
 
         <com.noteIt.gridViewCustom.GridViewCustom
             android:id="@+id/noteGridView"
@@ -24,9 +23,9 @@
             android:stretchMode="columnWidth"
             android:gravity="center"
             android:numColumns="auto_fit"
-
             android:verticalSpacing="2dp"
-            android:horizontalSpacing="2dp" />
+            android:horizontalSpacing="2dp"
+            android:padding="4dp" />
 
     </LinearLayout>
 
