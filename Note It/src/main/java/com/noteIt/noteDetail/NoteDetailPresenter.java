@@ -1,9 +1,12 @@
 package com.noteIt.noteDetail;
 
 
+import android.content.Intent;
+
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
+import com.noteIt.notes.NoteFragment;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -81,5 +84,7 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter {
     public boolean isChanged() {
         return isChanged;
     }
+
+
 
 }

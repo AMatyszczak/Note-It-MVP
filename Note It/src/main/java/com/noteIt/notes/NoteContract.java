@@ -22,11 +22,11 @@ public interface NoteContract {
 
         void addNoteStart();
 
-
-
         void getNoteDetail(int noteFromList);
 
         ArrayList<Task> getNoteTasks(String noteId);
+
+        void showSnackBar(String text);
 
 
     }

@@ -1,8 +1,10 @@
 package com.noteIt.notes;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,8 +37,10 @@ import static android.content.ContentValues.TAG;
  */
 public class NoteFragment extends Fragment implements NoteContract.View {
 
-    private final static int ADD_NOTE = 1;
-    private final static String GET_NOTE_DETAIL = "GETNOTEDETAIL";
+    public final static int ADD_NOTE = 1;
+
+    public final static int NOTE_DETAIL_REQUEST = 2;
+    public final static String NOTE_SAVED_SNACKBAR_TEXT = "Note Saved";
 
     private NoteAdapter mNoteAdapter;
     private NoteContract.Presenter mPresenter;
@@ -90,7 +94,6 @@ public class NoteFragment extends Fragment implements NoteContract.View {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 getNoteDetail(i);
-                Log.e(TAG, "onItemClick: ");
             }
         });
         showNoNoteMenu(false);
@@ -128,13 +131,19 @@ public class NoteFragment extends Fragment implements NoteContract.View {
     public void addNoteStart() {
         Intent intent = new Intent(getActivity(), NoteAddActivity.class);
         startActivityForResult(intent, ADD_NOTE);
-        mNoteAdapter.replaceNoteList(mPresenter.getAllNotes());
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mNoteAdapter.replaceNoteList(mPresenter.getAllNotes());
+
+        if(requestCode == NOTE_DETAIL_REQUEST)
+            if(resultCode == Activity.RESULT_OK)
+            {
+                showSnackBar( NOTE_SAVED_SNACKBAR_TEXT );
+                mNoteAdapter.replaceNoteList(mPresenter.getAllNotes());
+            }
+
     }
 
     @Override
@@ -165,8 +174,15 @@ public class NoteFragment extends Fragment implements NoteContract.View {
     public void getNoteDetail(int noteFromList) {
         Note note = mNoteAdapter.getItem(noteFromList);
         Intent intent = new Intent(getContext(), NoteDetailActivity.class);
-        intent.putExtra(GET_NOTE_DETAIL, note.getId());
-        startActivity(intent);
+        intent.putExtra(NoteDetailActivity.GET_NOTE_DETAIL, note.getId());
+        startActivityForResult(intent, NOTE_DETAIL_REQUEST);
+    }
+
+    @Override
+    public void showSnackBar(String text)
+    {
+        if(getView()!= null)
+            Snackbar.make(getView(),text,Snackbar.LENGTH_SHORT).show();
     }
 
     public void notifyDataSwapped(Note fromNote, Note toNote) {

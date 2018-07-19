@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 
 import com.noteIt.R;
@@ -13,8 +14,7 @@ import com.noteIt.util.ActivityUtils;
 
 public class NoteDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "TAG";
-    private static final String GET_NOTE_DETAIL = "GETNOTEDETAIL";
+    public final static String GET_NOTE_DETAIL = "Get note detail";
     public NoteDetailPresenter mPresenter;
 
 
