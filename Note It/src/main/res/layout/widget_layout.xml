@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="6dp"
     android:orientation="vertical"
     tools:context="com.noteIt.noteDetail.NoteDetailFragment"
     tools:showIn="@layout/notedetail_act"
@@ -32,16 +31,20 @@
         android:hint="@string/description"
         android:textSize="12sp"
         android:padding="2dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"/>
 
     <ListView
         android:id="@+id/widgetTaskList"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:focusableInTouchMode="false"
         android:focusable="false"
-        android:clickable="false"/>
+        android:paddingTop="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"/>
 
 
 </LinearLayout>
