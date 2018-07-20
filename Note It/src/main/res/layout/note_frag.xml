@@ -14,15 +14,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.noteIt.gridViewCustom.GridViewCustom
-            android:id="@+id/noteGridView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/noteRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="150dp"
             android:minHeight="150dp"
-            android:stretchMode="columnWidth"
             android:gravity="center"
-            android:numColumns="auto_fit"
             android:verticalSpacing="2dp"
             android:horizontalSpacing="2dp"
             android:padding="4dp" />
