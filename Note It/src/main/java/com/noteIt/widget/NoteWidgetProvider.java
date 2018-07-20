@@ -93,6 +93,7 @@ public class NoteWidgetProvider extends AppWidgetProvider
         intentActivity.setAction(Long.toString(System.currentTimeMillis()));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent);
+        views.setPendingIntentTemplate(R.id.widgetTaskList,pendingIntent);
 
         Intent intentTask = new Intent(context, MyWidgetRemoteViewsService.class);
         intentTask.putExtra(NOTE_ID, noteId);

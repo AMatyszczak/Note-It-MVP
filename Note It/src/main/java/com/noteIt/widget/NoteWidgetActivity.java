@@ -43,6 +43,7 @@ public class NoteWidgetActivity extends Activity
         mGridView = findViewById(R.id.widgetNoteGridView);
         mNoteRepository = mNoteRepository.getINSTANCE(getApplication());
         mNoteAdapter = new NoteAdapter(new ArrayList<Note>(0) );
+        mNoteAdapter.setWidgetActivity(this);
         mGridView.setAdapter(mNoteAdapter);
         mNoteAdapter.replaceNoteList(mNoteRepository.getNotesList());
 
@@ -81,6 +82,11 @@ public class NoteWidgetActivity extends Activity
             }
         });
 
+    }
+
+    public ArrayList<Task> getNoteTasks(String noteId)
+    {
+        return mNoteRepository.getNoteTasks(noteId);
     }
 
     static void saveNote(Context context, int appwidgetId, Note note)
