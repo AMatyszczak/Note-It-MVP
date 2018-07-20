@@ -3,7 +3,6 @@ package com.noteIt.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -12,8 +11,6 @@ import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 
 public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
@@ -63,11 +60,11 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
         if(task.isDone())
         {
-            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_black_24dp);
+            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_24dp);
         }
         else
         {
-            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_outline_blank_black_24dp);
+            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_outline_blank_24dp);
         }
 
         return remoteViews;
@@ -91,7 +88,7 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
 

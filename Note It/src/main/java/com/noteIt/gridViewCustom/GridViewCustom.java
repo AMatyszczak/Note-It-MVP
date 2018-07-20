@@ -15,8 +15,10 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 
+import com.noteIt.R;
 import com.noteIt.notes.NoteAdapter;
 
 public class GridViewCustom extends GridView implements AdapterView.OnItemLongClickListener {
@@ -145,16 +147,19 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
 
                             View viewUnder = getViewFromId(viewID);
 
+
                             adapter.swapItems((int) mDraggedItemId, (int) viewID);
                             animateDragToStart(mDraggedView, viewUnder);
 
                             viewUnder.setVisibility(INVISIBLE);
                             mDraggedView.setVisibility(VISIBLE);
-//
+                            mDraggedView.setBackgroundColor(getResources().getColor(R.color.white));
+
+
                             mDraggedView = viewUnder;
                             mDraggedItemId = viewID;
 
-                            //adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
                             return true;
                         }
                         return false;
@@ -162,12 +167,13 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
                     break;
                 case MotionEvent.ACTION_UP:
                     if (isDragging) {
-                        draggingEnded();
+
+                        draggingEnded(adapter);
                     }
                     break;
                 case MotionEvent.ACTION_CANCEL:
                     if (isDragging) {
-                        draggingEnded();
+                        draggingEnded(adapter);
                     }
                     break;
                 case MotionEvent.ACTION_POINTER_UP:
@@ -175,19 +181,22 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
                     final int pointerId = motionEvent.getPointerId(pointerIndex);
                     if (pointerId == mActivePointerId)
                         if (isDragging) {
-                            draggingEnded();
+                            draggingEnded(adapter);
                         }
                     break;
                 default:
                     if (mActionMode != null)
                         mActionMode.finish();
+                    adapter.notifyDataSetChanged();
                     break;
             }
             return false;
         }
     };
 
-    private void draggingEnded() {
+    private void draggingEnded(BaseAdapter adapter) {
+        adapter.notifyDataSetChanged();
+
         getViewFromId(mDraggedItemId).setVisibility(VISIBLE);
         mDraggedItemId = INVALID_ID;
         mHoverCell = null;
@@ -222,7 +231,7 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
     }
 
     private void animateDragToStart(View currView, View nextView) {
-        if (currView != null) {
+        if (currView != null  && nextView != null && currView != nextView) {
             float topMargin = nextView.getTop() - currView.getTop();
             float leftMargin = nextView.getLeft() - currView.getLeft();
 
@@ -230,10 +239,6 @@ public class GridViewCustom extends GridView implements AdapterView.OnItemLongCl
             translateAnimation.setDuration(ANIMATION_DURATION);
             translateAnimation.setInterpolator(new AccelerateInterpolator());
             currView.startAnimation(translateAnimation);
-
-
-
-
 
         }
     }

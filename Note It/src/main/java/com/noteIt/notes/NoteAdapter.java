@@ -1,5 +1,6 @@
 package com.noteIt.notes;
 
+import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.noteIt.R;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
+import com.noteIt.widget.NoteWidgetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +29,26 @@ import static android.content.ContentValues.TAG;
 public class NoteAdapter extends BaseAdapter {
     private List<Note> mNoteList;
     private List<Task> mTaskList;
+
     private NoteFragment mNoteFragment;
+    private NoteWidgetActivity mWidgetActivity;
     private int N ;
 
     public NoteAdapter(List<Note> noteList) {
 
         N = 0;
+        mNoteFragment = null;
+        mWidgetActivity = null;
         this.mNoteList = noteList;
         setList(noteList);
     }
 
     public void setFragment(Fragment fragment) {
         mNoteFragment = (NoteFragment) fragment;
+    }
+
+    public void setWidgetActivity(Activity activity) {
+        mWidgetActivity = (NoteWidgetActivity)activity;
     }
 
     @Override
@@ -79,6 +89,8 @@ public class NoteAdapter extends BaseAdapter {
 
         if(mNoteFragment != null)
             taskList = mNoteFragment.getNoteTasks(note.getId());
+        if(mWidgetActivity != null)
+            taskList = mWidgetActivity.getNoteTasks(note.getId());
         linearLayout.removeAllViews();
 
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
