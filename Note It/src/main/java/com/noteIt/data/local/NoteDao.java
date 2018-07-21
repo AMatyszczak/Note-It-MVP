@@ -10,6 +10,7 @@ import android.arch.persistence.room.Update;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,9 @@ public interface NoteDao {
 
     @Query("SELECT COUNT() FROM Note")
     int getNoteCount();
+
+    @Delete
+    void deleteNotes(ArrayList<Note> notes);
 
     @Delete
     void deleteNote(Note note);

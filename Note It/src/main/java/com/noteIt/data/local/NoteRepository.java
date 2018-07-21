@@ -5,6 +5,7 @@ import android.content.Context;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,8 @@ public class NoteRepository {
         mNoteDao.deleteNote(note);
     }
 
+    public void deleteNotes(ArrayList<Note> notes) { mNoteDao.deleteNotes(notes); }
+
     public int getNoteCount() {
         return mNoteDao.getNoteCount();
     }
@@ -60,6 +63,8 @@ public class NoteRepository {
         }
         return INSTANCE;
     }
+
+
 
     //TASKS
 
