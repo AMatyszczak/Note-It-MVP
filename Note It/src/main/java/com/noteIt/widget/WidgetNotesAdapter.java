@@ -1,10 +1,9 @@
-package com.noteIt.notes;
+package com.noteIt.widget;
 
 import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,23 +17,21 @@ import android.widget.TextView;
 import com.noteIt.R;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
+import com.noteIt.notes.NoteFragment;
 import com.noteIt.widget.NoteWidgetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
 
-
-public class NoteAdapter extends BaseAdapter {
+public class WidgetNotesAdapter extends BaseAdapter {
     private List<Note> mNoteList;
-    private List<Task> mTaskList;
-
+    
     private NoteFragment mNoteFragment;
     private NoteWidgetActivity mWidgetActivity;
     private int N ;
 
-    public NoteAdapter(List<Note> noteList) {
+    public WidgetNotesAdapter(List<Note> noteList) {
 
         N = 0;
         mNoteFragment = null;
@@ -78,13 +75,13 @@ public class NoteAdapter extends BaseAdapter {
 
         Note note = getItem(i);
 
-        TextView title = root.findViewById(R.id.add_note_title);
+        TextView title = root.findViewById(R.id.note_title);
         title.setText(note.getTitle());
 
         TextView description = root.findViewById(R.id.add_note_description);
         description.setText(note.getDescription());
 
-        LinearLayout linearLayout = root.findViewById(R.id.noteTaskList);
+        LinearLayout linearLayout = root.findViewById(R.id.note_task_layout);
         ArrayList<Task> taskList = new ArrayList<>(0);
 
         if(mNoteFragment != null)
@@ -94,30 +91,25 @@ public class NoteAdapter extends BaseAdapter {
         linearLayout.removeAllViews();
 
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        RelativeLayout v = (RelativeLayout) inflater.inflate(R.layout.task_fragment_layout, viewGroup, false);
-        TextView textView = v.findViewById(R.id.task_layout_text);
+
 
         for (Task task : taskList) {
 
-            if (textView != null) {
-                v = (RelativeLayout) inflater.inflate(R.layout.task_fragment_layout, viewGroup, false);
-                textView = v.findViewById(R.id.task_layout_text);
-                CheckBox checkBox = v.findViewById(R.id.task_layout_checkbox);
-                textView.setText(task.getDescription());
-                checkBox.setChecked(task.isDone());
+            RelativeLayout v = (RelativeLayout) inflater.inflate(R.layout.task_fragment_layout, viewGroup, false);
+            TextView textView = v.findViewById(R.id.task_layout_text);
+            CheckBox checkBox = v.findViewById(R.id.task_layout_checkbox);
+            textView.setText(task.getDescription());
+            checkBox.setChecked(task.isDone());
 
-                linearLayout.addView(v);
-            }
+            linearLayout.addView(v);
+
         }
-
-
         return root;
     }
 
     public void replaceNoteList(List<Note> noteList) {
         setList(noteList);
     }
-
 
     private void setList(List<Note> noteList) {
         mNoteList.clear();
@@ -132,28 +124,4 @@ public class NoteAdapter extends BaseAdapter {
     }
 
 
-    public void swapItems(int fromId, int toId) {
-        Note temp = mNoteList.get(fromId);
-        Note toIdNote = mNoteList.get(toId);
-
-        mNoteList.set(fromId, toIdNote);
-        mNoteList.set(toId, temp);
-
-        if (mNoteFragment != null)
-            mNoteFragment.notifyDataSwapped(temp, toIdNote);
-
-
-    }
-
-    public ArrayList<Note> getNotesFromIds(SparseBooleanArray notesIds) {
-        ArrayList<Note> noteList = new ArrayList<>();
-        int N = notesIds.size();
-        for (int i = 0; i < N; i++) {
-            if (notesIds.valueAt(i)) {
-                noteList.add(mNoteList.get(notesIds.keyAt(i)));
-            }
-
-        }
-        return noteList;
-    }
 }

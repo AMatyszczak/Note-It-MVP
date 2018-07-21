@@ -73,7 +73,7 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRecyclerNoteListAdapter = new RecyclerNoteListAdapter(new ArrayList<Note>(0));
+        mRecyclerNoteListAdapter = new RecyclerNoteListAdapter(getContext(), new ArrayList<Note>(0));
     }
 
     @Override
@@ -90,16 +90,12 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
         mNoteRecyclerView.setAdapter(mRecyclerNoteListAdapter);
         mNoteRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
+
         ItemTouchHelperCallback callback = new ItemTouchHelperCallback(mRecyclerNoteListAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
 
-//        mNoteRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                getNoteDetail(i);
-//            }
-//        });
+
         showNoNoteMenu(false);
 
         return root;
@@ -175,14 +171,6 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     }
 
     @Override
-    public void getNoteDetail(int noteFromList) {
-//        Note note = mRecyclerNoteListAdapter.getItem(noteFromList);
-//        Intent intent = new Intent(getContext(), NoteDetailActivity.class);
-//        intent.putExtra(NoteDetailActivity.GET_NOTE_DETAIL, note.getId());
-//        startActivityForResult(intent, NOTE_DETAIL_REQUEST);
-    }
-
-    @Override
     public void showSnackBar(String text)
     {
         if(getView()!= null)
@@ -198,7 +186,7 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
         mItemTouchHelper.startDrag(viewHolder);
     }
 
-    //    private class MyMultiChoiceListener implements AbsListView.MultiChoiceModeListener {
+//    private class MyMultiChoiceListener implements AbsListView.MultiChoiceModeListener {
 //
 //        RecyclerNoteListAdapter skAdapter;
 //
