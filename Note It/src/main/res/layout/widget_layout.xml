@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="6dp"
     android:orientation="vertical"
     tools:context="com.noteIt.noteDetail.NoteDetailFragment"
     tools:showIn="@layout/notedetail_act"
@@ -14,12 +13,11 @@
         android:id="@+id/widgetTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/title"
         android:singleLine="true"
         android:textSize="12sp"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:background="@drawable/widget_title_style"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"/>
@@ -29,19 +27,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top"
-        android:hint="@string/description"
         android:textSize="12sp"
         android:padding="2dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"/>
 
     <ListView
         android:id="@+id/widgetTaskList"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:focusableInTouchMode="false"
+        android:paddingTop="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:divider="@null"
+        android:clickable="false"
         android:focusable="false"
-        android:clickable="false"/>
+        android:focusableInTouchMode="false"
+        android:saveEnabled="false"
+        android:background="@color/unselected"
+        />
 
 
 </LinearLayout>

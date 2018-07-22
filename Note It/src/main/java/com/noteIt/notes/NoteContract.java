@@ -14,19 +14,15 @@ public interface NoteContract {
     interface View {
         void showNoNoteMenu(boolean show);
 
-
-
         void updateNoteList(List<Note> noteList);
 
         void setPresenter(NoteContract.Presenter presenter);
 
         void addNoteStart();
 
-
-
-        void getNoteDetail(int noteFromList);
-
         ArrayList<Task> getNoteTasks(String noteId);
+
+        void showSnackBar(String text);
 
 
     }

@@ -57,13 +57,14 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
         Task task = mTaskArrayList.get(i);
         remoteViews.setTextViewText(R.id.widget_task_text, task.getDescription());
+
         if(task.isDone())
         {
-            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_black_24dp);
+            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_24dp);
         }
         else
         {
-            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_outline_blank_black_24dp);
+            remoteViews.setImageViewResource(R.id.widget_checkbox_imageView, R.drawable.ic_check_box_outline_blank_24dp);
         }
 
         return remoteViews;
@@ -87,7 +88,7 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
 

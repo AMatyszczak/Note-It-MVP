@@ -4,19 +4,24 @@
     android:layout_width="match_parent"
     android:id="@+id/widgetItemContainer"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:focusable="false"
+    android:focusableInTouchMode="false">
 
     <ImageView
         android:id="@+id/widget_checkbox_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_check_box_outline_blank_black_24dp"/>
+        android:src="@drawable/ic_check_box_outline_blank_24dp"/>
 
-    <TextView android:id="@+id/widget_task_text"
+    <TextView
+        android:id="@+id/widget_task_text"
         android:layout_width="match_parent"
         android:gravity="start"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"/>
 
 </LinearLayout>

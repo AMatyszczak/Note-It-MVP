@@ -15,7 +15,6 @@ import com.noteIt.R;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
-import com.noteIt.notes.NoteAdapter;
 
 import java.util.ArrayList;
 
@@ -30,7 +29,7 @@ public class NoteWidgetActivity extends Activity
 
     private GridView mGridView;
     private NoteRepository mNoteRepository;
-    private NoteAdapter mNoteAdapter;
+    private WidgetNotesAdapter mWidgetNotesAdapter;
 
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -42,9 +41,10 @@ public class NoteWidgetActivity extends Activity
         setContentView(R.layout.widget_note_menu);
         mGridView = findViewById(R.id.widgetNoteGridView);
         mNoteRepository = mNoteRepository.getINSTANCE(getApplication());
-        mNoteAdapter = new NoteAdapter(new ArrayList<Note>(0) );
-        mGridView.setAdapter(mNoteAdapter);
-        mNoteAdapter.replaceNoteList(mNoteRepository.getNotesList());
+        mWidgetNotesAdapter = new WidgetNotesAdapter(new ArrayList<Note>(0) );
+        mWidgetNotesAdapter.setWidgetActivity(this);
+        mGridView.setAdapter(mWidgetNotesAdapter);
+        mWidgetNotesAdapter.replaceNoteList(mNoteRepository.getNotesList());
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -61,7 +61,7 @@ public class NoteWidgetActivity extends Activity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Note note = mNoteAdapter.getItem(i);
+                Note note = mWidgetNotesAdapter.getItem(i);
                 String title = note.getTitle();
                 String description = note.getDescription();
                 String id = note.getId();
@@ -81,6 +81,11 @@ public class NoteWidgetActivity extends Activity
             }
         });
 
+    }
+
+    public ArrayList<Task> getNoteTasks(String noteId)
+    {
+        return mNoteRepository.getNoteTasks(noteId);
     }
 
     static void saveNote(Context context, int appwidgetId, Note note)

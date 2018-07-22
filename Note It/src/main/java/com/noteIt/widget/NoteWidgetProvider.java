@@ -21,6 +21,7 @@ import com.noteIt.R;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
+import com.noteIt.noteDetail.NoteDetailActivity;
 import com.noteIt.notes.NoteActivity;
 
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class NoteWidgetProvider extends AppWidgetProvider
     private static final int MIN_WIDGET_WIDTH = 70;
 
     private static final String NOTE_ID = "NOTE_ID";
-   // private static final String
     NoteRepository mTaskRepository;
 
 
@@ -47,7 +47,6 @@ public class NoteWidgetProvider extends AppWidgetProvider
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             ComponentName componentName = new ComponentName(context,NoteWidgetProvider.class);
             int appWidgetIds[] = appWidgetManager.getAppWidgetIds(componentName);
-
             String Id;
             final int N = appWidgetIds.length;
             for(int i = 0; i < N; i++)
@@ -66,9 +65,8 @@ public class NoteWidgetProvider extends AppWidgetProvider
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        final int N = appWidgetIds.length;
 
-        for (int i=0; i<N; i++) {
+        for (int i: appWidgetIds) {
             int appWidgetId = appWidgetIds[i];
 
             String title = NoteWidgetActivity.loadTitlePref(context,appWidgetId);
@@ -90,16 +88,20 @@ public class NoteWidgetProvider extends AppWidgetProvider
         views.setTextViewText(R.id.widgetTitle,title);
         views.setTextViewText(R.id.widgetDescription,description);
 
-        Intent intentActivity = new Intent(context, NoteActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentActivity, 0);
+        Intent intentActivity = new Intent(context, NoteDetailActivity.class);
+        intentActivity.putExtra(NoteDetailActivity.GET_NOTE_DETAIL, noteId);
+        intentActivity.setAction(Long.toString(System.currentTimeMillis()));
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent);
+        views.setPendingIntentTemplate(R.id.widgetTaskList,pendingIntent);
 
         Intent intentTask = new Intent(context, MyWidgetRemoteViewsService.class);
         intentTask.putExtra(NOTE_ID, noteId);
         intentTask.setData(Uri.fromParts("content",noteId,null));
 
-        intentTask.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widgetTaskList);
         views.setRemoteAdapter(R.id.widgetTaskList, intentTask);
+
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 

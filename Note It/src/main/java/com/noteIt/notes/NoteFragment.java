@@ -1,26 +1,28 @@
 package com.noteIt.notes;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ActionMode;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.noteIt.RecyclerViewClasses.ItemTouchHelperCallback;
+import com.noteIt.RecyclerViewClasses.OnStartDrag;
+import com.noteIt.RecyclerViewClasses.RecyclerNoteListAdapter;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
-import com.noteIt.gridViewCustom.GridViewCustom;
 import com.noteIt.noteAdd.NoteAddActivity;
 import com.noteIt.R;
 import com.noteIt.noteDetail.NoteDetailActivity;
@@ -28,20 +30,22 @@ import com.noteIt.noteDetail.NoteDetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 /**
  * A placeholder fragment containing a simple view.
  */
-public class NoteFragment extends Fragment implements NoteContract.View {
+public class NoteFragment extends Fragment implements NoteContract.View, OnStartDrag {
 
-    private final static int ADD_NOTE = 1;
-    private final static String GET_NOTE_DETAIL = "GETNOTEDETAIL";
+    public final static int ADD_NOTE = 1;
 
-    private NoteAdapter mNoteAdapter;
+    public final static int NOTE_DETAIL_REQUEST = 2;
+    public final static String NOTE_SAVED_SNACKBAR_TEXT = "Note Saved";
+
+    private RecyclerNoteListAdapter mRecyclerNoteListAdapter;
     private NoteContract.Presenter mPresenter;
 
-    private GridViewCustom mNoteGridView;
+    private RecyclerView mNoteRecyclerView;
+    private ItemTouchHelper mItemTouchHelper;
+
     private LinearLayout mNoteLayout;
 
     private TextView mNoNoteTextView;
@@ -69,8 +73,7 @@ public class NoteFragment extends Fragment implements NoteContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mNoteAdapter = new NoteAdapter(new ArrayList<Note>(0));
-        mNoteAdapter.setFragment(this);
+        mRecyclerNoteListAdapter = new RecyclerNoteListAdapter(getContext(), new ArrayList<Note>(0));
     }
 
     @Override
@@ -81,18 +84,18 @@ public class NoteFragment extends Fragment implements NoteContract.View {
         mNoNoteTextView = root.findViewById(R.id.noNoteTextView);
         mNoNoteLayout = root.findViewById(R.id.noNoteLayout);
 
-        mNoteGridView = root.findViewById(R.id.noteGridView);
-        mNoteGridView.setAdapter(mNoteAdapter);
-        mNoteGridView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mNoteGridView.setMultiChoiceModeListener(new MyMultiChoiceListener(mNoteAdapter));
 
-        mNoteGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                getNoteDetail(i);
-                Log.e(TAG, "onItemClick: ");
-            }
-        });
+        mNoteRecyclerView = root.findViewById(R.id.noteRecyclerView);
+        mNoteRecyclerView.setHasFixedSize(true);
+        mNoteRecyclerView.setAdapter(mRecyclerNoteListAdapter);
+        mNoteRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+
+        ItemTouchHelperCallback callback = new ItemTouchHelperCallback(mRecyclerNoteListAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
+
+
         showNoNoteMenu(false);
 
         return root;
@@ -115,7 +118,7 @@ public class NoteFragment extends Fragment implements NoteContract.View {
 
     @Override
     public void updateNoteList(List<Note> noteList) {
-        mNoteAdapter.replaceNoteList(noteList);
+        mRecyclerNoteListAdapter.replaceNoteList(noteList);
     }
 
     @Override
@@ -128,25 +131,31 @@ public class NoteFragment extends Fragment implements NoteContract.View {
     public void addNoteStart() {
         Intent intent = new Intent(getActivity(), NoteAddActivity.class);
         startActivityForResult(intent, ADD_NOTE);
-        mNoteAdapter.replaceNoteList(mPresenter.getAllNotes());
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mNoteAdapter.replaceNoteList(mPresenter.getAllNotes());
+
+        if(requestCode == NOTE_DETAIL_REQUEST)
+            if(resultCode == Activity.RESULT_OK)
+            {
+                showSnackBar( NOTE_SAVED_SNACKBAR_TEXT );
+                mRecyclerNoteListAdapter.replaceNoteList(mPresenter.getAllNotes());
+            }
+
     }
 
     @Override
     public void showNoNoteMenu(boolean show) {
         if (show) {
-            mNoteGridView.setVisibility(View.GONE);
+            mNoteRecyclerView.setVisibility(View.GONE);
             mNoteLayout.setVisibility(View.GONE);
 
             mNoNoteTextView.setVisibility(View.VISIBLE);
             mNoNoteLayout.setVisibility(View.VISIBLE);
         } else {
-            mNoteGridView.setVisibility(View.VISIBLE);
+            mNoteRecyclerView.setVisibility(View.VISIBLE);
             mNoteLayout.setVisibility(View.VISIBLE);
 
             mNoNoteTextView.setVisibility(View.GONE);
@@ -162,63 +171,67 @@ public class NoteFragment extends Fragment implements NoteContract.View {
     }
 
     @Override
-    public void getNoteDetail(int noteFromList) {
-        Note note = mNoteAdapter.getItem(noteFromList);
-        Intent intent = new Intent(getContext(), NoteDetailActivity.class);
-        intent.putExtra(GET_NOTE_DETAIL, note.getId());
-        startActivity(intent);
+    public void showSnackBar(String text)
+    {
+        if(getView()!= null)
+            Snackbar.make(getView(),text,Snackbar.LENGTH_SHORT).show();
     }
 
     public void notifyDataSwapped(Note fromNote, Note toNote) {
         mPresenter.swapNotesPositions(fromNote, toNote);
     }
 
-    private class MyMultiChoiceListener implements AbsListView.MultiChoiceModeListener {
-
-        NoteAdapter skAdapter;
-
-        MyMultiChoiceListener(NoteAdapter noteAdapter) {
-            skAdapter = noteAdapter;
-        }
-
-        @Override
-        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            MenuInflater inflater = actionMode.getMenuInflater();
-            inflater.inflate(R.menu.contextual_menu, menu);
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-
-            return false;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-            ArrayList<Note> arrayList = skAdapter.getNotesFromIds(mNoteGridView.getCheckedItemPositions());
-            switch (menuItem.getItemId()) {
-                case R.id.item_delete:
-                    mPresenter.deleteNotes(arrayList);
-                    actionMode.finish();
-                    break;
-            }
-            return false;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode actionMode) {
-
-        }
-
-        @Override
-        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-
-            int checkedItemCountNote = mNoteGridView.getCheckedItemCount();
-            actionMode.setTitle(checkedItemCountNote + " Selected");
-
-        }
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
     }
+
+//    private class MyMultiChoiceListener implements AbsListView.MultiChoiceModeListener {
+//
+//        RecyclerNoteListAdapter skAdapter;
+//
+//        MyMultiChoiceListener(RecyclerNoteListAdapter recyclerListAdapter) {
+//            skAdapter = recyclerListAdapter;
+//        }
+//
+//        @Override
+//        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+//            MenuInflater inflater = actionMode.getMenuInflater();
+//            inflater.inflate(R.menu.contextual_menu, menu);
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+//
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+//            ArrayList<Note> arrayList = skAdapter.getNotesFromIds(mNoteRecyclerView.getCheckedItemPositions());
+//            switch (menuItem.getItemId()) {
+//                case R.id.item_delete:
+//                    mPresenter.deleteNotes(arrayList);
+//                    actionMode.finish();
+//                    break;
+//            }
+//            return false;
+//        }
+//
+//        @Override
+//        public void onDestroyActionMode(ActionMode actionMode) {
+//
+//        }
+//
+//        @Override
+//        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
+//
+//            int checkedItemCountNote = mNoteRecyclerView.getCheckedItemCount();
+//            actionMode.setTitle(checkedItemCountNote + " Selected");
+//
+//        }
+//    }
 
 }
 

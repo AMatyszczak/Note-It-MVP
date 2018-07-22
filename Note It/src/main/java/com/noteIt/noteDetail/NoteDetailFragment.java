@@ -22,6 +22,7 @@ import com.noteIt.R;
 import com.noteIt.TaskList.TaskRecyclerAdapter;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
+import com.noteIt.notes.NoteFragment;
 import com.noteIt.widget.NoteWidgetProvider;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
  */
 
 public class NoteDetailFragment extends Fragment implements NoteDetailContract.View {
+
     private static final String ADD_LIST = "Click here to create To-Do List";
     private static final String ADD_TASK = "+ Add New Task";
     private static final String SAVED = "Saved";
@@ -178,6 +180,5 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
         } else
             mAddTaskTextView.setText(ADD_LIST);
     }
-
 
 }
