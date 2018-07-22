@@ -79,4 +79,8 @@ public final class Note {
         this.mPosition = mPosition;
     }
 
+    public void subtractPosition(int value) { setPosition(this.mPosition -= value); }
+
+    public void addToPosition(int value) { setPosition(this.mPosition += value); }
+
 }
