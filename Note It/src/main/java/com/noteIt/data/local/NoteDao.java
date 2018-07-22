@@ -42,5 +42,8 @@ public interface NoteDao {
     @Update
     void updateNote(Note note);
 
+    @Update
+    void updateNotes(ArrayList<Note> notes);
+
 
 }

@@ -1,6 +1,7 @@
 package com.noteIt.data.local;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
@@ -25,18 +26,18 @@ public class NoteRepository {
     }
 
     public List<Note> getNotesList() {
+
         return mNoteDao.getNotes();
     }
 
     public String insertNote(Note note) {
-        if (note.getPosition() < 0)
-            note.setPosition(getNoteCount() + 1);
         mNoteDao.insertNote(note);
         return note.getId();
     }
 
     public void deleteAllNotes() {
         mNoteDao.deleteAllNotes();
+
     }
 
     public Note getNoteFromId(String id) {
@@ -47,11 +48,17 @@ public class NoteRepository {
         mNoteDao.updateNote(note);
     }
 
+    public void updateNotes(ArrayList<Note> notes) { mNoteDao.updateNotes(notes); }
+
     public void deleteNote(Note note) {
+
         mNoteDao.deleteNote(note);
+        updateNotePositionOnDelete(note);
     }
 
-    public void deleteNotes(ArrayList<Note> notes) { mNoteDao.deleteNotes(notes); }
+    public void deleteNotes(ArrayList<Note> notes) {
+        mNoteDao.deleteNotes(notes);
+        updateNotesPositionsOnDelete(notes);}
 
     public int getNoteCount() {
         return mNoteDao.getNoteCount();
@@ -88,5 +95,45 @@ public class NoteRepository {
         mTaskDao.updateTask(task);
     }
 
+    //Private
+
+    private int updateNotesPositionsOnDelete(ArrayList<Note> deletedNoteList)
+    {
+        int editedNotesCount = 0;
+        ArrayList<Note> noteList = (ArrayList<Note>)mNoteDao.getNotes();
+
+        int positionDiff = 0;
+        for(Note note: noteList)
+        {
+            for (Note deletedNote: deletedNoteList)
+            {
+                if( note.getPosition() > deletedNote.getPosition())
+                    positionDiff++;
+            }
+            if(positionDiff!=0)
+            {
+                note.subtractPosition(positionDiff);
+                mNoteDao.updateNote(note);
+                editedNotesCount++;
+            }
+            positionDiff = 0;
+        }
+
+        return editedNotesCount;
+    }
+
+    private int updateNotePositionOnDelete(Note note)
+    {
+        int editedNotesCount = 0;
+        ArrayList<Note> noteList = (ArrayList<Note>)mNoteDao.getNotes();
+
+        int N = noteList.size();
+        for(int i = note.getPosition()+1 ; i < N; i++)
+        {
+            noteList.get(i).subtractPosition(1);
+            editedNotesCount++;
+        }
+        return editedNotesCount;
+    }
 }
 
