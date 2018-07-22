@@ -113,6 +113,10 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
                         mSelectedNotes.add(note);
                         setActionModeTitle(1);
                     }
+                    else
+                    {
+                        mActionMode.finish();
+                    }
                     return true;
                 }
             });
@@ -195,10 +199,24 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
+
+        //Swap Notes Position first
+        Note fromNote = mArrayList.get(fromPosition);
+        Note toNote = mArrayList.get(toPosition);
+        int tempPosition = fromNote.getPosition();
+        fromNote.setPosition(toNote.getPosition());
+        toNote.setPosition(tempPosition);
+
         Collections.swap(mArrayList, fromPosition, toPosition);
+        mNoteRepository.updateNote(fromNote);
+        mNoteRepository.updateNote(toNote);
         notifyItemMoved(fromPosition, toPosition);
+
+        if(mActionMode!= null)
+            mActionMode.finish();
         return true;
     }
+
 
     @Override
     public void onItemDismiss(int position) {
@@ -237,9 +255,9 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
                 case R.id.item_delete:
                     mArrayList.removeAll(mSelectedNotes);
                     mNoteRepository.deleteNotes(mSelectedNotes);
-                    notifyDataSetChanged();
-                    actionMode.finish();
+                    setList(mNoteRepository.getNotesList());
 
+                    actionMode.finish();
                     break;
             }
             return false;
@@ -251,6 +269,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
                 cardview.setSelected(false);
             }
             mSelectedCardViews.clear();
+            mSelectedNotes.clear();
+
             mActionMode = null;
         }
 

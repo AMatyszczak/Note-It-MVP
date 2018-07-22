@@ -24,7 +24,7 @@ public class NoteAddPresenter implements NoteAddContract.Presenter {
 
     @Override
     public void addNote() {
-        Note note = new Note(mFragment.getTitle(), mFragment.getDescription(), -1);
+        Note note = new Note(mFragment.getTitle(), mFragment.getDescription(), mNoteRepository.getNoteCount()+1);
         ArrayList<Task> taskList = mFragment.getTaskList();
         String noteId = mNoteRepository.insertNote(note);
         taskList = setTaskNoteId(taskList, noteId);
