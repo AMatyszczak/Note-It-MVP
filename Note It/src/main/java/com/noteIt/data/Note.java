@@ -1,12 +1,15 @@
 package com.noteIt.data;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Entity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.UUID;
+
+import javax.annotation.Nonnull;
 
 /**
  * Created by adria on 23.04.2018.
@@ -30,12 +33,21 @@ public final class Note {
     @ColumnInfo(name = "position")
     private int mPosition;
 
+    @NonNull
+    @ColumnInfo(name = "archived")
+    private boolean isArchived;
 
     public Note(@Nullable String title, @Nullable String description, @Nullable int position) {
-        this(UUID.randomUUID().toString(), title, description, position);
+        this(UUID.randomUUID().toString(), title, description, position, false);
     }
 
-    public Note(@NonNull String Id, @Nullable String title, @Nullable String description, @Nullable int position) {
+    @Ignore
+    public Note(@Nullable String title, @Nullable String description, @Nullable int position, boolean isArchived) {
+        this(UUID.randomUUID().toString(), title, description, position, isArchived);
+    }
+
+    @Ignore
+    public Note(@NonNull String Id, @Nullable String title, @Nullable String description, @Nullable int position, boolean isArchived) {
         mId = Id;
         mTitle = title;
         mDescription = description;
@@ -68,7 +80,7 @@ public final class Note {
     }
 
     public void setDescription(String description) {
-        mTitle = description;
+        mDescription = description;
     }
 
     public int getPosition() {
@@ -79,8 +91,18 @@ public final class Note {
         this.mPosition = mPosition;
     }
 
+    @NonNull
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(@NonNull boolean archived) {
+        isArchived = archived;
+    }
+
     public void subtractPosition(int value) { setPosition(this.mPosition -= value); }
 
     public void addToPosition(int value) { setPosition(this.mPosition += value); }
+
 
 }
