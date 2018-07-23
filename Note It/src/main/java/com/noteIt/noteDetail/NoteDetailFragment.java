@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.noteIt.R;
 import com.noteIt.TaskList.TaskRecyclerAdapter;
@@ -157,7 +158,7 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
         mPresenter.updateNote(mTitle.getText().toString(), mDescription.getText().toString(), mPosition, mAdapter.getTaskList());
         if (getView() != null) {
 
-            Snackbar.make(getView(), SAVED, Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }
     }
 
