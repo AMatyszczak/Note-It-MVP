@@ -41,6 +41,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
     private ArrayList<CardView> mSelectedCardViews;
     private ArrayList<Note> mSelectedNotes;
 
+    private boolean isArchived;
+
     class ViewHolder extends RecyclerView.ViewHolder
     {
         private CardView mCardView;
@@ -125,7 +127,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
         void updateTasks(String noteId)
         {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            ArrayList<Task> tasks =  mNoteRepository.getNoteTasks(noteId);
+            ArrayList<Task> tasks;
+            tasks =  mNoteRepository.getNoteTasks(noteId);
             mTaskLayout.removeAllViews();
             for (Task task: tasks) {
                 try
@@ -158,9 +161,10 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
     }
 
-    public RecyclerNoteListAdapter(Context context, ArrayList<Note> items) {
+    public RecyclerNoteListAdapter(Context context, ArrayList<Note> items, boolean isArchived) {
         this.mArrayList = items;
         this.mContext = context;
+        this.isArchived = isArchived;
         this.mNoteRepository = NoteRepository.getINSTANCE(mContext);
         mSelectedCardViews = new ArrayList<>(0);
         mSelectedNotes = new ArrayList<>(0);
@@ -235,6 +239,11 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
         notifyDataSetChanged();
     }
 
+    public void setArchivedLoading(boolean set)
+    {
+        this.isArchived = set;
+    }
+
     private ActionMode.Callback actionModeCallbacks = new ActionMode.Callback() {
 
         @Override
@@ -255,8 +264,12 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
                 case R.id.item_delete:
                     mArrayList.removeAll(mSelectedNotes);
                     mNoteRepository.deleteNotes(mSelectedNotes);
-                    setList(mNoteRepository.getNotesList());
 
+                    actionMode.finish();
+                    break;
+                case R.id.item_archive:
+                    mSelectedNotes = archiveNotes(mSelectedNotes);
+                    mNoteRepository.updateNotes(mSelectedNotes);
                     actionMode.finish();
                     break;
             }
@@ -268,10 +281,30 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
             for (CardView cardview: mSelectedCardViews) {
                 cardview.setSelected(false);
             }
+            if(isArchived)
+                setList(mNoteRepository.getArchivedNotes());
+            else
+                setList(mNoteRepository.getNotesList());
             mSelectedCardViews.clear();
             mSelectedNotes.clear();
 
             mActionMode = null;
+        }
+
+        void removeNotesFromArchived(ArrayList<Note> noteList){
+            for (Note note: noteList) {
+                note.setArchived(note.isArchived());
+
+            }
+        }
+
+        ArrayList<Note> archiveNotes(ArrayList<Note> noteList)
+        {
+            for (Note note: noteList) {
+                note.setArchived(!note.isArchived());
+
+            }
+            return noteList;
         }
 
     };

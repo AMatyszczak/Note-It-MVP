@@ -1,11 +1,15 @@
 package com.noteIt.notes;
 
+import android.util.Log;
+
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by adria on 24.04.2018.

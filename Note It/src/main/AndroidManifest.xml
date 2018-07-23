@@ -34,6 +34,10 @@
         <activity
             android:name=".remote.RegisterActivity"
             android:label="register" />
+
+        <activity android:name=".ArchivedNotes.ArchivedNotesActivity"
+            android:label="Archive Notes"/>
+
         <activity android:name=".widget.NoteWidgetActivity"
             android:label="WidgetActivity"
             android:windowSoftInputMode="adjustResize"/>

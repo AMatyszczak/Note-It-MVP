@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Dao
 public interface NoteDao {
-    @Query("SELECT * FROM Note ORDER BY position ASC")
+    @Query("SELECT * FROM Note WHERE archived = 0 ORDER BY position ASC")
     List<Note> getNotes();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -44,6 +44,11 @@ public interface NoteDao {
 
     @Update
     void updateNotes(ArrayList<Note> notes);
+
+    //Archived Notes
+
+    @Query("SELECT * FROM Note WHERE archived = 1")
+    List<Note> getArchivedNotes();
 
 
 }

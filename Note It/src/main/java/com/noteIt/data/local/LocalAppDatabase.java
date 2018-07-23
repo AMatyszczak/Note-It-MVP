@@ -1,8 +1,10 @@
 package com.noteIt.data.local;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 
 import com.noteIt.data.Note;
@@ -11,7 +13,7 @@ import com.noteIt.data.Task;
 /**
  * Created by adria on 01.05.2018.
  */
-@Database(entities = {Note.class, Task.class}, version = 2)
+@Database(entities = {Note.class, Task.class}, version = 1)
 public abstract class LocalAppDatabase extends RoomDatabase {
     public abstract NoteDao noteDao();
 
@@ -24,7 +26,7 @@ public abstract class LocalAppDatabase extends RoomDatabase {
             synchronized (LocalAppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            LocalAppDatabase.class, "App_Database").allowMainThreadQueries().fallbackToDestructiveMigration()
+                            LocalAppDatabase.class, "App_Database").allowMainThreadQueries()
                             .addMigrations().build();
                 }
             }
@@ -35,7 +37,7 @@ public abstract class LocalAppDatabase extends RoomDatabase {
 //    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
 //        @Override
 //        public void migrate(SupportSQLiteDatabase database) {
-//            database.execSQL("ALTER TABLE `task` RENAME TO `note`");
+//            database.execSQL("ALTER TABLE `note` ADD `archived`");
 //        }
 //    };
 //

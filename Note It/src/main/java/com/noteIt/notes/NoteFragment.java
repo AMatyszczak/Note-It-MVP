@@ -73,7 +73,7 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRecyclerNoteListAdapter = new RecyclerNoteListAdapter(getContext(), new ArrayList<Note>(0));
+        mRecyclerNoteListAdapter = new RecyclerNoteListAdapter(getContext(), new ArrayList<Note>(0), false);
     }
 
     @Override
@@ -84,12 +84,10 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
         mNoNoteTextView = root.findViewById(R.id.noNoteTextView);
         mNoNoteLayout = root.findViewById(R.id.noNoteLayout);
 
-
         mNoteRecyclerView = root.findViewById(R.id.noteRecyclerView);
         mNoteRecyclerView.setHasFixedSize(true);
         mNoteRecyclerView.setAdapter(mRecyclerNoteListAdapter);
         mNoteRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
 
         ItemTouchHelperCallback callback = new ItemTouchHelperCallback(mRecyclerNoteListAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
@@ -177,61 +175,10 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
             Snackbar.make(getView(),text,Snackbar.LENGTH_SHORT).show();
     }
 
-    public void notifyDataSwapped(Note fromNote, Note toNote) {
-        mPresenter.swapNotesPositions(fromNote, toNote);
-    }
-
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         mItemTouchHelper.startDrag(viewHolder);
     }
-
-//    private class MyMultiChoiceListener implements AbsListView.MultiChoiceModeListener {
-//
-//        RecyclerNoteListAdapter skAdapter;
-//
-//        MyMultiChoiceListener(RecyclerNoteListAdapter recyclerListAdapter) {
-//            skAdapter = recyclerListAdapter;
-//        }
-//
-//        @Override
-//        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-//            MenuInflater inflater = actionMode.getMenuInflater();
-//            inflater.inflate(R.menu.contextual_menu, menu);
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-//
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-//            ArrayList<Note> arrayList = skAdapter.getNotesFromIds(mNoteRecyclerView.getCheckedItemPositions());
-//            switch (menuItem.getItemId()) {
-//                case R.id.item_delete:
-//                    mPresenter.deleteNotes(arrayList);
-//                    actionMode.finish();
-//                    break;
-//            }
-//            return false;
-//        }
-//
-//        @Override
-//        public void onDestroyActionMode(ActionMode actionMode) {
-//
-//        }
-//
-//        @Override
-//        public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-//
-//            int checkedItemCountNote = mNoteRecyclerView.getCheckedItemCount();
-//            actionMode.setTitle(checkedItemCountNote + " Selected");
-//
-//        }
-//    }
 
 }
 

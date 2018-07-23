@@ -71,6 +71,12 @@ public class NoteRepository {
         return INSTANCE;
     }
 
+    //Archived
+    public ArrayList<Note> getArchivedNotes()
+    {
+        return (ArrayList<Note>)mNoteDao.getArchivedNotes();
+    }
+
 
 
     //TASKS
