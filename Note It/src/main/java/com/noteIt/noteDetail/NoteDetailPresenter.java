@@ -47,7 +47,11 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter {
 
     @Override
     public void updateNote(String title, String description, int position, ArrayList<Task> tasksList) {
-        Note note = new Note(mNoteID, title, description, position);
+
+        Note note = mNoteRepository.getNoteFromId(mNoteID);
+        note.setTitle(title);
+        note.setDescription(description);
+        note.setPosition(position);
 
         for (Task task : tasksList)
         {
