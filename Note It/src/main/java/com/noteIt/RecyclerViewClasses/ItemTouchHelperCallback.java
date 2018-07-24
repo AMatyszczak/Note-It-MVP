@@ -44,6 +44,7 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback
             return false;
         }
 
+
         mAdapter.onItemMove(source.getAdapterPosition(), target.getAdapterPosition());
         return true;
     }
@@ -89,6 +90,5 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback
             itemViewHolder.onItemClear();
         }
     }
-
 
 }

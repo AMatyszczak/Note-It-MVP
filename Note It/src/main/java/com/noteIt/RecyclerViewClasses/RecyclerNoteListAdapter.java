@@ -1,8 +1,10 @@
 package com.noteIt.RecyclerViewClasses;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
@@ -48,6 +50,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
     private NoteFragment mNoteFragment;
     private ArchivedNotesFragment mNoteArchivedFragment;
 
+    private boolean isSwiped = false;
+
     class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder
     {
         private CardView mCardView;
@@ -66,12 +70,17 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
         @Override
         public void onItemSelected() {
-            
+
         }
 
         @Override
         public void onItemClear() {
-            mActionMode.finish();
+            if(mActionMode != null  && isSwiped )
+            {
+                mActionMode.finish();
+                isSwiped = false;
+            }
+
         }
 
         void update(Note note)
@@ -243,7 +252,7 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
         updateNotes(new ArrayList<>(Arrays.asList(fromNote,toNote)));
         notifyItemMoved(fromPosition, toPosition);
-
+        isSwiped = true;
         return true;
     }
 
@@ -288,13 +297,37 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        public boolean onActionItemClicked(final ActionMode actionMode, MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.item_delete:
-                    mArrayList.removeAll(mSelectedNotes);
-                    deleteNotes(mSelectedNotes);
 
-                    actionMode.finish();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(
+                            mContext);
+                    alert.setTitle("Alert");
+                    alert.setMessage("Are you sure to delete notes");
+                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mArrayList.removeAll(mSelectedNotes);
+                            deleteNotes(mSelectedNotes);
+
+                            actionMode.finish();
+
+                            dialog.dismiss();
+
+                        }
+                    });
+                    alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
+
                     break;
                 case R.id.item_archive:
                     mSelectedNotes = archiveNotes(mSelectedNotes);
