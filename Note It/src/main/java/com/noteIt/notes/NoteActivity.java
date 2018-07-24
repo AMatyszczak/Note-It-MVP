@@ -79,10 +79,12 @@ public class NoteActivity extends AppCompatActivity {
                                 Intent intent = new Intent(NoteActivity.this, ArchivedNotesActivity.class);
                                 startActivity(intent);
                                 break;
+                            case R.id.menu_notes:
+                                mDrawerLayout.closeDrawers();
                             default:
                                 break;
                         }
-                        // Close the navigation drawer when an item is selected.
+
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         return true;

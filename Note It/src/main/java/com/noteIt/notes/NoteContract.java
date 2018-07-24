@@ -3,6 +3,7 @@ package com.noteIt.notes;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,6 @@ import java.util.List;
 
 public interface NoteContract {
     interface View {
-        void showNoNoteMenu(boolean show);
-
         void updateNoteList(List<Note> noteList);
 
         void setPresenter(NoteContract.Presenter presenter);
@@ -29,13 +28,15 @@ public interface NoteContract {
 
     interface Presenter {
 
-        List<Note> getAllNotes();
-
-        void deleteNotes(ArrayList<Note> notes);
+        List<Note> getNotes();
 
         void refreshNoteList();
 
         ArrayList<Task> getNoteTasks(String noteId);
+
+        void deleteNotes(ArrayList<Note> noteList);
+
+        void updateNotes(ArrayList<Note> noteList);
 
         void swapNotesPositions(Note fromNote, Note toNote);
     }

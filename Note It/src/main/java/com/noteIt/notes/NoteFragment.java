@@ -2,6 +2,7 @@ package com.noteIt.notes;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,7 +26,6 @@ import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.noteAdd.NoteAddActivity;
 import com.noteIt.R;
-import com.noteIt.noteDetail.NoteDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,18 +73,18 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRecyclerNoteListAdapter = new RecyclerNoteListAdapter(getContext(), new ArrayList<Note>(0), false);
+        mRecyclerNoteListAdapter = new RecyclerNoteListAdapter(getContext(), new ArrayList<Note>(0), false, this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull  LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.note_frag, container, false);
-        mNoteLayout = root.findViewById(R.id.noteLayout);
-        mNoNoteTextView = root.findViewById(R.id.noNoteTextView);
-        mNoNoteLayout = root.findViewById(R.id.noNoteLayout);
+        mNoteLayout = root.findViewById(R.id.note_layout);
+        mNoNoteTextView = root.findViewById(R.id.empty_note_textView);
+        mNoNoteLayout = root.findViewById(R.id.empty_note_layout);
 
-        mNoteRecyclerView = root.findViewById(R.id.noteRecyclerView);
+        mNoteRecyclerView = root.findViewById(R.id.note_recyclerView);
         mNoteRecyclerView.setHasFixedSize(true);
         mNoteRecyclerView.setAdapter(mRecyclerNoteListAdapter);
         mNoteRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -94,7 +94,7 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
         mItemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
 
 
-        showNoNoteMenu(false);
+        showEmptyView(false);
 
         return root;
     }
@@ -103,8 +103,10 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_note);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+            fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addNoteStart();
@@ -139,13 +141,12 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
             if(resultCode == Activity.RESULT_OK)
             {
                 showSnackBar( NOTE_SAVED_SNACKBAR_TEXT );
-                mRecyclerNoteListAdapter.replaceNoteList(mPresenter.getAllNotes());
+                mRecyclerNoteListAdapter.replaceNoteList(mPresenter.getNotes());
             }
 
     }
 
-    @Override
-    public void showNoNoteMenu(boolean show) {
+    public void showEmptyView(boolean show) {
         if (show) {
             mNoteRecyclerView.setVisibility(View.GONE);
             mNoteLayout.setVisibility(View.GONE);
@@ -179,6 +180,23 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         mItemTouchHelper.startDrag(viewHolder);
     }
+
+
+    public void deleteNotes(ArrayList<Note> noteList)
+    {
+        mPresenter.deleteNotes(noteList);
+    }
+
+    public void updateNotes(ArrayList<Note> noteList)
+    {
+        mPresenter.updateNotes(noteList);
+    }
+
+    public ArrayList<Note> getNotes()
+    {
+        return (ArrayList<Note>)mPresenter.getNotes();
+    }
+
 
 }
 

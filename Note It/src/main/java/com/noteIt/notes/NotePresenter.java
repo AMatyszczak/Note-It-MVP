@@ -1,15 +1,11 @@
 package com.noteIt.notes;
 
-import android.util.Log;
-
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by adria on 24.04.2018.
@@ -32,17 +28,16 @@ public final class NotePresenter implements NoteContract.Presenter {
     @Override
     public void refreshNoteList() {
         List<Note> list = mNoteRepository.getNotesList();
-        if (list.size() == 0)
-            mFragment.showNoNoteMenu(true);
-        else {
-            mFragment.showNoNoteMenu(false);
+        if (list.size() != 0)
+        {
+
             mFragment.updateNoteList(list);
         }
 
     }
 
     @Override
-    public List<Note> getAllNotes() {
+    public List<Note> getNotes() {
         return mNoteRepository.getNotesList();
     }
 
@@ -53,13 +48,13 @@ public final class NotePresenter implements NoteContract.Presenter {
 
     @Override
     public void deleteNotes(ArrayList<Note> notes) {
-        for (Note note : notes) {
-            mNoteRepository.deleteNote(note);
-        }
-        refreshNoteList();
-
+        mNoteRepository.deleteNotes(notes);
     }
 
+    @Override
+    public void updateNotes(ArrayList<Note> noteList) {
+        mNoteRepository.updateNotes(noteList);
+    }
 
     @Override
     public void swapNotesPositions(Note fromNote, Note toNote) {
@@ -71,6 +66,4 @@ public final class NotePresenter implements NoteContract.Presenter {
         mNoteRepository.updateNote(toNote);
 
     }
-
-
 }

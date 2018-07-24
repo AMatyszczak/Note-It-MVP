@@ -19,13 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.noteIt.ArchivedNotes.ArchivedNotesFragment;
 import com.noteIt.R;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 import com.noteIt.noteDetail.NoteDetailActivity;
+import com.noteIt.notes.NoteFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +38,6 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
     private ArrayList<Note> mArrayList;
     private Context mContext;
-    private NoteRepository mNoteRepository;
     private ActionMode mActionMode;
 
     private ArrayList<CardView> mSelectedCardViews;
@@ -43,7 +45,10 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
     private boolean isArchived;
 
-    class ViewHolder extends RecyclerView.ViewHolder
+    private NoteFragment mNoteFragment;
+    private ArchivedNotesFragment mNoteArchivedFragment;
+
+    class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder
     {
         private CardView mCardView;
         private TextView mTitle;
@@ -59,6 +64,16 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
         }
 
+        @Override
+        public void onItemSelected() {
+            
+        }
+
+        @Override
+        public void onItemClear() {
+            mActionMode.finish();
+        }
+
         void update(Note note)
         {
             mTitle.setText(note.getTitle());
@@ -66,7 +81,6 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
             setOnClickIntent(note);
             updateTasks(note.getId());
             setOnLongClickActionMode(note);
-
 
         }
 
@@ -128,7 +142,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
         {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ArrayList<Task> tasks;
-            tasks =  mNoteRepository.getNoteTasks(noteId);
+            tasks = getNoteTasks(noteId);
+
             mTaskLayout.removeAllViews();
             for (Task task: tasks) {
                 try
@@ -161,13 +176,26 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
     }
 
-    public RecyclerNoteListAdapter(Context context, ArrayList<Note> items, boolean isArchived) {
+    public RecyclerNoteListAdapter(Context context, ArrayList<Note> items, boolean isArchived, NoteFragment fragment) {
         this.mArrayList = items;
         this.mContext = context;
         this.isArchived = isArchived;
-        this.mNoteRepository = NoteRepository.getINSTANCE(mContext);
+
         mSelectedCardViews = new ArrayList<>(0);
         mSelectedNotes = new ArrayList<>(0);
+
+        mNoteFragment = fragment;
+    }
+
+    public RecyclerNoteListAdapter(Context context, ArrayList<Note> items, boolean isArchived, ArchivedNotesFragment fragment) {
+        this.mArrayList = items;
+        this.mContext = context;
+        this.isArchived = isArchived;
+
+        mSelectedCardViews = new ArrayList<>(0);
+        mSelectedNotes = new ArrayList<>(0);
+
+        mNoteArchivedFragment = fragment;
     }
 
 
@@ -212,19 +240,19 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
         toNote.setPosition(tempPosition);
 
         Collections.swap(mArrayList, fromPosition, toPosition);
-        mNoteRepository.updateNote(fromNote);
-        mNoteRepository.updateNote(toNote);
+
+        updateNotes(new ArrayList<>(Arrays.asList(fromNote,toNote)));
         notifyItemMoved(fromPosition, toPosition);
 
-        if(mActionMode!= null)
-            mActionMode.finish();
         return true;
     }
 
 
     @Override
     public void onItemDismiss(int position) {
+
         mArrayList.remove(position);
+
         notifyItemRemoved(position);
     }
 
@@ -236,12 +264,13 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
     private void setList(List<Note> noteList) {
         mArrayList.clear();
         mArrayList.addAll(noteList);
-        notifyDataSetChanged();
-    }
 
-    public void setArchivedLoading(boolean set)
-    {
-        this.isArchived = set;
+        if(noteList.size() > 0)
+            showEmptyView(false);
+        else
+            showEmptyView(true);
+
+        notifyDataSetChanged();
     }
 
     private ActionMode.Callback actionModeCallbacks = new ActionMode.Callback() {
@@ -263,13 +292,15 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
             switch (menuItem.getItemId()) {
                 case R.id.item_delete:
                     mArrayList.removeAll(mSelectedNotes);
-                    mNoteRepository.deleteNotes(mSelectedNotes);
+                    deleteNotes(mSelectedNotes);
 
                     actionMode.finish();
                     break;
                 case R.id.item_archive:
                     mSelectedNotes = archiveNotes(mSelectedNotes);
-                    mNoteRepository.updateNotes(mSelectedNotes);
+
+                    updateNotes(mSelectedNotes);
+
                     actionMode.finish();
                     break;
             }
@@ -281,21 +312,12 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
             for (CardView cardview: mSelectedCardViews) {
                 cardview.setSelected(false);
             }
-            if(isArchived)
-                setList(mNoteRepository.getArchivedNotes());
-            else
-                setList(mNoteRepository.getNotesList());
+            setList(getNotes());
+
             mSelectedCardViews.clear();
             mSelectedNotes.clear();
 
             mActionMode = null;
-        }
-
-        void removeNotesFromArchived(ArrayList<Note> noteList){
-            for (Note note: noteList) {
-                note.setArchived(note.isArchived());
-
-            }
         }
 
         ArrayList<Note> archiveNotes(ArrayList<Note> noteList)
@@ -306,6 +328,62 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
             }
             return noteList;
         }
-
     };
+
+
+
+    private void deleteNotes(ArrayList<Note> noteList)
+    {
+        if(mNoteFragment != null)
+        {
+            mNoteFragment.deleteNotes(noteList);
+        } else {
+            mNoteArchivedFragment.deleteNotes(noteList);
+        }
+
+    }
+
+    private void updateNotes(ArrayList<Note> noteList)
+    {
+        if(mNoteFragment != null)
+        {
+            mNoteFragment.updateNotes( noteList );
+        }
+        else
+        {
+            mNoteArchivedFragment.updateNotes( noteList );
+        }
+    }
+
+    private ArrayList<Note> getNotes()
+    {
+        if(isArchived)
+            return mNoteArchivedFragment.getArchivedNotes();
+        else
+            return mNoteFragment.getNotes();
+    }
+
+    private ArrayList<Task> getNoteTasks(String noteId)
+    {
+        if(mNoteFragment != null)
+        {
+            return mNoteFragment.getNoteTasks(noteId);
+        }
+        else
+        {
+            return mNoteArchivedFragment.getNoteTasks(noteId);
+        }
+    }
+
+    private void showEmptyView(boolean show)
+    {
+        if(mNoteFragment != null)
+        {
+            mNoteFragment.showEmptyView(show);
+        }
+        else
+        {
+            mNoteArchivedFragment.showEmptyView(show);
+        }
+    }
 }
