@@ -26,7 +26,7 @@ public abstract class LocalAppDatabase extends RoomDatabase {
             synchronized (LocalAppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            LocalAppDatabase.class, "App_Database").allowMainThreadQueries()
+                            LocalAppDatabase.class, "App_Database").fallbackToDestructiveMigration().allowMainThreadQueries()
                             .addMigrations().build();
                 }
             }

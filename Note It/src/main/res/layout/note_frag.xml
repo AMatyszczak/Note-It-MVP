@@ -9,13 +9,13 @@
     android:background="@color/colorBackground">
 
     <LinearLayout
-        android:id="@+id/noteLayout"
+        android:id="@+id/note_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/noteRecyclerView"
+            android:id="@+id/note_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="150dp"
@@ -28,7 +28,7 @@
 
 
     <LinearLayout
-        android:id="@+id/noNoteLayout"
+        android:id="@+id/empty_note_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -37,7 +37,7 @@
 
 
         <TextView
-            android:id="@+id/noNoteTextView"
+            android:id="@+id/empty_note_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/archived_note_fragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/archived_recylerView"
+    <LinearLayout
+        android:id="@+id/archived_note_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"/>
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/archived_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="2dp"
+            android:padding="4dp"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/archived_empty_note_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/archived_empty_note_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/no_note" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
