@@ -10,16 +10,20 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by adria on 01.05.2018.
  */
-
+@Singleton
 public class NoteRepository {
     private NoteDao mNoteDao;
     private TaskDao mTaskDao;
     private static NoteRepository INSTANCE = null;
 
-    private NoteRepository(Context context) {
+    @Inject
+    NoteRepository(Context context) {
         LocalAppDatabase database = LocalAppDatabase.getDatabase(context);
         mNoteDao = database.noteDao();
         mTaskDao = database.taskDao();
