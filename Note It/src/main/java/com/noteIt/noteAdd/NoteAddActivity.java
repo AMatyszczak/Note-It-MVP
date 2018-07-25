@@ -10,10 +10,18 @@ import com.noteIt.R;
 import com.noteIt.data.local.NoteRepository;
 import com.noteIt.util.ActivityUtils;
 
-public class NoteAddActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.Lazy;
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class NoteAddActivity extends DaggerAppCompatActivity {
 
     private static final String TAG = "TAG";
-    private NoteAddPresenter mPresenter;
+    @Inject
+    public NoteAddPresenter mPresenter;
+    @Inject
+    Lazy<NoteAddFragment> mNoteFragmentProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +36,10 @@ public class NoteAddActivity extends AppCompatActivity {
 
         NoteAddFragment NoteAddFragment = (NoteAddFragment) getSupportFragmentManager().findFragmentById(R.id.NoteAddFragment);
         if (NoteAddFragment == null) {
-            NoteAddFragment = new NoteAddFragment();
+            NoteAddFragment = mNoteFragmentProvider.get();
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), NoteAddFragment, R.id.contentFrame);
         }
-        NoteRepository noteRepository = NoteRepository.getINSTANCE(getApplication());
-        mPresenter = new NoteAddPresenter(NoteAddFragment, noteRepository);
     }
 
 

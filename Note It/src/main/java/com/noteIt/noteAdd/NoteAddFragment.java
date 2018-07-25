@@ -19,6 +19,8 @@ import com.noteIt.data.Task;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 
 public class NoteAddFragment extends Fragment implements NoteAddContract.View {
 
@@ -27,17 +29,26 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
 
     private EditText mTitle;
     private EditText mDescription;
-    private NoteAddContract.Presenter mPresenter;
+
+    @Inject
+    public NoteAddContract.Presenter mPresenter;
+
     private TextView mAddTaskTextView;
 
     private RecyclerView mRecyclerView;
     private TaskRecyclerAdapter mAdapter;
 
-
+    @Inject
     public NoteAddFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mPresenter!= null)
+            mPresenter.bindFragment(this);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +65,8 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.addNote();
+                if(mPresenter!= null)
+                    mPresenter.addNote();
             }
         });
     }
@@ -87,11 +99,6 @@ public class NoteAddFragment extends Fragment implements NoteAddContract.View {
             }
         });
         return root;
-    }
-
-    @Override
-    public void setPresenter(NoteAddContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override

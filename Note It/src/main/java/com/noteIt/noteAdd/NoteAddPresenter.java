@@ -1,25 +1,30 @@
 package com.noteIt.noteAdd;
 
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 /**
  * Created by adria on 05.05.2018.
  */
-
-public class NoteAddPresenter implements NoteAddContract.Presenter {
+@ActivityScoped
+public final class NoteAddPresenter implements NoteAddContract.Presenter {
 
     private NoteAddContract.View mFragment;
-    private NoteRepository mNoteRepository;
 
-    NoteAddPresenter(NoteAddContract.View fragment, NoteRepository noteRepository) {
-        mFragment = fragment;
+    public NoteRepository mNoteRepository;
+
+    @Inject
+    NoteAddPresenter( NoteRepository noteRepository) {
+
         mNoteRepository = noteRepository;
 
-        mFragment.setPresenter(this);
+
     }
 
     @Override
@@ -32,6 +37,11 @@ public class NoteAddPresenter implements NoteAddContract.Presenter {
 
         mFragment.showNotes();
 
+    }
+
+    @Override
+    public void bindFragment(NoteAddContract.View fragment) {
+        this.mFragment = fragment;
     }
 
     private ArrayList<Task> setTaskNoteId(ArrayList<Task> taskList, String noteId) {

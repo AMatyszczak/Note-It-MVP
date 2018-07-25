@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public interface NoteAddContract {
     interface View {
-        void setPresenter(NoteAddContract.Presenter presenter);
-
         String getTitle();
 
         String getDescription();
@@ -24,6 +22,8 @@ public interface NoteAddContract {
 
     interface Presenter {
         void addNote();
+
+        void bindFragment(NoteAddContract.View fragment);
     }
 
 }
