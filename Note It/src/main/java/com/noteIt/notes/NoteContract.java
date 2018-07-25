@@ -13,9 +13,6 @@ import java.util.List;
 
 public interface NoteContract {
     interface View {
-        void updateNoteList(List<Note> noteList);
-
-        void setPresenter(NoteContract.Presenter presenter);
 
         void addNoteStart();
 
@@ -29,8 +26,6 @@ public interface NoteContract {
     interface Presenter {
 
         List<Note> getNotes();
-
-        void refreshNoteList();
 
         ArrayList<Task> getNoteTasks(String noteId);
 

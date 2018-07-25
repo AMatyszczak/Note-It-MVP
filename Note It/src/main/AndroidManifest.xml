@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name=".NoteApplication"
         >
         <activity
             android:name=".notes.NoteActivity"
@@ -35,7 +36,7 @@
             android:name=".remote.RegisterActivity"
             android:label="register" />
 
-        <activity android:name=".ArchivedNotes.ArchivedNotesActivity"
+        <activity android:name=".archivedNotes.ArchivedNotesActivity"
             android:label="Archive Notes"/>
 
         <activity android:name=".widget.NoteWidgetActivity"

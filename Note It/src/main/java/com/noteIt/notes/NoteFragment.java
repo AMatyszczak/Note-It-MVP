@@ -1,6 +1,7 @@
 package com.noteIt.notes;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import com.noteIt.RecyclerViewClasses.ItemTouchHelperCallback;
 import com.noteIt.RecyclerViewClasses.OnStartDrag;
 import com.noteIt.RecyclerViewClasses.RecyclerNoteListAdapter;
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.noteAdd.NoteAddActivity;
@@ -30,9 +33,12 @@ import com.noteIt.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * A placeholder fragment containing a simple view.
  */
+@ActivityScoped
 public class NoteFragment extends Fragment implements NoteContract.View, OnStartDrag {
 
     public final static int ADD_NOTE = 1;
@@ -41,7 +47,9 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     public final static String NOTE_SAVED_SNACKBAR_TEXT = "Note Saved";
 
     private RecyclerNoteListAdapter mRecyclerNoteListAdapter;
-    private NoteContract.Presenter mPresenter;
+
+    @Inject
+    public NoteContract.Presenter mPresenter;
 
     private RecyclerView mNoteRecyclerView;
     private ItemTouchHelper mItemTouchHelper;
@@ -51,7 +59,7 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     private TextView mNoNoteTextView;
     private LinearLayout mNoNoteLayout;
 
-
+    @Inject
     public NoteFragment() {
 
     }
@@ -59,14 +67,9 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
     @Override
     public void onResume() {
         if(mPresenter!= null)
-            mPresenter.refreshNoteList();
+            updateNoteList(mPresenter.getNotes());
 
         super.onResume();
-    }
-
-    @Override
-    public void setPresenter(NoteContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override
@@ -93,8 +96,7 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
 
-
-        showEmptyView(false);
+        showEmptyView(true);
 
         return root;
     }
@@ -113,10 +115,10 @@ public class NoteFragment extends Fragment implements NoteContract.View, OnStart
             }
         });
         if(mPresenter!= null)
-            mPresenter.refreshNoteList();
+            updateNoteList(mPresenter.getNotes());
     }
 
-    @Override
+
     public void updateNoteList(List<Note> noteList) {
         mRecyclerNoteListAdapter.replaceNoteList(noteList);
     }

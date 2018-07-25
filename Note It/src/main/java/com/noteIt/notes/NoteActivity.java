@@ -10,16 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.noteIt.ArchivedNotes.ArchivedNotesActivity;
+import com.noteIt.archivedNotes.ArchivedNotesActivity;
 import com.noteIt.R;
 import com.noteIt.data.local.NoteRepository;
 import com.noteIt.util.ActivityUtils;
 
-public class NoteActivity extends AppCompatActivity {
+import javax.inject.Inject;
 
+import dagger.Lazy;
+import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class NoteActivity extends DaggerAppCompatActivity {
+
+    @Inject
     public NotePresenter mPresenter;
+    @Inject
+    Lazy<NoteFragment> mNoteFragmentProvider;
     public DrawerLayout mDrawerLayout;
 
 
@@ -43,12 +51,11 @@ public class NoteActivity extends AppCompatActivity {
 
         NoteFragment noteFragment = (NoteFragment) getSupportFragmentManager().findFragmentById(R.id.NoteFragment);
         if (noteFragment == null) {
-            noteFragment = new NoteFragment();
+            noteFragment = mNoteFragmentProvider.get();
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), noteFragment, R.id.contentFrame);
         }
-        NoteRepository noteRepository = NoteRepository.getINSTANCE(getApplication());
-        mPresenter = new NotePresenter(noteFragment, noteRepository);
+
     }
 
     @Override

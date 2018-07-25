@@ -1,5 +1,6 @@
 package com.noteIt.notes;
 
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
@@ -7,33 +8,21 @@ import com.noteIt.data.local.NoteRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by adria on 24.04.2018.
  */
-
+@ActivityScoped
 public final class NotePresenter implements NoteContract.Presenter {
     private final int ADD_NOTE = 1;
 
-    private NoteRepository mNoteRepository;
+    private final NoteRepository mNoteRepository;
 
-    private NoteContract.View mFragment;
 
-    NotePresenter(NoteContract.View fragment, NoteRepository noteRepository) {
-        mFragment = fragment;
+    @Inject
+    NotePresenter(NoteRepository noteRepository) {
         mNoteRepository = noteRepository;
-
-        mFragment.setPresenter(this);
-    }
-
-    @Override
-    public void refreshNoteList() {
-        List<Note> list = mNoteRepository.getNotesList();
-        if (list.size() != 0)
-        {
-
-            mFragment.updateNoteList(list);
-        }
-
     }
 
     @Override
