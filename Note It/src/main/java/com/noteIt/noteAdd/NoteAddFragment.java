@@ -15,14 +15,17 @@ import android.widget.TextView;
 
 import com.noteIt.R;
 import com.noteIt.TaskList.TaskRecyclerAdapter;
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Task;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerFragment;
 
-public class NoteAddFragment extends Fragment implements NoteAddContract.View {
+@ActivityScoped
+public class NoteAddFragment extends DaggerFragment implements NoteAddContract.View {
 
     private static final String ADD_LIST = "Click here to create To-Do List";
     private static final String ADD_TASK = "+ Add New Task";
