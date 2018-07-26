@@ -1,9 +1,8 @@
-package com.noteIt.ArchivedNotes;
+package com.noteIt.archivedNotes;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,35 +13,42 @@ import android.widget.TextView;
 
 import com.noteIt.R;
 import com.noteIt.RecyclerViewClasses.RecyclerNoteListAdapter;
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArchivedNotesFragment extends Fragment implements ArchivedNotesContract.View
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
+@ActivityScoped
+public class ArchivedNoteFragment extends DaggerFragment implements ArchivedNoteContract.View
 {
     private RecyclerView mRecyclerView;
     private RecyclerNoteListAdapter mAdapter;
-    private ArchivedNotesContract.Presenter mPresenter;
+    @Inject
+    public ArchivedNoteContract.Presenter mPresenter;
 
     private LinearLayout mEmptyLayout;
     private LinearLayout mNoteLayout;
     private TextView mEmptyTextView;
 
+    @Inject
+    public ArchivedNoteFragment()
+    {
+
+    }
+
     @Override
     public void onResume() {
+        mPresenter.setFragment(this);
         if(mPresenter!= null)
             mPresenter.refreshNoteList();
 
         super.onResume();
     }
-
-    @Override
-    public void setPresenter(ArchivedNotesContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

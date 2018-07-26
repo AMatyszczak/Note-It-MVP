@@ -1,16 +1,14 @@
-package com.noteIt.ArchivedNotes;
+package com.noteIt.archivedNotes;
 
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ArchivedNotesContract {
+public interface ArchivedNoteContract {
 
     interface View {
-        void setPresenter(ArchivedNotesContract.Presenter presenter);
 
         void updateNoteList(List<Note> noteList);
 
@@ -27,6 +25,7 @@ public interface ArchivedNotesContract {
 
         ArrayList<Note> getNotes();
 
+        void setFragment(ArchivedNoteContract.View fragment);
     }
 
 }

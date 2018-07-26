@@ -1,6 +1,4 @@
-package com.noteIt.ArchivedNotes;
-
-import android.util.Log;
+package com.noteIt.archivedNotes;
 
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
@@ -8,19 +6,24 @@ import com.noteIt.data.local.NoteRepository;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
+import javax.inject.Inject;
 
-public class ArchivedNotesPresenter implements ArchivedNotesContract.Presenter
+public final class ArchivedNotePresenter implements ArchivedNoteContract.Presenter
 {
 
-    private ArchivedNotesFragment mFragment;
+    private ArchivedNoteContract.View mFragment;
     private NoteRepository mNoteRepository;
 
-    public ArchivedNotesPresenter(ArchivedNotesFragment fragment, NoteRepository noteRepository)
+    @Inject
+    ArchivedNotePresenter(NoteRepository noteRepository)
     {
-        this.mFragment = fragment;
         this.mNoteRepository = noteRepository;
-        mFragment.setPresenter(this);
+    }
+
+    @Override
+    public void setFragment(ArchivedNoteContract.View fragment)
+    {
+        mFragment = fragment;
     }
 
     @Override

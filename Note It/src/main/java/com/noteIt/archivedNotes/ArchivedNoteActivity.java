@@ -1,4 +1,4 @@
-package com.noteIt.ArchivedNotes;
+package com.noteIt.archivedNotes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,19 +7,24 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.noteIt.R;
-import com.noteIt.data.local.NoteRepository;
 import com.noteIt.notes.NoteActivity;
 import com.noteIt.util.ActivityUtils;
 
-public class ArchivedNotesActivity extends AppCompatActivity implements ArchivedNotesContract
-{
+import javax.inject.Inject;
 
-    private ArchivedNotesContract.Presenter mPresenter;
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class ArchivedNoteActivity extends DaggerAppCompatActivity implements ArchivedNoteContract
+{
+    @Inject
+    public ArchivedNoteContract.Presenter mPresenter;
+    @Inject
+    public ArchivedNoteFragment mFragment;
+
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -41,14 +46,12 @@ public class ArchivedNotesActivity extends AppCompatActivity implements Archived
         NavigationView navigationView = findViewById(R.id.archived_navigationView);
         setNavigationItemSelection(navigationView);
 
-        ArchivedNotesFragment archivedNotesFragment = (ArchivedNotesFragment)getSupportFragmentManager().findFragmentById(R.id.archived_note_fragment);
-        if(archivedNotesFragment == null)
+        ArchivedNoteFragment archivedNoteFragment = (ArchivedNoteFragment)getSupportFragmentManager().findFragmentById(R.id.archived_note_fragment);
+        if(archivedNoteFragment == null)
         {
-            archivedNotesFragment = new ArchivedNotesFragment();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),archivedNotesFragment,R.id.contentFrame);
+            archivedNoteFragment = mFragment;
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), archivedNoteFragment,R.id.contentFrame);
         }
-        mPresenter = new ArchivedNotesPresenter(archivedNotesFragment, NoteRepository.getINSTANCE(this));
-
 
     }
 
@@ -72,7 +75,7 @@ public class ArchivedNotesActivity extends AppCompatActivity implements Archived
                                 mDrawerLayout.closeDrawers();
                                 break;
                             case R.id.menu_notes:
-                                Intent intent = new Intent(ArchivedNotesActivity.this, NoteActivity.class);
+                                Intent intent = new Intent(ArchivedNoteActivity.this, NoteActivity.class);
                                 startActivity(intent);
                             default:
                                 break;
