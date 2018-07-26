@@ -8,14 +8,26 @@ import android.util.Log;
 import android.view.Menu;
 
 import com.noteIt.R;
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.local.NoteRepository;
 import com.noteIt.util.ActivityUtils;
 
+import javax.annotation.Nullable;
+import javax.inject.Inject;
 
-public class NoteDetailActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
 
-    public final static String GET_NOTE_DETAIL = "Get note detail";
-    public NoteDetailPresenter mPresenter;
+public class NoteDetailActivity extends DaggerAppCompatActivity {
+
+    public final static String GET_NOTE_DETAIL = "GET_NOTE_DETAIL";
+    @Inject
+    public NoteDetailContract.Presenter mPresenter;
+
+    @Inject
+    public NoteDetailFragment mFragment;
+
+    @Inject
+    public String mNoteId;
 
 
     @Override
@@ -32,14 +44,10 @@ public class NoteDetailActivity extends AppCompatActivity {
 
         NoteDetailFragment noteDetailFragment = (NoteDetailFragment) getSupportFragmentManager().findFragmentById(R.id.NoteFragment);
         if (noteDetailFragment == null) {
-            noteDetailFragment = new NoteDetailFragment();
+            noteDetailFragment = mFragment;
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), noteDetailFragment, R.id.contentFrame);
         }
-        NoteRepository noteRepository = NoteRepository.getINSTANCE(getApplication());
-        String id = getIntent().getStringExtra(GET_NOTE_DETAIL);
-
-        mPresenter = new NoteDetailPresenter(id, noteDetailFragment, noteRepository);
 
     }
 

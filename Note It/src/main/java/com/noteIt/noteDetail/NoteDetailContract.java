@@ -2,6 +2,7 @@ package com.noteIt.noteDetail;
 
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
+import com.noteIt.notes.NoteContract;
 
 import java.util.ArrayList;
 
@@ -12,8 +13,6 @@ import java.util.ArrayList;
 public interface NoteDetailContract {
     interface View {
         void closeNoteDetail();
-
-        void setPresenter(NoteDetailContract.Presenter presenter);
 
         void updateNote();
 
@@ -33,6 +32,10 @@ public interface NoteDetailContract {
         void notifyDataChanged();
 
         boolean isChanged();
+
+        void setFragment(NoteDetailContract.View fragment);
+
+        void deleteFragment();
 
     }
 

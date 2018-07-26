@@ -3,6 +3,7 @@ package com.noteIt.noteDetail;
 
 import android.content.Intent;
 
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
@@ -11,29 +12,42 @@ import com.noteIt.notes.NoteFragment;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+
 
 /**
  * Created by adria on 10.05.2018.
  */
+public final class NoteDetailPresenter implements NoteDetailContract.Presenter {
 
-public class NoteDetailPresenter implements NoteDetailContract.Presenter {
-    private String mNoteID;
+    @Nullable
+    public String mNoteID;
 
     private NoteDetailContract.View mFragment;
     private NoteRepository mNoteRepository;
     private boolean isChanged;
 
 
+    @Inject
+    NoteDetailPresenter(String noteId,  NoteRepository noteRepository) {
+        this.mNoteID = noteId;
+        this.mNoteRepository = noteRepository;
+        this.isChanged = false;
 
-    NoteDetailPresenter(String noteId, NoteDetailContract.View fragment, NoteRepository noteRepository) {
-        mNoteID = noteId;
-        mFragment = fragment;
-        mNoteRepository = noteRepository;
-        isChanged = false;
-
-        mFragment.setPresenter(this);
     }
 
+    @Override
+    public void setFragment(NoteDetailContract.View fragment)
+    {
+        mFragment = fragment;
+    }
+
+    @Override
+    public void deleteFragment()
+    {
+        mFragment = null;
+    }
 
     @Override
     public Note getNote() {
@@ -71,7 +85,8 @@ public class NoteDetailPresenter implements NoteDetailContract.Presenter {
         }
 
         mNoteRepository.updateNote(note);
-        mFragment.closeNoteDetail();
+        if(mFragment != null)
+            mFragment.closeNoteDetail();
     }
 
     @Override

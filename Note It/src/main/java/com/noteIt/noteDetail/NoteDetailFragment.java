@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.noteIt.R;
 import com.noteIt.TaskList.TaskRecyclerAdapter;
+import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.notes.NoteFragment;
@@ -28,12 +30,17 @@ import com.noteIt.widget.NoteWidgetProvider;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
+
 /**
  * Created by adria on 10.05.2018.
  */
+@ActivityScoped
+public class NoteDetailFragment extends DaggerFragment implements NoteDetailContract.View {
 
-public class NoteDetailFragment extends Fragment implements NoteDetailContract.View {
-
+    public static final String NOTE_ID = "NOTE_ID";
     private static final String ADD_LIST = "Click here to create To-Do List";
     private static final String ADD_TASK = "+ Add New Task";
     private static final String SAVED = "Saved";
@@ -43,11 +50,29 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
     private int mPosition;
     private TextView mAddTaskTextView;
 
-    private NoteDetailContract.Presenter mPresenter;
+    @Inject
+    public NoteDetailContract.Presenter mPresenter;
 
     private RecyclerView mRecyclerView;
     private TaskRecyclerAdapter mAdapter;
 
+    @Inject
+    public NoteDetailFragment()
+    {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.setFragment(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.deleteFragment();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -149,11 +174,6 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
     }
 
     @Override
-    public void setPresenter(NoteDetailContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void updateNote() {
         mPresenter.updateNote(mTitle.getText().toString(), mDescription.getText().toString(), mPosition, mAdapter.getTaskList());
         if (getView() != null) {
@@ -170,10 +190,20 @@ public class NoteDetailFragment extends Fragment implements NoteDetailContract.V
 
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
+
+
     }
 
     @Override
-    public ArrayList<Task> getDeletedTasks() { return mAdapter.getDeletedTaskList(); }
+    public ArrayList<Task> getDeletedTasks() {
+        if(mAdapter!=null)
+        {
+            return mAdapter.getDeletedTaskList();
+        }
+        else
+            return new ArrayList<Task>(0);
+
+    }
 
     public void setTaskListAddTitle(boolean set) {
         if (set) {
