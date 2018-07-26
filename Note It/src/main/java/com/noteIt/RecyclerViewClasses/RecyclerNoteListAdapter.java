@@ -21,11 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.noteIt.ArchivedNotes.ArchivedNotesFragment;
+import com.noteIt.archivedNotes.ArchivedNoteFragment;
 import com.noteIt.R;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
-import com.noteIt.data.local.NoteRepository;
 import com.noteIt.noteDetail.NoteDetailActivity;
 import com.noteIt.notes.NoteFragment;
 
@@ -48,7 +47,7 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
     private boolean isArchived;
 
     private NoteFragment mNoteFragment;
-    private ArchivedNotesFragment mNoteArchivedFragment;
+    private ArchivedNoteFragment mNoteArchivedFragment;
 
     private boolean isSwiped = false;
 
@@ -196,7 +195,7 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
         mNoteFragment = fragment;
     }
 
-    public RecyclerNoteListAdapter(Context context, ArrayList<Note> items, boolean isArchived, ArchivedNotesFragment fragment) {
+    public RecyclerNoteListAdapter(Context context, ArrayList<Note> items, boolean isArchived, ArchivedNoteFragment fragment) {
         this.mArrayList = items;
         this.mContext = context;
         this.isArchived = isArchived;
@@ -309,8 +308,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            mArrayList.removeAll(mSelectedNotes);
                             deleteNotes(mSelectedNotes);
+                            mArrayList.removeAll(mSelectedNotes);
 
                             actionMode.finish();
 
@@ -330,8 +329,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
                     break;
                 case R.id.item_archive:
+                    mArrayList.removeAll(mSelectedNotes);
                     mSelectedNotes = archiveNotes(mSelectedNotes);
-
                     updateNotes(mSelectedNotes);
 
                     actionMode.finish();
@@ -345,8 +344,8 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
             for (CardView cardview: mSelectedCardViews) {
                 cardview.setSelected(false);
             }
-            setList(getNotes());
-
+            //setList(getNotes());
+            notifyDataSetChanged();
             mSelectedCardViews.clear();
             mSelectedNotes.clear();
 

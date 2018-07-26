@@ -18,14 +18,15 @@ import com.noteIt.data.local.NoteRepository;
 
 import java.util.ArrayList;
 
-public class NoteWidgetActivity extends Activity
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class NoteWidgetActivity extends DaggerAppCompatActivity
 {
 
     private static final String PREFS_NAME = "com.myappmvp.widget.NoteWidgetActivity";
     public static final String PREF_TITLE = "Title";
     public static final String PREF_DESCRIPTION = "Description";
     public static final String PREF_ID = "Id";
-    public static final String PREF_TASK_LIST = "PrefTaskList";
 
     private GridView mGridView;
     private NoteRepository mNoteRepository;

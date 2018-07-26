@@ -8,25 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 
 import com.noteIt.R;
 import com.noteIt.data.Note;
-import com.noteIt.data.Task;
 import com.noteIt.data.local.NoteRepository;
 import com.noteIt.noteDetail.NoteDetailActivity;
-import com.noteIt.notes.NoteActivity;
 
-import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
+import javax.inject.Inject;
 
 public class NoteWidgetProvider extends AppWidgetProvider
 {
@@ -35,7 +25,8 @@ public class NoteWidgetProvider extends AppWidgetProvider
     private static final int MIN_WIDGET_WIDTH = 70;
 
     private static final String NOTE_ID = "NOTE_ID";
-    NoteRepository mTaskRepository;
+    @Inject
+    NoteRepository mNoteRepository;
 
 
     @Override
@@ -43,7 +34,6 @@ public class NoteWidgetProvider extends AppWidgetProvider
         String action = intent.getAction();
         if(action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE))
         {
-            mTaskRepository = NoteRepository.getINSTANCE(context);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             ComponentName componentName = new ComponentName(context,NoteWidgetProvider.class);
             int appWidgetIds[] = appWidgetManager.getAppWidgetIds(componentName);
@@ -53,7 +43,7 @@ public class NoteWidgetProvider extends AppWidgetProvider
             {
                 int appWidgetId = appWidgetIds[i];
                 Id = NoteWidgetActivity.loadIdPref(context,appWidgetId);
-                Note note = mTaskRepository.getNoteFromId(Id);
+                Note note = mNoteRepository.getNoteFromId(Id);
 
                 if(note != null)
                 {

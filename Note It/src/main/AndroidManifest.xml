@@ -36,7 +36,7 @@
             android:name=".remote.RegisterActivity"
             android:label="register" />
 
-        <activity android:name=".archivedNotes.ArchivedNotesActivity"
+        <activity android:name=".archivedNotes.ArchivedNoteActivity"
             android:label="Archive Notes"/>
 
         <activity android:name=".widget.NoteWidgetActivity"

@@ -35,11 +35,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerFragment;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 @ActivityScoped
-public class NoteFragment extends Fragment implements NoteContract.View, OnStartDrag {
+public class NoteFragment extends DaggerFragment implements NoteContract.View, OnStartDrag {
 
     public final static int ADD_NOTE = 1;
 
