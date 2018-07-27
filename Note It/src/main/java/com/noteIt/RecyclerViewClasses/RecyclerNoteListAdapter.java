@@ -37,6 +37,11 @@ import static android.content.ContentValues.TAG;
 
 public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteListAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
+    private static final String ALERT_DELETION_TITLE = "Alert";
+    private static final String ALERT_DELETION_STRING = "Are you sure to delete notes";
+    private static final String ALERT_DELETION_CONFIRM_STRING = "YES";
+    private static final String ALERT_DELETION_DENY_STRING = "NO";
+
     private ArrayList<Note> mArrayList;
     private Context mContext;
     private ActionMode mActionMode;
@@ -302,9 +307,9 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
                     AlertDialog.Builder alert = new AlertDialog.Builder(
                             mContext);
-                    alert.setTitle("Alert");
-                    alert.setMessage("Are you sure to delete notes");
-                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    alert.setTitle(ALERT_DELETION_TITLE);
+                    alert.setMessage(ALERT_DELETION_STRING);
+                    alert.setPositiveButton(ALERT_DELETION_CONFIRM_STRING, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -317,7 +322,7 @@ public class RecyclerNoteListAdapter extends RecyclerView.Adapter<RecyclerNoteLi
 
                         }
                     });
-                    alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    alert.setNegativeButton(ALERT_DELETION_DENY_STRING, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
