@@ -1,7 +1,11 @@
 package com.noteIt.notes;
 
 
+import android.app.Instrumentation;
+import android.support.design.widget.NavigationView;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.contrib.DrawerActions;
+import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -11,13 +15,18 @@ import com.noteIt.Injection;
 import com.noteIt.R;
 
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -46,6 +55,12 @@ public class NoteFragTest
     private static final String TASKDESC = "TASKDESC";
     private static final String TASKDESC2 = "TASKDESC2";
     private static final String TASKDESC3 = "TASKDESC3";
+
+    @After
+    public void clearNotes()
+    {
+        Injection.provideNoteRepository(InstrumentationRegistry.getTargetContext()).deleteAllNotes();
+    }
 
     @Rule
     public ActivityTestRule<NoteActivity> mActivityTaskRule = new ActivityTestRule<NoteActivity>(NoteActivity.class)
@@ -87,6 +102,54 @@ public class NoteFragTest
         onView(allOf(withId(R.id.task_layout_checkbox), hasSibling(withText(TASKDESC)))).check(matches(isChecked()));
     }
 
+    @Test
+    public void create_deleteNotes()
+    {
+        onView(withId(R.id.empty_note_layout)).check(matches(isDisplayed()));
+        createNote(TITLE,DESCRIPTION, TASKDESC, TASKDESC2);
+        onView(withId(R.id.empty_note_layout)).check(matches(not(isDisplayed())));
+        onView(withText(TITLE)).perform(longClick());
+        onView(withId(R.id.item_delete)).perform(click());
+        onView(withText("YES")).perform(click());
+
+        onView(withText(TITLE)).check(doesNotExist());
+    }
+
+    /*
+    Create 2 notes and archive them. Go to ArchiveActivity. Delete 1 note and unArchived the other
+
+     */
+    @Test
+    public void create_archive_delete_unarchive_Notes()
+    {
+        createNote(TITLE,DESCRIPTION, TASKDESC, TASKDESC2);
+        createNote(TITLE2,DESCRIPTION, TASKDESC, TASKDESC2);
+
+        onView(withText(TITLE)).perform(longClick());
+        onView(withText(TITLE2)).perform(click());
+        onView(withId(R.id.item_archive)).perform(click());
+
+        onView(withText(TITLE)).check(doesNotExist());
+
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.navigation_view)).perform(NavigationViewActions.navigateTo(R.id.menu_archived));
+
+        onView(withText(TITLE)).check(matches(isDisplayed()));
+
+        onView(withText(TITLE)).perform(longClick());
+        onView(withId(R.id.item_delete)).perform(click());
+        onView(withText("YES")).perform(click());
+        onView(withText(TITLE)).check(doesNotExist());
+
+        onView(withText(TITLE2)).perform(longClick());
+        onView(withId(R.id.item_archive)).perform(click());
+
+        onView(withId(R.id.archived_drawerLayout)).perform(DrawerActions.open());
+        onView(withId(R.id.archived_navigationView)).perform(NavigationViewActions.navigateTo(R.id.menu_notes));
+
+        onView(withText(TITLE2)).check(matches(isDisplayed()));
+    }
+
     private void clickCheckBoxForTask(String desc) {
         onView(Matchers.allOf(withId(R.id.task_checkbox), hasSibling(withText(desc)))).perform(click());
     }
@@ -110,8 +173,8 @@ public class NoteFragTest
         }
 
         onView(withId(R.id.fab_add_note)).perform(click());
-
-
     }
+
+
 
 }
