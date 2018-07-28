@@ -18,36 +18,35 @@ import com.noteIt.noteDetail.NoteDetailActivity;
 
 import javax.inject.Inject;
 
-public class NoteWidgetProvider extends AppWidgetProvider
+public class WidgetNoteProvider extends AppWidgetProvider
 {
+    public static final String NOTE_ID = "NOTE_ID";
 
     private static final int MIN_WIDGET_HEIGHT = 100;
     private static final int MIN_WIDGET_WIDTH = 70;
 
-    private static final String NOTE_ID = "NOTE_ID";
-    @Inject
-    NoteRepository mNoteRepository;
-
+    public NoteRepository mNoteRepository;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if(action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE))
         {
+            mNoteRepository = NoteRepository.getINSTANCE(context);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            ComponentName componentName = new ComponentName(context,NoteWidgetProvider.class);
+            ComponentName componentName = new ComponentName(context,WidgetNoteProvider.class);
             int appWidgetIds[] = appWidgetManager.getAppWidgetIds(componentName);
             String Id;
             final int N = appWidgetIds.length;
             for(int i = 0; i < N; i++)
             {
                 int appWidgetId = appWidgetIds[i];
-                Id = NoteWidgetActivity.loadIdPref(context,appWidgetId);
+                Id = WidgetNoteActivity.loadIdPref(context,appWidgetId);
                 Note note = mNoteRepository.getNoteFromId(Id);
 
                 if(note != null)
                 {
-                    NoteWidgetProvider.updateAppWidget(context, appWidgetManager, appWidgetId, note.getTitle(), note.getDescription(), note.getId());
+                    WidgetNoteProvider.updateAppWidget(context, appWidgetManager, appWidgetId, note.getTitle(), note.getDescription(), note.getId());
                 }
             }
         }
@@ -59,9 +58,9 @@ public class NoteWidgetProvider extends AppWidgetProvider
         for (int i: appWidgetIds) {
             int appWidgetId = appWidgetIds[i];
 
-            String title = NoteWidgetActivity.loadTitlePref(context,appWidgetId);
-            String description = NoteWidgetActivity.loadDescPref(context,appWidgetId);
-            String id = NoteWidgetActivity.loadIdPref(context,appWidgetId);
+            String title = WidgetNoteActivity.loadTitlePref(context,appWidgetId);
+            String description = WidgetNoteActivity.loadDescPref(context,appWidgetId);
+            String id = WidgetNoteActivity.loadIdPref(context,appWidgetId);
 
             updateAppWidget(context, appWidgetManager, appWidgetId, title,description, id);
 

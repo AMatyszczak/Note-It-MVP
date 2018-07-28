@@ -1,6 +1,5 @@
 package com.noteIt.widget;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,18 +17,21 @@ import com.noteIt.data.local.NoteRepository;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class NoteWidgetActivity extends DaggerAppCompatActivity
+public class WidgetNoteActivity extends DaggerAppCompatActivity
 {
 
-    private static final String PREFS_NAME = "com.myappmvp.widget.NoteWidgetActivity";
+    private static final String PREFS_NAME = "com.noteIt.widget.WidgetNoteActivity";
     public static final String PREF_TITLE = "Title";
     public static final String PREF_DESCRIPTION = "Description";
     public static final String PREF_ID = "Id";
 
     private GridView mGridView;
-    private NoteRepository mNoteRepository;
+    @Inject
+    public NoteRepository mNoteRepository;
     private WidgetNotesAdapter mWidgetNotesAdapter;
 
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -41,7 +43,7 @@ public class NoteWidgetActivity extends DaggerAppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.widget_note_menu);
         mGridView = findViewById(R.id.widgetNoteGridView);
-        mNoteRepository = mNoteRepository.getINSTANCE(getApplication());
+
         mWidgetNotesAdapter = new WidgetNotesAdapter(new ArrayList<Note>(0) );
         mWidgetNotesAdapter.setWidgetActivity(this);
         mGridView.setAdapter(mWidgetNotesAdapter);
@@ -67,10 +69,10 @@ public class NoteWidgetActivity extends DaggerAppCompatActivity
                 String description = note.getDescription();
                 String id = note.getId();
 
-                Context context = NoteWidgetActivity.this;
+                Context context = WidgetNoteActivity.this;
                 saveNote(context, mAppWidgetId, note);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                NoteWidgetProvider.updateAppWidget(context,appWidgetManager,mAppWidgetId,title,description,id);
+                WidgetNoteProvider.updateAppWidget(context,appWidgetManager,mAppWidgetId,title,description,id);
 
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);

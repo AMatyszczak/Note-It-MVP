@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.noteIt.R;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.notes.NoteFragment;
-import com.noteIt.widget.NoteWidgetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +26,10 @@ public class WidgetNotesAdapter extends BaseAdapter {
     private List<Note> mNoteList;
     
     private NoteFragment mNoteFragment;
-    private NoteWidgetActivity mWidgetActivity;
-    private int N ;
+    private WidgetNoteActivity mWidgetActivity;
 
     public WidgetNotesAdapter(List<Note> noteList) {
 
-        N = 0;
         mNoteFragment = null;
         mWidgetActivity = null;
         this.mNoteList = noteList;
@@ -45,7 +41,7 @@ public class WidgetNotesAdapter extends BaseAdapter {
     }
 
     public void setWidgetActivity(Activity activity) {
-        mWidgetActivity = (NoteWidgetActivity)activity;
+        mWidgetActivity = (WidgetNoteActivity)activity;
     }
 
     @Override
@@ -65,8 +61,6 @@ public class WidgetNotesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        //Log.e(TAG, "getView: WYWOLANE!!!!!!!!!!!!!!!!!!!!!, N: " + N );
-        N++;
         View root = view;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
@@ -78,7 +72,7 @@ public class WidgetNotesAdapter extends BaseAdapter {
         TextView title = root.findViewById(R.id.note_title);
         title.setText(note.getTitle());
 
-        TextView description = root.findViewById(R.id.add_note_description);
+        TextView description = root.findViewById(R.id.note_description);
         description.setText(note.getDescription());
 
         LinearLayout linearLayout = root.findViewById(R.id.note_task_layout);
