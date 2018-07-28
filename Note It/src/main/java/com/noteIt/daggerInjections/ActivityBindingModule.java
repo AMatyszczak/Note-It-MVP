@@ -9,6 +9,8 @@ import com.noteIt.noteDetail.NoteDetailActivity;
 import com.noteIt.noteDetail.NoteDetailModule;
 import com.noteIt.notes.NoteActivity;
 import com.noteIt.notes.NoteModule;
+import com.noteIt.widget.WidgetNoteActivity;
+import com.noteIt.widget.WidgetNoteModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -32,5 +34,9 @@ public abstract class ActivityBindingModule
     @ActivityScoped
     @ContributesAndroidInjector(modules = ArchivedNoteModule.class)
     abstract ArchivedNoteActivity archivedNotesActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = WidgetNoteModule.class)
+    abstract WidgetNoteActivity noteWidgetActivity();
 
 }
