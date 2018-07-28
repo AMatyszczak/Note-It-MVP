@@ -39,11 +39,11 @@
         <activity android:name=".archivedNotes.ArchivedNoteActivity"
             android:label="Archive Notes"/>
 
-        <activity android:name=".widget.NoteWidgetActivity"
+        <activity android:name=".widget.WidgetNoteActivity"
             android:label="WidgetActivity"
             android:windowSoftInputMode="adjustResize"/>
 
-        <receiver android:name=".widget.NoteWidgetProvider" >
+        <receiver android:name=".widget.WidgetNoteProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
