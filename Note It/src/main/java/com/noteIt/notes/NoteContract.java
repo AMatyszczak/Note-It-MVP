@@ -20,6 +20,11 @@ public interface NoteContract {
 
         void showSnackBar(String text);
 
+        void updateNoteList(List<Note> noteList);
+
+        //Testing
+        boolean isActive();
+
 
     }
 
@@ -33,7 +38,10 @@ public interface NoteContract {
 
         void updateNotes(ArrayList<Note> noteList);
 
-        void swapNotesPositions(Note fromNote, Note toNote);
+        void setFragment(NoteContract.View fragment);
+
+        void deleteFragment();
+
     }
 
 

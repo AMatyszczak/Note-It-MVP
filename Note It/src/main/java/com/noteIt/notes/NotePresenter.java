@@ -19,6 +19,8 @@ public final class NotePresenter implements NoteContract.Presenter {
 
     private final NoteRepository mNoteRepository;
 
+    private NoteContract.View mFragment;
+
 
     @Inject
     NotePresenter(NoteRepository noteRepository) {
@@ -46,13 +48,17 @@ public final class NotePresenter implements NoteContract.Presenter {
     }
 
     @Override
-    public void swapNotesPositions(Note fromNote, Note toNote) {
-        int position = fromNote.getPosition();
-        fromNote.setPosition(toNote.getPosition());
-        toNote.setPosition(position);
-
-        mNoteRepository.updateNote(fromNote);
-        mNoteRepository.updateNote(toNote);
-
+    public void setFragment(NoteContract.View fragment)
+    {
+        mFragment = fragment;
     }
+    @Override
+    public void deleteFragment()
+    {
+        mFragment = null;
+    }
+
+
+
+
 }

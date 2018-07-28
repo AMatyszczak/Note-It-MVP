@@ -68,10 +68,21 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
 
     @Override
     public void onResume() {
-        if(mPresenter!= null)
-            updateNoteList(mPresenter.getNotes());
-
         super.onResume();
+        if(mPresenter!= null)
+        {
+            mPresenter.setFragment(this);
+            updateNoteList(mPresenter.getNotes());
+        }
+
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.deleteFragment();
     }
 
     @Override
@@ -120,7 +131,7 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
             updateNoteList(mPresenter.getNotes());
     }
 
-
+    @Override
     public void updateNoteList(List<Note> noteList) {
         mRecyclerNoteListAdapter.replaceNoteList(noteList);
     }
@@ -185,6 +196,10 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
         mItemTouchHelper.startDrag(viewHolder);
     }
 
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
 
     public void deleteNotes(ArrayList<Note> noteList)
     {
