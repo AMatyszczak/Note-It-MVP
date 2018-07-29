@@ -3,8 +3,8 @@
     android:initialKeyguardLayout="@layout/widget_layout"
     android:initialLayout="@layout/widget_layout"
     android:minHeight="80dp"
-    android:minWidth="120dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:minWidth="80dp"
+    android:previewImage="@drawable/note_it_not_filled"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
     android:configure="com.noteIt.widget.WidgetNoteActivity"/>
