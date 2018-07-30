@@ -4,4 +4,4 @@ Application to create Notes with or without To-Do`s.
 Supports widgets
 
 ## Installation
-Setting up this project might require to Sync Project with Gradle Files or Invalidate Caches, to work properly. 
+Setting up this project might require to sync project with gradle files to work properly. 
