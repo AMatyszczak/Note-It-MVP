@@ -1,6 +1,6 @@
 # Note-It-MVP
 ## About
-Application to create Notes with or without To-Do`s.
+Application to create notes with To-Do`s.
 Supports widgets
 
 ## Installation
