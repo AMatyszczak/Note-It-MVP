@@ -1,7 +1,5 @@
 package com.noteIt.noteDetail;
 
-import android.support.annotation.Nullable;
-
 import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.daggerInjections.FragmentScoped;
 
@@ -11,8 +9,7 @@ import dagger.Provides;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class NoteDetailModule
-{
+public abstract class NoteDetailModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract NoteDetailFragment noteDetailFragment();
@@ -27,6 +24,10 @@ public abstract class NoteDetailModule
         return activity.getIntent().getStringExtra(NoteDetailActivity.GET_NOTE_DETAIL);
     }
 
-
+    @Provides
+    static NoteDetailFragment notedetailFragment()
+    {
+        return new NoteDetailFragment();
+    }
 
 }

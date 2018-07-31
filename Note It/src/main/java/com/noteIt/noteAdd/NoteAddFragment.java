@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,7 +40,6 @@ public class NoteAddFragment extends DaggerFragment implements NoteAddContract.V
     private RecyclerView mRecyclerView;
     private TaskRecyclerAdapter mAdapter;
 
-    @Inject
     public NoteAddFragment() {
         // Required empty public constructor
     }
@@ -49,7 +47,7 @@ public class NoteAddFragment extends DaggerFragment implements NoteAddContract.V
     @Override
     public void onResume() {
         super.onResume();
-        if(mPresenter!= null)
+        if (mPresenter != null)
             mPresenter.bindFragment(this);
     }
 
@@ -68,7 +66,7 @@ public class NoteAddFragment extends DaggerFragment implements NoteAddContract.V
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mPresenter!= null)
+                if (mPresenter != null)
                     mPresenter.addNote();
             }
         });

@@ -52,9 +52,7 @@ public class NoteDetailFragment extends DaggerFragment implements NoteDetailCont
     private RecyclerView mRecyclerView;
     private TaskRecyclerAdapter mAdapter;
 
-    @Inject
-    public NoteDetailFragment()
-    {
+    public NoteDetailFragment() {
 
     }
 
@@ -80,8 +78,7 @@ public class NoteDetailFragment extends DaggerFragment implements NoteDetailCont
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(mPresenter != null)
-        {
+        if (mPresenter != null) {
             Note note = mPresenter.getNote();
             mTitle.setText(note.getTitle());
             mDescription.setText(note.getDescription());
@@ -136,8 +133,7 @@ public class NoteDetailFragment extends DaggerFragment implements NoteDetailCont
         View root = inflater.inflate(R.layout.notedetail_frag, container, false);
         mTitle = root.findViewById(R.id.detail_note_title);
         mDescription = root.findViewById(R.id.detail_note_description);
-        if(mPresenter!= null)
-        {
+        if (mPresenter != null) {
             mAdapter.addTasks(mPresenter.getNoteTasks());
         }
 
@@ -192,11 +188,9 @@ public class NoteDetailFragment extends DaggerFragment implements NoteDetailCont
 
     @Override
     public ArrayList<Task> getDeletedTasks() {
-        if(mAdapter!=null)
-        {
+        if (mAdapter != null) {
             return mAdapter.getDeletedTaskList();
-        }
-        else
+        } else
             return new ArrayList<Task>(0);
 
     }

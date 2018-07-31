@@ -1,15 +1,12 @@
 package com.noteIt.notes;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -21,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.noteIt.R;
 import com.noteIt.RecyclerViewClasses.ItemTouchHelperCallback;
 import com.noteIt.RecyclerViewClasses.OnStartDrag;
 import com.noteIt.RecyclerViewClasses.RecyclerNoteListAdapter;
@@ -28,7 +26,6 @@ import com.noteIt.daggerInjections.ActivityScoped;
 import com.noteIt.data.Note;
 import com.noteIt.data.Task;
 import com.noteIt.noteAdd.NoteAddActivity;
-import com.noteIt.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +58,7 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
     private TextView mNoNoteTextView;
     private LinearLayout mNoNoteLayout;
 
-    @Inject
+
     public NoteFragment() {
 
     }
@@ -69,12 +66,10 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
     @Override
     public void onResume() {
         super.onResume();
-        if(mPresenter!= null)
-        {
+        if (mPresenter != null) {
             mPresenter.setFragment(this);
             updateNoteList(mPresenter.getNotes());
         }
-
 
 
     }
@@ -93,7 +88,7 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
     }
 
     @Override
-    public View onCreateView(@NonNull  LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.note_frag, container, false);
         mNoteLayout = root.findViewById(R.id.note_layout);
@@ -121,13 +116,13 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
 
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_note);
 
-            fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addNoteStart();
             }
         });
-        if(mPresenter!= null)
+        if (mPresenter != null)
             updateNoteList(mPresenter.getNotes());
     }
 
@@ -138,7 +133,7 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
 
     @Override
     public ArrayList<Task> getNoteTasks(String noteId) {
-            return mPresenter.getNoteTasks(noteId);
+        return mPresenter.getNoteTasks(noteId);
     }
 
 
@@ -152,10 +147,9 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode == NOTE_DETAIL_REQUEST)
-            if(resultCode == Activity.RESULT_OK)
-            {
-                showSnackBar( NOTE_SAVED_SNACKBAR_TEXT );
+        if (requestCode == NOTE_DETAIL_REQUEST)
+            if (resultCode == Activity.RESULT_OK) {
+                showSnackBar(NOTE_SAVED_SNACKBAR_TEXT);
                 mRecyclerNoteListAdapter.replaceNoteList(mPresenter.getNotes());
             }
 
@@ -185,10 +179,9 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
     }
 
     @Override
-    public void showSnackBar(String text)
-    {
-        if(getView()!= null)
-            Snackbar.make(getView(),text,Snackbar.LENGTH_SHORT).show();
+    public void showSnackBar(String text) {
+        if (getView() != null)
+            Snackbar.make(getView(), text, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -201,19 +194,16 @@ public class NoteFragment extends DaggerFragment implements NoteContract.View, O
         return isAdded();
     }
 
-    public void deleteNotes(ArrayList<Note> noteList)
-    {
+    public void deleteNotes(ArrayList<Note> noteList) {
         mPresenter.deleteNotes(noteList);
     }
 
-    public void updateNotes(ArrayList<Note> noteList)
-    {
+    public void updateNotes(ArrayList<Note> noteList) {
         mPresenter.updateNotes(noteList);
     }
 
-    public ArrayList<Note> getNotes()
-    {
-        return (ArrayList<Note>)mPresenter.getNotes();
+    public ArrayList<Note> getNotes() {
+        return (ArrayList<Note>) mPresenter.getNotes();
     }
 
 

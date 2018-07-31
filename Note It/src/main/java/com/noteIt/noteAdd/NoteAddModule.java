@@ -5,11 +5,11 @@ import com.noteIt.daggerInjections.FragmentScoped;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class NoteAddModule
-{
+public abstract class NoteAddModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract NoteAddFragment noteAddFragment();
@@ -18,5 +18,9 @@ public abstract class NoteAddModule
     @Binds
     abstract NoteAddContract.Presenter noteAddPresenter(NoteAddPresenter noteAddPresenter);
 
-
+    @Provides
+    static NoteAddFragment noteaddFragment()
+    {
+        return new NoteAddFragment();
+    }
 }
